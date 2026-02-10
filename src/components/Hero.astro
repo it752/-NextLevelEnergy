@@ -1,0 +1,652 @@
+---
+import { Image } from 'astro:assets';
+import heroBg from '../assets/hero/hero-bg.png';
+import heroRight from '../assets/hero/hero-right.png';
+import logoWhite from '../assets/logo/logo-white.svg';
+---
+
+<section id="hero">
+	<div class="hero-container shadow-2xl">
+		<!-- Background Image - Optimized with fetchpriority -->
+		<div class="bg-layer z-0">
+			<Image
+				src={heroBg}
+				alt=""
+				class="bg-img"
+				widths={[640, 1024, 1440, 1920]}
+				sizes="100vw"
+				loading="eager"
+				fetchpriority="high"
+				quality={80}
+			/>
+		</div>
+
+		<!-- Main Purple Gradient Overlay -->
+		<div class="hero-main-gradient z-[1]"></div>
+
+		<!-- Secondary Dark Overlays -->
+		<div class="dark-overlay-r z-[2]"></div>
+		<div class="dark-overlay-t z-[2]"></div>
+
+		<!-- Person Image - Optimized and responsive visibility -->
+		<div class="person-wrapper z-[3]">
+			<Image
+				src={heroRight}
+				alt="Mateusz Pawluk"
+				class="person-img"
+				widths={[400, 800, 1200]}
+				sizes="(max-width: 768px) 90vw, (max-width: 1024px) 60vw, 45vw"
+				loading="eager"
+				fetchpriority="high"
+				quality={90}
+			/>
+		</div>
+
+		<!-- Fixed Branding & Navigation -->
+		<nav class="navbar" id="global-nav">
+			<a href="/" class="logo-link" aria-label="Home">
+				<Image src={logoWhite} alt="NF Logo" class="logo-img" loading="eager" />
+			</a>
+			<button id="menu-toggle" class="menu-btn" aria-label="Toggle menu">
+				<span class="bar bar-long"></span>
+				<span class="bar bar-short"></span>
+				<span class="bar bar-long"></span>
+			</button>
+		</nav>
+
+		<!-- Menu Overlay -->
+		<div id="menu-overlay" class="menu-overlay">
+			<div class="menu-header">
+				<Image src={logoWhite} alt="NF Logo" class="logo-img" />
+				<button id="close-menu" class="close-btn" aria-label="Close menu">
+					<svg viewBox="0 0 24 24" width="32" height="32" stroke="white" stroke-width="2" fill="none">
+						<path d="M18 6L6 18M6 6l12 12"></path>
+					</svg>
+				</button>
+			</div>
+
+			<div class="menu-links">
+				{
+					['Idea', 'Historia', 'Zespół', 'O nas', 'Ścieżka kariery', 'Kariera'].map((item, index) => (
+						<a
+							href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
+							class="menu-item-link"
+							style={`--index: ${index}`}>
+							<span class="menu-item-text">{item}</span>
+							<svg
+								class="menu-item-arrow"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2">
+								<path d="M5 12h14m-7-7l7 7-7 7" />
+							</svg>
+						</a>
+					))
+				}
+			</div>
+		</div>
+
+		<!-- Content Layer -->
+		<div class="hero-content z-[4]">
+			<!-- Main Text Area -->
+			<div class="main-text-area">
+				<div class="text-group">
+					<h1 class="hero-title">
+						LOREM IPSUM<br />
+						<span class="title-sub">DOLOR SIT AMET</span>
+					</h1>
+					<p class="hero-desc">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit
+						interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia
+						nostra, per inceptos himenaeos.
+					</p>
+				</div>
+			</div>
+
+			<!-- Bottom Button -->
+			<div class="btn-container">
+				<a href="#idea" class="level-up-btn">
+					<span class="btn-text">
+						Level Up
+						<svg
+							class="arrow-svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="3"
+							stroke-linecap="round"
+							stroke-linejoin="round">
+							<path d="M7 11l5-5 5 5"></path>
+							<path d="M7 18l5-5 5 5"></path>
+						</svg>
+					</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	const menuToggle = document.getElementById('menu-toggle');
+	const closeMenu = document.getElementById('close-menu');
+	const menuOverlay = document.getElementById('menu-overlay');
+
+	if (menuToggle && closeMenu && menuOverlay) {
+		const toggleScrollLock = lock => {
+			document.body.style.overflow = lock ? 'hidden' : '';
+		};
+
+		menuToggle.addEventListener('click', () => {
+			menuOverlay.classList.add('active');
+			toggleScrollLock(true);
+		});
+
+		closeMenu.addEventListener('click', () => {
+			menuOverlay.classList.remove('active');
+			toggleScrollLock(false);
+		});
+
+		// Close menu on link click
+		const menuLinks = menuOverlay.querySelectorAll('.menu-item-link');
+		menuLinks.forEach(link => {
+			link.addEventListener('click', () => {
+				menuOverlay.classList.remove('active');
+				toggleScrollLock(false);
+			});
+		});
+	}
+</script>
+
+<style>
+	#hero {
+		width: 100%;
+		height: 100vh;
+		/* Use svh if supported for better mobile height handling */
+		height: 100svh;
+		position: relative;
+		overflow: hidden;
+		background-color: #0f172a;
+	}
+
+	.hero-container {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.bg-layer {
+		position: absolute;
+		inset: 0;
+		will-change: transform;
+	}
+
+	.bg-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.hero-main-gradient {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background: linear-gradient(
+			to right,
+			rgba(15, 23, 42, 0.4) 0%,
+			transparent 25%,
+			transparent 40%,
+			rgba(162, 19, 218, 0.3) 55%,
+			rgba(162, 19, 218, 0.8) 75%,
+			#a213da 100%
+		);
+	}
+
+	.dark-overlay-r {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to right, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 40%, transparent 65%);
+	}
+
+	.dark-overlay-t {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 300px; /* Only bottom area */
+		background: linear-gradient(to top, #0b111d 0%, transparent 100%);
+		pointer-events: none;
+		z-index: 10;
+	}
+
+	/* Person Wrapper Responsive */
+	.person-wrapper {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		height: 100%;
+		width: 50%;
+		pointer-events: none;
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-end;
+		/* Mask to fade person at the very bottom */
+		mask-image: linear-gradient(to top, transparent 0%, black 10%, black 100%);
+		-webkit-mask-image: linear-gradient(to top, transparent 0%, black 10%, black 100%);
+	}
+
+	.person-img {
+		height: 108%;
+		width: auto;
+		object-fit: contain;
+		object-position: right bottom;
+		transform: translateY(8%);
+		filter: drop-shadow(-30px 0 40px rgba(0, 0, 0, 0.4));
+		will-change: filter;
+	}
+
+	.hero-content {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		z-index: 20; /* Higher than dark-overlay-t (10) */
+	}
+
+	/* Fixed Navbar - Transparent & Sharp */
+	.navbar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1.5rem;
+		width: 100%;
+		z-index: 2000;
+		transition: all 0.3s ease;
+		background: transparent; /* No background */
+		backdrop-filter: none; /* No blur */
+		-webkit-backdrop-filter: none;
+	}
+
+	.menu-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1.5rem;
+		width: 100%;
+	}
+
+	.logo-img {
+		height: 2rem;
+		width: auto;
+		transition: height 0.3s ease;
+	}
+
+	.menu-btn,
+	.close-btn {
+		display: flex;
+		flex-direction: column; /* Default for menu-btn, close-btn will override if needed */
+		align-items: flex-end;
+		justify-content: center;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0.5rem;
+		width: 3rem;
+		height: 3rem;
+	}
+
+	.menu-btn {
+		gap: 6px; /* Specific to menu-btn */
+	}
+
+	.close-btn {
+		flex-direction: row; /* Override for close-btn to center SVG */
+		align-items: center;
+		justify-content: center;
+	}
+
+	.bar {
+		height: 2.5px;
+		background-color: white;
+		border-radius: 99px;
+		transition: width 0.3s ease;
+	}
+
+	.bar-long {
+		width: 32px;
+	}
+	.bar-short {
+		width: 20px;
+	}
+
+	.menu-btn:hover .bar-long {
+		width: 20px;
+	}
+	.menu-btn:hover .bar-short {
+		width: 32px;
+	}
+
+	/* Main Text Area Responsive */
+	.main-text-area {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start; /* Top on mobile */
+		padding: 3rem 1.5rem 0;
+	}
+
+	.hero-title {
+		font-size: clamp(2.5rem, 10vw, 6rem);
+		font-weight: 950;
+		line-height: 0.92;
+		color: white;
+		text-transform: uppercase;
+		margin-bottom: 1.5rem;
+		letter-spacing: -0.03em;
+		filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+	}
+
+	.hero-desc {
+		font-size: clamp(0.9rem, 1.3vw, 1.15rem);
+		line-height: 1.5;
+		color: rgba(255, 255, 255, 0.85);
+		max-width: 480px;
+		font-weight: 500;
+	}
+
+	/* Bottom Button Responsive */
+	.btn-container {
+		padding: 2.5rem 0;
+		display: flex;
+		justify-content: center;
+		position: relative;
+		z-index: 50; /* Above all background layers and overlays */
+	}
+
+	.level-up-btn {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.9rem 2.2rem;
+		border-radius: 9999px;
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		color: white;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		font-size: 0.8rem;
+		transition:
+			transform 0.3s ease,
+			background 0.3s ease,
+			box-shadow 0.3s ease;
+		text-decoration: none;
+	}
+
+	.btn-text {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+	}
+
+	.arrow-svg {
+		width: 1rem;
+		height: 1rem;
+		animation: bounce-up 2s infinite ease-in-out;
+	}
+
+	@keyframes bounce-up {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-4px);
+		}
+	}
+
+	/* MEDIA QUERIES */
+
+	/* Tablet */
+	@media (min-width: 768px) and (max-width: 1023px) {
+		.navbar,
+		.menu-header {
+			padding: 2.5rem 3rem;
+		}
+		.logo-img {
+			height: 2.8rem;
+		}
+		.main-text-area {
+			padding: 10rem 4rem 0; /* Increased from 5rem to 10rem */
+			justify-content: flex-start;
+		}
+		.person-wrapper {
+			width: 65%;
+			height: 65%;
+		}
+		.person-img {
+			height: 110%; /* Slightly smaller than 115% */
+		}
+		.hero-title {
+			font-size: clamp(4rem, 10vw, 5.5rem);
+			margin-bottom: 2rem;
+		}
+		.btn-container {
+			padding: 5rem 0;
+		}
+	}
+
+	/* Desktop */
+	@media (min-width: 1024px) {
+		.navbar,
+		.menu-header {
+			padding: 3rem 4rem;
+		}
+		.logo-img {
+			height: 3.2rem;
+		}
+		.main-text-area {
+			padding: 0 6rem;
+			justify-content: center; /* Keep centered on desktop */
+		}
+		.person-wrapper {
+			width: 45%;
+		}
+	}
+
+	/* PSI Optimization: Adjust mobile person display to not overlap text too much */
+	@media (max-width: 767px) {
+		.main-text-area {
+			padding: 6rem 1.5rem 0; /* Increased top padding from 3rem to 6rem */
+		}
+		.person-wrapper {
+			width: 100%;
+			height: 50%; /* Limit height to bottom half */
+			z-index: 1;
+		}
+		.person-img {
+			height: 100%; /* Fill the lower half */
+			transform: translateY(5%); /* Slight adjustment */
+		}
+		.hero-content {
+			z-index: 2;
+		}
+		.hero-title {
+			font-size: clamp(2.3rem, 12vw, 3.5rem);
+		}
+		.hero-desc {
+			max-width: 300px; /* Narrower for mobile readability */
+		}
+	}
+
+	/* Accessibility & Performance */
+	@media (prefers-reduced-motion: reduce) {
+		.arrow-svg {
+			animation: none;
+		}
+	}
+
+	/* Menu Overlay Styles */
+	.menu-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		height: 100svh;
+		background-color: #0f172a;
+		z-index: 3000; /* Ensure it's ABOVE the fixed navbar */
+		display: flex;
+		flex-direction: column;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-20px);
+		transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.menu-overlay.active {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.menu-header {
+		opacity: 0;
+		transform: translateY(-10px);
+		transition: all 0.5s ease 0.2s;
+	}
+
+	.menu-overlay.active .menu-header {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.close-btn svg {
+		transition: transform 0.3s ease;
+	}
+
+	.close-btn:hover svg {
+		transform: rotate(90deg);
+	}
+
+	.menu-links {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+	}
+
+	.menu-item-link {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 2.5rem;
+		text-decoration: none;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		position: relative;
+		overflow: hidden;
+		opacity: 0;
+		transform: translateY(30px);
+		transition:
+			opacity 0.6s ease,
+			transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.menu-overlay.active .menu-item-link {
+		opacity: 1;
+		transform: translateY(0);
+		/* Staggered delay using CSS variable */
+		transition-delay: calc(0.1s + (var(--index) * 0.08s));
+	}
+
+	.menu-item-text {
+		font-size: clamp(2rem, 8vw, 5rem);
+		font-weight: 900;
+		text-transform: uppercase;
+		color: transparent;
+		-webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4);
+		position: relative;
+		z-index: 2;
+		transition: all 0.4s ease;
+	}
+
+	.menu-item-link::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, #a213da 0%, rgba(162, 19, 218, 0) 100%);
+		transition: left 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+		z-index: 1;
+	}
+
+	.menu-item-link:hover::before {
+		left: 0;
+	}
+
+	.menu-item-link:hover .menu-item-text {
+		color: white;
+		-webkit-text-stroke: 1.5px transparent;
+		padding-left: 1rem;
+	}
+
+	.menu-item-arrow {
+		width: 3rem;
+		height: 3rem;
+		color: white;
+		opacity: 0;
+		transform: translateX(-20px);
+		transition: all 0.4s ease;
+		z-index: 2;
+	}
+
+	.menu-item-link:hover .menu-item-arrow {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	/* Landscape Mobile Optimization */
+	@media (orientation: landscape) and (max-height: 500px) {
+		#hero {
+			height: auto;
+			min-height: 100svh;
+			overflow-y: auto;
+		}
+		.hero-content {
+			height: auto;
+			min-height: 100svh;
+		}
+		.main-text-area {
+			padding: 1rem 1.5rem;
+			justify-content: flex-start;
+		}
+		.hero-title {
+			font-size: 2rem;
+			margin-bottom: 1rem;
+		}
+		.hero-desc {
+			font-size: 0.9rem;
+			max-width: 100%;
+		}
+		.person-wrapper {
+			display: none; /* Hide person image in landscape to save critical space */
+		}
+		.navbar {
+			padding: 1rem 1.5rem;
+		}
+		.logo-img {
+			height: 1.5rem;
+		}
+		.btn-container {
+			padding: 2rem 0;
+		}
+	}
+</style>
