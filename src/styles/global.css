@@ -7,8 +7,8 @@
   --color-accent: #2DD4A0;
   --color-accent-dark: #1AAF83;
   
-  /* Updated background colors based on user input */
-  --color-dark-start: #0F172A;
+  /* Global Background Color matching Blog section */
+  --color-dark-start: #0B111D;
   --color-dark-end: #0B111D;
   
   --font-heading: 'Inter', sans-serif;
