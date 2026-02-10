@@ -685,17 +685,27 @@ const loopPosts = [...posts, ...posts, ...posts];
 		bottom: 0;
 		left: 0;
 		right: 0;
-		height: 100px;
-		background: linear-gradient(to top, #0b111d 0%, transparent 100%);
+		height: 80px;
+		background: linear-gradient(to top, rgba(15, 23, 42, 0.8) 0%, transparent 100%);
 		pointer-events: none;
+		z-index: 5;
+	}
+
+	.main-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		/* Mask to fade image at the bottom into the frame */
+		mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+		-webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
 	}
 
 	.close-article {
 		position: absolute;
 		top: 20px;
 		right: 20px;
-		background: rgba(0, 0, 0, 0.5);
-		border: 1px solid rgba(255, 255, 255, 0.2);
+		background: rgba(0, 0, 0, 0.4);
+		border: 1px solid rgba(255, 255, 255, 0.1);
 		color: white;
 		width: 44px;
 		height: 44px;
@@ -705,6 +715,20 @@ const loopPosts = [...posts, ...posts, ...posts];
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+
+	.close-article:hover {
+		background: #a213da;
+		border-color: #a213da;
+		transform: rotate(90deg) scale(1.1);
+		box-shadow: 0 0 20px rgba(162, 19, 218, 0.6);
+	}
+
+	.close-article svg {
+		width: 24px;
+		height: 24px;
+		transition: transform 0.3s ease;
 	}
 
 	.article-scroll-container {
