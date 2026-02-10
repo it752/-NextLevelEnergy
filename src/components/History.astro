@@ -1,0 +1,412 @@
+---
+const milestones = [
+	{
+		year: '2004',
+		title: 'Powstanie Next Level Energy',
+		color: '#A213DA',
+		description:
+			'Początek naszej drogi. Z pasją do innowacji i zrównoważonego rozwoju, założyliśmy fundamenty firmy, która miała zrewolucjonizować rynek energii odnawialnej w Polsce. Skupiliśmy się na dostarczaniu rozwiązań, które łączą ekologię z realnym zyskiem dla przedsiębiorstw.',
+	},
+	{
+		year: '2006',
+		title: 'Rekonstrukcja tamy wodnej we Włocławku',
+		color: '#00D1FF',
+		description:
+			'Przełomowy projekt inżynieryjny, który udowodnił nasze kompetencje w realizacji skomplikowanych inwestycji hydroenergetycznych na skalę krajową. Wykorzystaliśmy innowacyjne systemy sterowania i optymalizacji przepływu, znacząco zwiększając wydajność obiektu.',
+	},
+	{
+		year: '2012',
+		title: 'Własna elektrownia wodna',
+		color: '#2DD44F',
+		description:
+			'Uruchomienie własnego źródła energii było krokiem milowym w stronę niezależności i praktycznym potwierdzeniem efektywności naszych rozwiązań. Staliśmy się nie tylko dostawcą technologii, ale i aktywnym producentem czystej energii.',
+	},
+	{
+		year: '2018',
+		title: 'Stworzenia własnej metody sprzedażowej',
+		color: '#FF9E00',
+		description:
+			'Wdrożyliśmy unikalny model doradztwa, oparty na głębokiej analizie potrzeb klienta i optymalizacji kosztów energetycznych, co stało się naszym znakiem rozpoznawczym. Nasza metoda "Value-Driven Sales" zrewolucjonizowała sposób, w jaki firmy podchodzą do inwestycji w OZE.',
+	},
+	{
+		year: '2023',
+		title: '760 milionów dofinansowania dla klientów',
+		color: '#0047FF',
+		description:
+			'Rekordowy rok, w którym skutecznie pomogliśmy naszym partnerom pozyskać ogromne środki na modernizację infrastruktury. Ta suma realnie przełożyła się na dziesiątki zrealizowanych inwestycji i gigantyczne oszczędności w sektorze przemysłowym.',
+	},
+];
+---
+
+<section id="history" class="history-section">
+	<div class="history-container">
+		<h2 class="section-tag">HISTORIA</h2>
+
+		<div class="timeline-accordion">
+			{
+				milestones.map((m, idx) => (
+					<div
+						class={`timeline-item ${idx === 1 ? 'is-active' : ''}`}
+						style={`--accent-color: ${m.color}; --index: ${idx}`}
+						data-year={m.year}>
+						<div class="item-bg" />
+
+						<div class="year-outline" aria-hidden="true">
+							{m.year}
+						</div>
+
+						<div class="item-content">
+							<div class="content-wrapper">
+								<span class="year-mobile">{m.year}</span>
+								<h3 class="milestone-title">{m.title}</h3>
+								<div class="desc-container">
+									<p class="milestone-desc">{m.description}</p>
+								</div>
+
+								<div class="level-up-wrapper">
+									<a href="#team" class="mini-level-up">
+										Level Up{' '}
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+											<path d="M7 11l5-5 5 5M7 18l5-5 5 5" />
+										</svg>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<script>
+	const items = document.querySelectorAll('.timeline-item');
+
+	items.forEach(item => {
+		item.addEventListener('click', () => {
+			items.forEach(i => i.classList.remove('is-active'));
+			item.classList.add('is-active');
+		});
+	});
+</script>
+
+<style>
+	.history-section {
+		background: #0b111d;
+		min-height: 100vh;
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.history-container {
+		display: flex;
+		flex-direction: column;
+		height: 100vh;
+		width: 100%;
+		padding-top: 2rem;
+	}
+
+	.section-tag {
+		padding-left: 5%;
+		font-size: 0.8rem;
+		font-weight: 800;
+		color: rgba(255, 255, 255, 0.4);
+		letter-spacing: 0.2em;
+		margin-bottom: 2rem;
+	}
+
+	.timeline-accordion {
+		display: flex;
+		flex: 1;
+		width: 100%;
+		overflow: hidden;
+	}
+
+	.timeline-item {
+		position: relative;
+		flex: 1;
+		height: 100%;
+		cursor: pointer;
+		overflow: hidden;
+		transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+		border-left: 1px solid rgba(255, 255, 255, 0.05);
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
+
+	.timeline-item.is-active {
+		flex: 5;
+	}
+
+	.item-bg {
+		position: absolute;
+		inset: 0;
+		/* Default desktop: Bottom to top gradient */
+		background: linear-gradient(to top, var(--accent-color) 0%, transparent 100%);
+		opacity: 0;
+		transform: scaleY(0);
+		transform-origin: bottom;
+		/* Much slower, more deliberate transition for luxury feel */
+		transition:
+			opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1),
+			transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+		z-index: 1;
+	}
+
+	.timeline-item:hover .item-bg {
+		opacity: 0.3;
+		transform: scaleY(1);
+	}
+
+	.timeline-item.is-active .item-bg {
+		opacity: 1;
+		transform: scaleY(1);
+		transition:
+			opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1),
+			transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	/* Large Year Outline - Centered and Contained */
+	.year-outline {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) rotate(-90deg);
+		/* Smaller font size to ensure it never touches edges of its column */
+		font-size: clamp(6rem, 12vw, 12rem);
+		font-family: 'Outfit', sans-serif; /* Geometric font for cleaner outlines */
+		font-weight: 900;
+		color: rgba(255, 255, 255, 0.03);
+		-webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.25);
+		letter-spacing: 0.15em;
+		pointer-events: none;
+		white-space: nowrap;
+		z-index: 2;
+		transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+		/* Force equal width for all numbers so every year has the same length */
+		font-variant-numeric: tabular-nums;
+		font-feature-settings: 'tnum';
+	}
+
+	.timeline-item:hover .year-outline {
+		-webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4);
+		opacity: 0.8;
+	}
+
+	.timeline-item.is-active .year-outline {
+		font-size: clamp(12rem, 35vh, 45vh);
+		opacity: 0.1;
+		top: 2%; /* Moved much higher */
+		left: 50%;
+		transform: translate(-50%, 0) rotate(0deg);
+		-webkit-text-stroke: 2px white;
+		color: transparent;
+		letter-spacing: 0.05em;
+	}
+
+	.item-content {
+		position: relative;
+		z-index: 10;
+		padding: 2rem;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: flex-end; /* Align content to bottom */
+		justify-content: center;
+		pointer-events: none;
+		padding-bottom: 4rem; /* Add consistent bottom padding */
+	}
+
+	.timeline-item.is-active .item-content {
+		pointer-events: auto;
+	}
+
+	.year-mobile {
+		display: none;
+	}
+
+	.content-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center; /* Center text visually in the narrow col */
+		text-align: center;
+		width: 100%;
+	}
+
+	.milestone-title {
+		font-size: clamp(0.9rem, 1.2vw, 1.3rem);
+		font-weight: 800;
+		color: white;
+		line-height: 1.2;
+		margin-bottom: 0px;
+		width: 100%;
+		max-width: 15rem;
+		transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+		text-transform: none; /* Match screenshot casing */
+		transform: translateY(0);
+	}
+
+	.timeline-item.is-active .milestone-title {
+		font-size: clamp(1.8rem, 4vw, 3rem);
+		max-width: 700px;
+		margin-bottom: 1.5rem;
+		animation: none; /* Remove previous animation to avoid conflict with transitions */
+		margin-top: auto; /* Push to bottom if needed */
+	}
+
+	/* Description reveal logic */
+	.desc-container {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+		width: 100%;
+		max-width: 600px;
+	}
+
+	.timeline-item.is-active .desc-container {
+		grid-template-rows: 1fr;
+	}
+
+	.milestone-desc {
+		font-size: 1.1rem;
+		color: rgba(255, 255, 255, 0.9);
+		line-height: 1.7;
+		max-width: 600px;
+		overflow: hidden;
+		opacity: 0;
+		transform: translateY(20px);
+		transition:
+			opacity 0.6s ease,
+			transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.timeline-item.is-active .milestone-desc {
+		opacity: 1;
+		transform: translateY(0);
+		transition-delay: 0.3s;
+	}
+
+	/* Mini Level Up Button Animation */
+	.level-up-wrapper {
+		margin-top: 3rem;
+		opacity: 0;
+		transform: translateY(20px);
+		transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+		pointer-events: none;
+	}
+
+	.timeline-item.is-active .level-up-wrapper {
+		opacity: 1;
+		transform: translateY(0);
+		transition-delay: 0.5s;
+		pointer-events: auto;
+	}
+
+	@keyframes reveal-text {
+		0% {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		100% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.mini-level-up {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.8rem;
+		padding: 0.8rem 1.8rem;
+		border-radius: 9999px;
+		border: 1px solid white;
+		color: white;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-weight: 800;
+		font-size: 0.8rem;
+		letter-spacing: 0.1em;
+		transition: all 0.3s ease;
+	}
+
+	.mini-level-up:hover {
+		background: white;
+		color: black;
+	}
+
+	.mini-level-up svg {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	/* Mobile Responsive Styles */
+	@media (max-width: 1023px) {
+		.history-container {
+			height: auto;
+			padding-bottom: 5rem;
+		}
+
+		.timeline-accordion {
+			flex-direction: column;
+		}
+
+		.timeline-item {
+			min-height: 100px;
+			flex: none;
+			border-left: none;
+			border-top: 1px solid rgba(255, 255, 255, 0.05);
+		}
+
+		.item-bg {
+			/* Mobile: Left to right gradient and horizontal fill */
+			background: linear-gradient(to right, var(--accent-color) 0%, transparent 100%);
+			transform: scaleX(0);
+			transform-origin: left;
+		}
+
+		.timeline-item:hover .item-bg,
+		.timeline-item.is-active .item-bg {
+			transform: scaleX(1);
+		}
+
+		.timeline-item.is-active {
+			min-height: 450px;
+		}
+
+		.year-outline {
+			font-size: 15vh;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%) rotate(0deg);
+			-webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+		}
+
+		.timeline-item.is-active .year-outline {
+			font-size: 25vh;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%) rotate(0deg);
+		}
+
+		.year-mobile {
+			display: block;
+			font-size: 1.2rem;
+			font-weight: 900;
+			opacity: 0.4;
+			margin-bottom: 0.5rem;
+		}
+
+		.item-content {
+			padding: 2rem 1.5rem;
+		}
+
+		.milestone-title {
+			font-size: 1.3rem;
+			margin-bottom: 1rem;
+		}
+	}
+</style>
