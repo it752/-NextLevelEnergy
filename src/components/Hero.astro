@@ -155,6 +155,41 @@ import logoWhite from '../assets/logo/logo-white.svg';
 				toggleScrollLock(false);
 			});
 		});
+
+		// Apple-style Smart Navbar
+		let lastScroll = 0;
+		const nav = document.getElementById('global-nav');
+
+		window.addEventListener(
+			'scroll',
+			() => {
+				const currentScroll = window.pageYOffset;
+
+				// Always show at top
+				if (currentScroll <= 100) {
+					nav.classList.remove('navbar-hidden');
+					nav.classList.remove('navbar-scrolled');
+					return;
+				}
+
+				// Background state when scrolled
+				if (currentScroll > 100) {
+					nav.classList.add('navbar-scrolled');
+				}
+
+				// Scroll direction logic
+				if (currentScroll > lastScroll && !nav.classList.contains('navbar-hidden') && currentScroll > 200) {
+					// Scrolling down - hide
+					nav.classList.add('navbar-hidden');
+				} else if (currentScroll < lastScroll && nav.classList.contains('navbar-hidden')) {
+					// Scrolling up - show
+					nav.classList.remove('navbar-hidden');
+				}
+
+				lastScroll = currentScroll;
+			},
+			{ passive: true },
+		);
 	}
 </script>
 
@@ -269,10 +304,22 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		padding: 1.5rem;
 		width: 100%;
 		z-index: 2000;
-		transition: all 0.3s ease;
-		background: transparent; /* No background */
-		backdrop-filter: none; /* No blur */
-		-webkit-backdrop-filter: none;
+		transition:
+			transform 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+			background 0.3s ease,
+			backdrop-filter 0.3s ease;
+		background: transparent;
+	}
+
+	.navbar.navbar-scrolled {
+		background: rgba(11, 17, 29, 0.8);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		padding: 1rem 1.5rem;
+	}
+
+	.navbar.navbar-hidden {
+		transform: translateY(-100%);
 	}
 
 	.menu-header {
@@ -497,7 +544,7 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		}
 	}
 
-	/* Menu Overlay Styles */
+	/* Menu Overlay Styles - Apple-style Bubble Expansion */
 	.menu-overlay {
 		position: fixed;
 		top: 0;
@@ -506,38 +553,39 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		height: 100vh;
 		height: 100svh;
 		background-color: #0b111d;
-		z-index: 3000; /* Ensure it's ABOVE the fixed navbar */
+		z-index: 3000;
 		display: flex;
 		flex-direction: column;
 		opacity: 0;
 		visibility: hidden;
-		transform: translateY(-20px);
-		transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+		/* Grow from the burger button location */
+		clip-path: circle(0% at 92% 4%);
+		transition:
+			clip-path 0.8s cubic-bezier(0.19, 1, 0.22, 1),
+			opacity 0.4s ease,
+			visibility 0.8s;
 	}
 
 	.menu-overlay.active {
 		opacity: 1;
 		visibility: visible;
-		transform: translateY(0);
+		clip-path: circle(150% at 92% 4%);
 	}
 
 	.menu-header {
 		opacity: 0;
-		transform: translateY(-10px);
-		transition: all 0.5s ease 0.2s;
+		transform: translateY(-20px);
+		transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0.2s;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1.5rem;
+		width: 100%;
 	}
 
 	.menu-overlay.active .menu-header {
 		opacity: 1;
 		transform: translateY(0);
-	}
-
-	.close-btn svg {
-		transition: transform 0.3s ease;
-	}
-
-	.close-btn:hover svg {
-		transform: rotate(90deg);
 	}
 
 	.menu-links {
@@ -560,15 +608,14 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		opacity: 0;
 		transform: translateY(30px);
 		transition:
-			opacity 0.6s ease,
-			transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+			opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1),
+			transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+		transition-delay: calc(0.3s + (var(--index) * 0.08s));
 	}
 
 	.menu-overlay.active .menu-item-link {
 		opacity: 1;
 		transform: translateY(0);
-		/* Staggered delay using CSS variable */
-		transition-delay: calc(0.1s + (var(--index) * 0.08s));
 	}
 
 	.menu-item-text {
