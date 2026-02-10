@@ -1,0 +1,736 @@
+---
+import { Image } from 'astro:assets';
+import kacperImg from '../assets/team/Kacper.png';
+import katarzynaImg from '../assets/team/Katarzyna.png';
+import marcinImg from '../assets/team/Marcin.png';
+
+const teamMembers = [
+	{
+		id: 'katarzyna',
+		name: 'Katarzyna',
+		role: 'Operations Manager',
+		image: katarzynaImg,
+		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus.',
+		email: 'katarzyna@mail.com',
+		phone: '+48 123 456 789',
+		linkedin: '#'
+	},
+	{
+		id: 'kacper',
+		name: 'Kacper',
+		role: 'Head of Development',
+		image: kacperImg,
+		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus. Ut interdum tellus elit sed risus. Maecenas eget condimentum velit.',
+		email: 'adresmail@mail.com',
+		phone: '+48 123 456 789',
+		linkedin: '#'
+	},
+	{
+		id: 'marcin',
+		name: 'Marcin',
+		role: 'Senior Consultant',
+		image: marcinImg,
+		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus.',
+		email: 'marcin@mail.com',
+		phone: '+48 123 456 789',
+		linkedin: '#'
+	}
+];
+---
+
+<section id="team" class="team-section">
+	<div class="team-container">
+		<!-- Section Header -->
+		<div class="team-header">
+			<div class="lightning-icon">
+				<svg viewBox="0 0 24 24" fill="none" class="w-8 h-8 text-[#A213DA]">
+					<path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+				</svg>
+			</div>
+			<h2>Poznaj <span class="highlight">nas lepiej</span></h2>
+		</div>
+
+		<!-- Carousel Area -->
+		<div class="carousel-wrapper">
+			<!-- Left Arrow -->
+			<button class="nav-arrow prev" aria-label="Previous member">
+				<div class="arrow-stack">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+				</div>
+			</button>
+
+			<div class="cards-stage">
+				{teamMembers.map((member, index) => (
+					<div 
+						class={`member-card ${index === 1 ? 'is-center' : index === 0 ? 'is-left' : 'is-right'}`}
+						data-index={index}
+						data-id={member.id}
+					>
+						<div class="card-inner">
+							<Image src={member.image} alt={member.name} class="card-img" />
+						</div>
+						
+						<!-- Details Panel (Hidden initially) -->
+						<div class="details-panel">
+							<div class="details-content">
+								<div class="details-header">
+									<h3>{member.name}</h3>
+									<a href={member.linkedin} target="_blank" class="linkedin-link">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+									</a>
+								</div>
+								
+								<div class="details-body">
+									<h4>O mnie</h4>
+									<p>{member.desc}</p>
+									
+									<div class="contact-info">
+										<h4>Kontakt</h4>
+										<p>{member.email}</p>
+										<p>{member.phone}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Back Button (for expanded state) -->
+						<button class="back-btn">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+							powrót
+						</button>
+					</div>
+				))}
+			</div>
+
+			<!-- Right Arrow -->
+			<button class="nav-arrow next" aria-label="Next member">
+				<div class="arrow-stack">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19l7-7-7-7"/></svg>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19l7-7-7-7"/></svg>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19l7-7-7-7"/></svg>
+				</div>
+			</button>
+		</div>
+
+		<div class="btn-container">
+			<a href="#contact" class="level-up-btn">
+				<span class="btn-text">
+					Level Up
+					<svg class="arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M7 11l5-5 5 5"></path>
+						<path d="M7 18l5-5 5 5"></path>
+					</svg>
+				</span>
+			</a>
+		</div>
+	</div>
+</section>
+
+<script>
+	const stage = document.querySelector('.cards-stage');
+	const cards = document.querySelectorAll('.member-card');
+	const prevBtn = document.querySelector('.nav-arrow.prev');
+	const nextBtn = document.querySelector('.nav-arrow.next');
+	const carouselWrapper = document.querySelector('.carousel-wrapper');
+	let currentIndex = 1;
+	let isExpanded = false;
+
+	function updateClasses() {
+		cards.forEach((card, idx) => {
+			card.className = 'member-card';
+			if (idx === currentIndex) {
+				card.classList.add('is-center');
+				if (isExpanded) card.classList.add('is-expanded');
+			} else if (idx === (currentIndex - 1 + cards.length) % cards.length) {
+				card.classList.add('is-left');
+			} else {
+				card.classList.add('is-right');
+			}
+		});
+
+		if (isExpanded) {
+			stage?.classList.add('has-expanded-card');
+			document.body.style.overflow = 'hidden';
+		} else {
+			stage?.classList.remove('has-expanded-card');
+			document.body.style.overflow = '';
+		}
+	}
+
+	function moveNext() {
+		currentIndex = (currentIndex + 1) % cards.length;
+		updateClasses();
+	}
+
+	function movePrev() {
+		currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+		updateClasses();
+	}
+
+	nextBtn?.addEventListener('click', moveNext);
+	prevBtn?.addEventListener('click', movePrev);
+
+	// Card Click Interaction
+	cards.forEach((card, idx) => {
+		const imgContainer = card.querySelector('.card-inner');
+		imgContainer?.addEventListener('click', () => {
+			if (idx === currentIndex && !isExpanded) {
+				isExpanded = true;
+				updateClasses();
+			} else if (idx !== currentIndex && !isExpanded) {
+				currentIndex = idx;
+				updateClasses();
+			}
+		});
+
+		const backBtn = card.querySelector('.back-btn');
+		backBtn?.addEventListener('click', (e) => {
+			e.stopPropagation();
+			isExpanded = false;
+			updateClasses();
+		});
+	});
+
+	// Touch Swipe Support
+	let touchStartX = 0;
+	let touchEndX = 0;
+	const SWIPE_THRESHOLD = 50;
+
+	carouselWrapper?.addEventListener('touchstart', (e) => {
+		touchStartX = e.changedTouches[0].screenX;
+	}, { passive: true });
+
+	carouselWrapper?.addEventListener('touchend', (e) => {
+		touchEndX = e.changedTouches[0].screenX;
+		const diff = touchStartX - touchEndX;
+		if (Math.abs(diff) > SWIPE_THRESHOLD) {
+			if (diff > 0) {
+				moveNext();
+			} else {
+				movePrev();
+			}
+		}
+	}, { passive: true });
+</script>
+
+<style>
+	.team-section {
+		background: #0b111d;
+		min-height: 100vh;
+		padding: 6rem 1rem 4rem 1rem;
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.team-container {
+		max-width: 1400px;
+		margin: 0 auto;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	.team-header {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		z-index: 5;
+	}
+
+	.team-header h2 {
+		font-size: clamp(2rem, 5vw, 3.5rem);
+		font-weight: 800;
+		color: white;
+	}
+
+	.highlight {
+		color: #A213DA;
+		font-style: italic;
+	}
+
+	.lightning-icon svg {
+		width: 2rem;
+		height: 2rem;
+		color: #A213DA;
+	}
+
+	/* Carousel */
+	.carousel-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		position: relative;
+		height: 550px;
+	}
+
+	.cards-stage {
+		position: relative;
+		width: 100%;
+		max-width: 1000px;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		perspective: 1000px;
+	}
+
+	/* Member Card Base */
+	.member-card {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%); 
+		transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1),
+					opacity 0.5s ease,
+					filter 0.5s ease,
+					width 0.5s ease;
+		cursor: pointer;
+		width: 300px;
+		max-height: 480px;
+		z-index: 1;
+		border: 1px solid transparent;
+		background: transparent;
+		border-radius: 24px;
+		padding: 0;
+	}
+
+	.card-inner {
+		width: 100%;
+		max-height: 480px;
+		overflow: visible;
+	}
+	
+	.card-img {
+		width: 100%;
+		height: auto;
+		max-height: 480px;
+		object-fit: contain;
+		filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+		transition: transform 0.6s ease;
+		display: block;
+	}
+
+	/* Positions - Overwrite transforms keeping the centering logic */
+	.member-card.is-center {
+		z-index: 10;
+		transform: translate(-50%, -50%) scale(1);
+		opacity: 1;
+	}
+
+	/* Hover scale ONLY on center card */
+	.member-card.is-center:not(.is-expanded):hover .card-img {
+		transform: scale(1.05);
+	}
+
+	.member-card.is-left {
+		transform: translate(-50%, -50%) translateX(-280px) scale(0.8);
+		opacity: 0.5;
+		z-index: 5;
+		filter: brightness(0.5);
+		cursor: pointer;
+	}
+
+	.member-card.is-right {
+		transform: translate(-50%, -50%) translateX(280px) scale(0.8);
+		opacity: 0.5;
+		z-index: 5;
+		filter: brightness(0.5);
+		cursor: pointer;
+	}
+
+	/* Expanded State — simple fade */
+	.member-card.is-expanded {
+		width: 900px;
+		max-height: none;
+		transform: translate(-50%, -50%) scale(1);
+		cursor: default;
+		display: flex;
+		align-items: stretch;
+		background: rgba(15, 23, 42, 0.92);
+		border-radius: 24px;
+		border: 1px solid rgba(162, 19, 218, 0.3);
+		padding: 2.5rem;
+		backdrop-filter: blur(20px);
+	}
+
+	.member-card.is-expanded .card-inner {
+		width: 40%;
+		flex-shrink: 0;
+		max-height: none;
+	}
+
+	.member-card.is-expanded .card-img {
+		max-height: none;
+	}
+
+	/* Details Panel — just fade in */
+	.details-panel {
+		width: 0;
+		overflow: hidden;
+		opacity: 0;
+		transition: opacity 0.5s ease;
+	}
+
+	.member-card.is-expanded .details-panel {
+		width: 60%;
+		opacity: 1;
+		padding-left: 2rem;
+	}
+
+	.details-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 1.5rem;
+		border-bottom: 1px solid rgba(255,255,255,0.1);
+		padding-bottom: 1rem;
+	}
+
+	.details-header h3 {
+		font-size: 2.5rem;
+		font-weight: 800;
+		color: white;
+	}
+
+	.linkedin-link {
+		color: white;
+		transition: color 0.3s;
+	}
+	.linkedin-link:hover {
+		color: #0077b5;
+	}
+
+	.details-body h4 {
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: #A213DA;
+		margin-bottom: 0.5rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.details-body p {
+		color: rgba(255,255,255,0.8);
+		line-height: 1.6;
+		font-size: 0.95rem;
+		margin-bottom: 1.5rem;
+	}
+
+	/* Back Button */
+	.back-btn {
+		position: absolute;
+		top: 1.5rem;
+		left: 1.5rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: #A213DA;
+		background: none;
+		border: none;
+		font-weight: 700;
+		font-size: 0.9rem;
+		cursor: pointer;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.3s;
+		z-index: 20;
+	}
+	
+	.back-btn svg { width: 18px; height: 18px; }
+
+	.member-card.is-expanded .back-btn {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	/* Hide SIDE cards when one is expanded, but keep arrows visible */
+	.has-expanded-card .member-card:not(.is-expanded) {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	/* Navigation Arrows */
+	.nav-arrow {
+		background: none;
+		border: none;
+		cursor: pointer;
+		z-index: 30;
+		padding: 1rem;
+		color: #A213DA;
+		transition: transform 0.3s, opacity 0.3s;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+    
+    .nav-arrow.prev {
+        left: 10%;
+    }
+    
+    .nav-arrow.next {
+        right: 10%;
+    }
+
+	.nav-arrow:hover {
+		transform: translateY(-50%) scale(1.15);
+	}
+
+	/* Arrows stay visible when expanded — just reduce emphasis slightly */
+	.has-expanded-card ~ .nav-arrow,
+	.carousel-wrapper:has(.has-expanded-card) .nav-arrow {
+		opacity: 0.7;
+	}
+
+	/* Arrow Pulsing Animation — Tighter Spacing */
+	.arrow-stack {
+		display: flex;
+		margin-left: -4px; /* Overlap arrows tightly */
+	}
+	
+	.arrow-stack svg {
+		width: 24px;
+		height: 24px;
+		margin-left: -6px; /* Tight overlap between each chevron */
+		opacity: 0.2;
+		animation: arrowPulse 1.8s infinite ease-in-out;
+	}
+
+	.arrow-stack svg:first-child {
+		margin-left: 0;
+	}
+	
+	/* Prev: pulse from right to left (away from cards) */
+	.prev .arrow-stack svg:nth-child(1) { animation-delay: 0s; }
+	.prev .arrow-stack svg:nth-child(2) { animation-delay: 0.15s; }
+	.prev .arrow-stack svg:nth-child(3) { animation-delay: 0.3s; }
+
+	/* Next: pulse from left to right (away from cards) */
+	.next .arrow-stack svg:nth-child(1) { animation-delay: 0.3s; }
+	.next .arrow-stack svg:nth-child(2) { animation-delay: 0.15s; }
+	.next .arrow-stack svg:nth-child(3) { animation-delay: 0s; }
+
+	@keyframes arrowPulse {
+		0%, 100% { opacity: 0.15; }
+		50% { opacity: 1; color: #D65CFF; }
+	}
+
+	/* Button */
+	.btn-container {
+		margin-top: 2rem;
+		position: relative;
+		z-index: 15;
+	}
+	.level-up-btn {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.85rem 2.5rem;
+		background: transparent;
+		border: 1px solid rgba(162, 19, 218, 0.5);
+		border-radius: 9999px;
+		color: white;
+		text-decoration: none;
+		font-weight: 700;
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		transition: all 0.3s ease;
+	}
+	.level-up-btn:hover {
+		background: rgba(162, 19, 218, 0.1);
+		border-color: #A213DA;
+		box-shadow: 0 0 20px rgba(162, 19, 218, 0.4);
+	}
+	.btn-text {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.arrow-svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	/* ====== TABLET (769px - 1024px) ====== */
+	@media (max-width: 1024px) {
+		.team-section {
+			padding: 4rem 1rem 3rem;
+		}
+
+		.team-header h2 {
+			font-size: 2.5rem;
+		}
+
+		/* Hide arrows on touch devices */
+		.nav-arrow {
+			display: none;
+		}
+
+		.carousel-wrapper {
+			height: 450px;
+		}
+
+		.member-card {
+			width: 220px;
+			max-height: 380px;
+		}
+
+		.card-inner { max-height: 380px; }
+		.card-img { max-height: 380px; }
+
+		.member-card.is-left {
+			transform: translate(-50%, -50%) translateX(-200px) scale(0.75);
+		}
+		.member-card.is-right {
+			transform: translate(-50%, -50%) translateX(200px) scale(0.75);
+		}
+
+		/* Expanded on tablet */
+		.member-card.is-expanded {
+			width: 90vw;
+			max-width: 700px;
+			padding: 2rem;
+		}
+
+		.member-card.is-expanded .card-inner {
+			width: 35%;
+		}
+
+		.details-header h3 { font-size: 2rem; }
+		.details-body p { font-size: 0.9rem; }
+	}
+
+	/* ====== MOBILE (<= 768px) ====== */
+	@media (max-width: 768px) {
+		.team-section {
+			padding: 3rem 1rem 2rem;
+			min-height: auto;
+		}
+
+		.team-container { gap: 1.5rem; }
+		.team-header h2 { font-size: 1.8rem; }
+
+		.carousel-wrapper {
+			height: 400px;
+		}
+
+		.cards-stage {
+			perspective: none;
+		}
+
+		.member-card {
+			width: 200px;
+			max-height: 340px;
+		}
+
+		.card-inner { max-height: 340px; }
+		.card-img { max-height: 340px; }
+
+		/* Show side cards partially on mobile — hint that there are more */
+		.member-card.is-left {
+			transform: translate(-50%, -50%) translateX(-140px) scale(0.65);
+			opacity: 0.3;
+			filter: brightness(0.4);
+		}
+		.member-card.is-right {
+			transform: translate(-50%, -50%) translateX(140px) scale(0.65);
+			opacity: 0.3;
+			filter: brightness(0.4);
+		}
+
+		/* Expanded on mobile - fullscreen overlay */
+		.member-card.is-expanded {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100dvh;
+			max-height: none;
+			max-width: none;
+			transform: none;
+			border-radius: 0;
+			border: none;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: 2rem 1.5rem;
+			overflow-y: auto;
+			z-index: 1000;
+			background: #0b111d;
+		}
+
+		.member-card.is-expanded .card-inner {
+			width: 260px;
+			max-height: none;
+			margin-bottom: 1rem;
+			flex-shrink: 0;
+		}
+
+		.member-card.is-expanded .card-img {
+			max-height: none;
+		}
+
+		.member-card.is-expanded .details-panel {
+			width: 100% !important;
+			opacity: 1 !important;
+			padding-left: 0;
+			text-align: center;
+			overflow: visible;
+		}
+
+		.details-header {
+			flex-direction: column;
+			gap: 0.5rem;
+			text-align: center;
+		}
+
+		.details-header h3 { font-size: 1.5rem; }
+		.details-body p { font-size: 0.85rem; line-height: 1.5; }
+		.details-body h4 { font-size: 0.95rem; }
+		.contact-info { text-align: center; }
+
+		.back-btn {
+			top: 0.75rem;
+			left: 0.75rem;
+			font-size: 0.85rem;
+		}
+
+		.level-up-btn {
+			padding: 0.75rem 2rem;
+			font-size: 0.8rem;
+		}
+	}
+
+	/* ====== SMALL MOBILE (<= 480px) ====== */
+	@media (max-width: 480px) {
+		.member-card {
+			width: 180px;
+			max-height: 300px;
+		}
+
+		.card-inner { max-height: 300px; }
+		.card-img { max-height: 300px; }
+
+		.carousel-wrapper {
+			height: 360px;
+		}
+
+		.member-card.is-expanded {
+			padding: 3.5rem 1rem 1.5rem;
+		}
+
+		.member-card.is-expanded .card-inner {
+			width: 150px;
+		}
+	}
+</style>
