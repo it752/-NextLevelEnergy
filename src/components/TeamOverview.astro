@@ -1,0 +1,504 @@
+---
+const stats = [
+	{ value: '50+', label: 'Pracowników' },
+	{ value: '1 mld', label: 'Dotacji dla klientów' },
+	{ value: '20+', label: 'Lat na rynku' },
+];
+
+const teamMembers = [
+	{
+		name: 'Jan Kowalski',
+		role: 'CEO',
+		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
+		email: 'jan@levelup.pl',
+		phone: '+48 123 456 789',
+		linkedin: '#',
+	},
+	{
+		name: 'Anna Nowak',
+		role: 'COO',
+		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
+		email: 'anna@levelup.pl',
+		phone: '+48 123 456 789',
+		linkedin: '#',
+	},
+	{
+		name: 'Piotr Wiśniewski',
+		role: 'CTO',
+		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
+		email: 'piotr@levelup.pl',
+		phone: '+48 123 456 789',
+		linkedin: '#',
+	},
+	{
+		name: 'Marta Zielińska',
+		role: 'Head of Sales',
+		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
+		email: 'marta@levelup.pl',
+		phone: '+48 123 456 789',
+		linkedin: '#',
+	},
+	{
+		name: 'Tomasz Lewandowski',
+		role: 'Finance Director',
+		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
+		email: 'tomasz@levelup.pl',
+		phone: '+48 123 456 789',
+		linkedin: '#',
+	},
+	{
+		name: 'Karolina Dąbrowska',
+		role: 'HR Manager',
+		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
+		email: 'karolina@levelup.pl',
+		phone: '+48 123 456 789',
+		linkedin: '#',
+	},
+];
+---
+
+<section id="team-overview" class="to-section">
+	<div class="to-bg-text" aria-hidden="true">
+		<span>ZESPÓŁ</span>
+		<span>ZESPÓŁ</span>
+	</div>
+
+	<div class="to-inner">
+		<div class="to-header">
+			<svg class="to-bolt" viewBox="0 0 24 24" fill="currentColor"
+				><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg
+			>
+			<h2>Poznaj <em>nasz zespół</em></h2>
+			<p>Zespół ekspertów, który zamienia pomysły w sukcesy.</p>
+		</div>
+
+		<div class="to-cards">
+			{
+				teamMembers.map((m, i) => (
+					<div class="to-card" style={`--delay: ${i * 0.08}s`}>
+						<div class="to-card-face to-card-front">
+							<div class="to-avatar">
+								{m.name
+									.split(' ')
+									.map(n => n[0])
+									.join('')}
+							</div>
+							<div class="to-card-info">
+								<h3>{m.name}</h3>
+								<span class="to-role">{m.role}</span>
+							</div>
+						</div>
+						<div class="to-card-face to-card-back">
+							<div class="to-back-top">
+								<h3>{m.name}</h3>
+								<a href={m.linkedin} aria-label="LinkedIn" class="to-li">
+									<svg viewBox="0 0 24 24" fill="currentColor">
+										<path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z" />
+									</svg>
+								</a>
+							</div>
+							<p>{m.desc}</p>
+							<div class="to-contact">
+								<strong>Kontakt</strong>
+								<a href={`mailto:${m.email}`}>{m.email}</a>
+								<a href={`tel:${m.phone.replace(/\s/g, '')}`}>{m.phone}</a>
+							</div>
+						</div>
+					</div>
+				))
+			}
+		</div>
+
+		<div class="to-stats">
+			{
+				stats.map((s, i) => (
+					<div class="to-stat" style={`--delay: ${i * 0.15}s`}>
+						<span class="to-stat-num">{s.value}</span>
+						<span class="to-stat-label">{s.label}</span>
+					</div>
+				))
+			}
+		</div>
+
+		<div class="to-cta">
+			<a href="#contact" class="to-btn">
+				<span>Level Up</span>
+				<svg
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="3"
+					stroke-linecap="round"
+					stroke-linejoin="round"><path d="M7 11l5-5 5 5"></path><path d="M7 18l5-5 5 5"></path></svg
+				>
+			</a>
+		</div>
+	</div>
+</section>
+
+<script>
+	// Animate stats on scroll
+	const statsEl = document.querySelectorAll('.to-stat');
+	const obs = new IntersectionObserver(
+		entries => {
+			entries.forEach(e => {
+				if (e.isIntersecting) {
+					e.target.classList.add('visible');
+					obs.unobserve(e.target);
+				}
+			});
+		},
+		{ threshold: 0.2 },
+	);
+	statsEl.forEach(el => obs.observe(el));
+
+	// Flip cards on click (touch devices)
+	document.querySelectorAll('.to-card').forEach(card => {
+		card.addEventListener('click', () => {
+			if (window.innerWidth <= 1024) {
+				document.querySelectorAll('.to-card').forEach(c => {
+					if (c !== card) c.classList.remove('flipped');
+				});
+				card.classList.toggle('flipped');
+			}
+		});
+	});
+</script>
+
+<style>
+	/* ===== SECTION ===== */
+	.to-section {
+		background: #0b111d;
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 6rem 2rem;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.to-bg-text {
+		position: absolute;
+		left: -2%;
+		top: 50%;
+		transform: translateY(-50%);
+		pointer-events: none;
+		z-index: 0;
+	}
+	.to-bg-text span {
+		display: block;
+		font-size: clamp(8rem, 15vw, 16rem);
+		font-weight: 900;
+		text-transform: uppercase;
+		color: transparent;
+		-webkit-text-stroke: 1px rgba(162, 19, 218, 0.06);
+		line-height: 0.85;
+		white-space: nowrap;
+	}
+
+	.to-inner {
+		max-width: 1100px;
+		width: 100%;
+		position: relative;
+		z-index: 1;
+	}
+
+	/* ===== HEADER ===== */
+	.to-header {
+		text-align: center;
+		margin-bottom: 4rem;
+	}
+	.to-bolt {
+		display: block;
+		width: 32px;
+		height: 32px;
+		color: #a213da;
+		margin: 0 auto 0.75rem;
+	}
+	.to-header h2 {
+		font-size: clamp(2rem, 4vw, 3rem);
+		font-weight: 800;
+		color: #fff;
+		margin: 0 0 0.75rem;
+	}
+	.to-header em {
+		font-style: italic;
+		color: #a213da;
+	}
+	.to-header p {
+		color: rgba(255, 255, 255, 0.45);
+		font-size: 1.05rem;
+		margin: 0;
+	}
+
+	/* ===== CARDS GRID ===== */
+	.to-cards {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.25rem;
+		margin-bottom: 4rem;
+	}
+
+	.to-card {
+		position: relative;
+		height: 200px;
+		perspective: 900px;
+		cursor: pointer;
+	}
+
+	.to-card-face {
+		position: absolute;
+		inset: 0;
+		border-radius: 16px;
+		backface-visibility: hidden;
+		transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	/* FRONT */
+	.to-card-front {
+		background: linear-gradient(135deg, rgba(162, 19, 218, 0.08) 0%, rgba(11, 17, 29, 0.9) 100%);
+		border: 1px solid rgba(162, 19, 218, 0.12);
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		padding: 1.5rem 1.75rem;
+		transition:
+			transform 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+			border-color 0.3s,
+			box-shadow 0.3s;
+	}
+	.to-card:hover .to-card-front {
+		border-color: rgba(162, 19, 218, 0.35);
+		box-shadow: 0 0 30px rgba(162, 19, 218, 0.08);
+	}
+
+	.to-avatar {
+		width: 64px;
+		height: 64px;
+		border-radius: 50%;
+		background: linear-gradient(145deg, #a213da, #7b0fb5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 1.25rem;
+		font-weight: 800;
+		color: #fff;
+		flex-shrink: 0;
+		box-shadow: 0 4px 20px rgba(162, 19, 218, 0.3);
+	}
+
+	.to-card-info h3 {
+		color: #fff;
+		font-size: 1.05rem;
+		font-weight: 700;
+		margin: 0 0 0.4rem;
+	}
+	.to-role {
+		color: #d065ff;
+		font-size: 0.72rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+
+	/* BACK */
+	.to-card-back {
+		background: rgba(11, 17, 29, 0.97);
+		border: 1px solid rgba(162, 19, 218, 0.25);
+		backdrop-filter: blur(16px);
+		padding: 1.25rem 1.5rem;
+		transform: rotateY(180deg);
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+	.to-back-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 0.5rem;
+	}
+	.to-back-top h3 {
+		color: #fff;
+		font-size: 1rem;
+		font-weight: 700;
+		margin: 0;
+	}
+	.to-li {
+		color: rgba(255, 255, 255, 0.6);
+		transition: color 0.2s;
+	}
+	.to-li:hover {
+		color: #0077b5;
+	}
+	.to-li svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	.to-card-back p {
+		color: rgba(255, 255, 255, 0.6);
+		font-size: 0.82rem;
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	.to-contact {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		margin-top: 0.5rem;
+	}
+	.to-contact strong {
+		color: #a213da;
+		font-size: 0.7rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+	.to-contact a {
+		color: rgba(255, 255, 255, 0.55);
+		text-decoration: none;
+		font-size: 0.78rem;
+		transition: color 0.2s;
+	}
+	.to-contact a:hover {
+		color: #d065ff;
+	}
+
+	/* Flip */
+	@media (hover: hover) {
+		.to-card:hover .to-card-front {
+			transform: rotateY(180deg);
+		}
+		.to-card:hover .to-card-back {
+			transform: rotateY(0deg);
+		}
+	}
+	.to-card.flipped .to-card-front {
+		transform: rotateY(180deg);
+	}
+	.to-card.flipped .to-card-back {
+		transform: rotateY(0deg);
+	}
+
+	/* ===== STATS ===== */
+	.to-stats {
+		display: flex;
+		justify-content: center;
+		gap: 5rem;
+		margin-bottom: 3rem;
+		padding: 2.5rem 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.06);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+	}
+
+	.to-stat {
+		text-align: center;
+		opacity: 0;
+		transform: translateY(24px);
+		transition:
+			opacity 0.7s ease var(--delay, 0s),
+			transform 0.7s ease var(--delay, 0s);
+	}
+	.to-stat.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.to-stat-num {
+		display: block;
+		font-size: clamp(2.5rem, 5vw, 4rem);
+		font-weight: 900;
+		color: #fff;
+		line-height: 1;
+	}
+	.to-stat-label {
+		display: block;
+		color: rgba(255, 255, 255, 0.4);
+		font-size: 0.85rem;
+		margin-top: 0.35rem;
+	}
+
+	/* ===== CTA ===== */
+	.to-cta {
+		text-align: center;
+	}
+	.to-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.85rem 2.5rem;
+		border: 1px solid rgba(162, 19, 218, 0.45);
+		border-radius: 999px;
+		background: transparent;
+		color: #fff;
+		font-weight: 700;
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		text-decoration: none;
+		transition: all 0.3s ease;
+	}
+	.to-btn svg {
+		width: 16px;
+		height: 16px;
+	}
+	.to-btn:hover {
+		background: rgba(162, 19, 218, 0.1);
+		border-color: #a213da;
+		box-shadow: 0 0 24px rgba(162, 19, 218, 0.3);
+	}
+
+	/* ===== TABLET ===== */
+	@media (max-width: 1024px) {
+		.to-section {
+			min-height: auto;
+			padding: 5rem 1.5rem;
+		}
+		.to-cards {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		.to-stats {
+			gap: 3rem;
+		}
+		.to-stat-num {
+			font-size: 2.5rem;
+		}
+	}
+
+	/* ===== MOBILE ===== */
+	@media (max-width: 640px) {
+		.to-section {
+			padding: 4rem 1rem;
+		}
+		.to-header {
+			margin-bottom: 2.5rem;
+		}
+		.to-cards {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+			margin-bottom: 3rem;
+		}
+		.to-card {
+			height: 180px;
+		}
+		.to-card-front {
+			padding: 1.25rem 1.5rem;
+		}
+		.to-avatar {
+			width: 52px;
+			height: 52px;
+			font-size: 1.1rem;
+		}
+		.to-stats {
+			flex-direction: column;
+			align-items: center;
+			gap: 1.5rem;
+			padding: 2rem 0;
+		}
+		.to-stat-num {
+			font-size: 2.25rem;
+		}
+	}
+</style>
