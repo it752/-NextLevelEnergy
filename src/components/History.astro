@@ -81,11 +81,11 @@ const milestones = [
 </section>
 
 <script>
-	const items = document.querySelectorAll('.timeline-item');
+	const historyItems = document.querySelectorAll('.timeline-item') as NodeListOf<HTMLElement>;
 
-	items.forEach(item => {
+	historyItems.forEach(item => {
 		item.addEventListener('click', () => {
-			items.forEach(i => i.classList.remove('is-active'));
+			historyItems.forEach(i => i.classList.remove('is-active'));
 			item.classList.add('is-active');
 		});
 	});

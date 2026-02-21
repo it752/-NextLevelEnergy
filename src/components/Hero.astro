@@ -6,7 +6,7 @@ import logoWhite from '../assets/logo/logo-white.svg';
 ---
 
 <section id="hero">
-	<div class="hero-container shadow-2xl">
+	<div class="hero-container">
 		<!-- Background Image - Optimized with fetchpriority -->
 		<div class="bg-layer">
 			<Image
@@ -133,7 +133,7 @@ import logoWhite from '../assets/logo/logo-white.svg';
 	const menuOverlay = document.getElementById('menu-overlay');
 
 	if (menuToggle && closeMenu && menuOverlay) {
-		const toggleScrollLock = lock => {
+		const toggleScrollLock = (lock: boolean) => {
 			document.body.style.overflow = lock ? 'hidden' : '';
 		};
 
@@ -160,36 +160,38 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		let lastScroll = 0;
 		const nav = document.getElementById('global-nav');
 
-		window.addEventListener(
-			'scroll',
-			() => {
-				const currentScroll = window.pageYOffset;
+		if (nav) {
+			window.addEventListener(
+				'scroll',
+				() => {
+					const currentScroll = window.pageYOffset;
 
-				// Always show at top
-				if (currentScroll <= 100) {
-					nav.classList.remove('navbar-hidden');
-					nav.classList.remove('navbar-scrolled');
-					return;
-				}
+					// Always show at top
+					if (currentScroll <= 100) {
+						nav.classList.remove('navbar-hidden');
+						nav.classList.remove('navbar-scrolled');
+						return;
+					}
 
-				// Background state when scrolled
-				if (currentScroll > 100) {
-					nav.classList.add('navbar-scrolled');
-				}
+					// Background state when scrolled
+					if (currentScroll > 100) {
+						nav.classList.add('navbar-scrolled');
+					}
 
-				// Scroll direction logic
-				if (currentScroll > lastScroll && !nav.classList.contains('navbar-hidden') && currentScroll > 200) {
-					// Scrolling down - hide
-					nav.classList.add('navbar-hidden');
-				} else if (currentScroll < lastScroll && nav.classList.contains('navbar-hidden')) {
-					// Scrolling up - show
-					nav.classList.remove('navbar-hidden');
-				}
+					// Scroll direction logic
+					if (currentScroll > lastScroll && !nav.classList.contains('navbar-hidden') && currentScroll > 200) {
+						// Scrolling down - hide
+						nav.classList.add('navbar-hidden');
+					} else if (currentScroll < lastScroll && nav.classList.contains('navbar-hidden')) {
+						// Scrolling up - show
+						nav.classList.remove('navbar-hidden');
+					}
 
-				lastScroll = currentScroll;
-			},
-			{ passive: true },
-		);
+					lastScroll = currentScroll;
+				},
+				{ passive: true },
+			);
+		}
 	}
 </script>
 
@@ -209,6 +211,7 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
+		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 	}
 
 	.bg-layer {

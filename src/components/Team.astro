@@ -43,7 +43,7 @@ const teamMembers = [
 		<!-- Section Header -->
 		<div class="team-header">
 			<div class="lightning-icon">
-				<svg viewBox="0 0 24 24" fill="none" class="w-8 h-8 text-[#A213DA]">
+				<svg viewBox="0 0 24 24" fill="none" class="lightning-icon-svg">
 					<path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
 				</svg>
 			</div>
@@ -129,11 +129,11 @@ const teamMembers = [
 </section>
 
 <script>
-	const stage = document.querySelector('.cards-stage');
-	const cards = document.querySelectorAll('.member-card');
-	const prevBtn = document.querySelector('.nav-arrow.prev');
-	const nextBtn = document.querySelector('.nav-arrow.next');
-	const carouselWrapper = document.querySelector('.carousel-wrapper');
+	const stage = document.querySelector('.cards-stage') as HTMLElement | null;
+	const cards = document.querySelectorAll('.member-card') as NodeListOf<HTMLElement>;
+	const prevBtn = document.querySelector('.nav-arrow.prev') as HTMLElement | null;
+	const nextBtn = document.querySelector('.nav-arrow.next') as HTMLElement | null;
+	const carouselWrapper = document.querySelector('.carousel-wrapper') as HTMLElement | null;
 	let currentIndex = 1;
 	let isExpanded = false;
 
@@ -198,21 +198,29 @@ const teamMembers = [
 	let touchEndX = 0;
 	const SWIPE_THRESHOLD = 50;
 
-	carouselWrapper?.addEventListener('touchstart', (e) => {
-		touchStartX = e.changedTouches[0].screenX;
-	}, { passive: true });
+	carouselWrapper?.addEventListener(
+		'touchstart',
+		(e: TouchEvent) => {
+			touchStartX = e.changedTouches[0].screenX;
+		},
+		{ passive: true },
+	);
 
-	carouselWrapper?.addEventListener('touchend', (e) => {
-		touchEndX = e.changedTouches[0].screenX;
-		const diff = touchStartX - touchEndX;
-		if (Math.abs(diff) > SWIPE_THRESHOLD) {
-			if (diff > 0) {
-				moveNext();
-			} else {
-				movePrev();
+	carouselWrapper?.addEventListener(
+		'touchend',
+		(e: TouchEvent) => {
+			touchEndX = e.changedTouches[0].screenX;
+			const diff = touchStartX - touchEndX;
+			if (Math.abs(diff) > SWIPE_THRESHOLD) {
+				if (diff > 0) {
+					moveNext();
+				} else {
+					movePrev();
+				}
 			}
-		}
-	}, { passive: true });
+		},
+		{ passive: true },
+	);
 </script>
 
 <style>

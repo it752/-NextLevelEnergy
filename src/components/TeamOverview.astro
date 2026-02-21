@@ -138,9 +138,9 @@ const teamMembers = [
 
 <script>
 	// Animate stats on scroll
-	const statsEl = document.querySelectorAll('.to-stat');
+	const statsEl = document.querySelectorAll('.to-stat') as NodeListOf<HTMLElement>;
 	const obs = new IntersectionObserver(
-		entries => {
+		(entries: IntersectionObserverEntry[]) => {
 			entries.forEach(e => {
 				if (e.isIntersecting) {
 					e.target.classList.add('visible');
@@ -153,10 +153,11 @@ const teamMembers = [
 	statsEl.forEach(el => obs.observe(el));
 
 	// Flip cards on click (touch devices)
-	document.querySelectorAll('.to-card').forEach(card => {
+	const teamCards = document.querySelectorAll('.to-card') as NodeListOf<HTMLElement>;
+	teamCards.forEach(card => {
 		card.addEventListener('click', () => {
 			if (window.innerWidth <= 1024) {
-				document.querySelectorAll('.to-card').forEach(c => {
+				teamCards.forEach(c => {
 					if (c !== card) c.classList.remove('flipped');
 				});
 				card.classList.toggle('flipped');

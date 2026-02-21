@@ -192,14 +192,14 @@ const loopPosts = [...posts, ...posts, ...posts];
 	const downBtn = document.getElementById('scroll-down');
 	const viewport = document.getElementById('list-viewport');
 
-	const mainDisplay = document.querySelector('.main-display');
+	const mainDisplay = document.querySelector('.main-display') as HTMLElement | null;
 	const introView = document.getElementById('intro-content');
 	const featuredArticle = document.getElementById('featured-article');
 	const backBtn = document.getElementById('back-to-intro');
 	const fTitle = document.getElementById('featured-title');
 	const fDate = document.getElementById('featured-date');
 	const fText = document.getElementById('featured-text');
-	const fImage = document.getElementById('featured-image');
+	const fImage = document.getElementById('featured-image') as HTMLImageElement | null;
 
 	// Infinite Scroll setup for Desktop
 	const originalCount = 6;
@@ -208,6 +208,7 @@ const loopPosts = [...posts, ...posts, ...posts];
 	let isAnimating = false;
 
 	const updateTrack = (instant = false) => {
+		if (!track) return;
 		if (window.innerWidth < 1024) {
 			track.style.transform = 'none';
 			return;
@@ -224,8 +225,8 @@ const loopPosts = [...posts, ...posts, ...posts];
 		});
 	};
 
-	const move = dir => {
-		if (isAnimating || window.innerWidth < 1024) return;
+	const move = (dir: number) => {
+		if (!track || isAnimating || window.innerWidth < 1024) return;
 		isAnimating = true;
 		currentIndex += dir;
 		updateTrack();
@@ -248,16 +249,19 @@ const loopPosts = [...posts, ...posts, ...posts];
 
 	viewport?.addEventListener(
 		'wheel',
-		e => {
+		(e: Event) => {
+			const wheelEvent = e as WheelEvent;
 			if (window.innerWidth < 1024) return;
-			e.preventDefault();
-			if (e.deltaY > 0) move(1);
+			wheelEvent.preventDefault();
+			if (wheelEvent.deltaY > 0) move(1);
 			else move(-1);
 		},
 		{ passive: false },
 	);
 
-	const showPost = card => {
+	const showPost = (card: HTMLElement) => {
+		if (!mainDisplay || !introView || !featuredArticle || !fTitle || !fDate || !fText || !fImage) return;
+
 		cards.forEach(c => c.classList.remove('is-active'));
 		card.classList.add('is-active');
 
@@ -282,10 +286,10 @@ const loopPosts = [...posts, ...posts, ...posts];
 
 		setTimeout(() => {
 			// Intro is hidden via CSS .fade-out visibility: hidden
-			fTitle.textContent = card.dataset.title;
-			fDate.textContent = card.dataset.date;
-			fText.innerHTML = `<p>${card.dataset.desc}</p><p>${card.dataset.desc}</p>`;
-			fImage.src = card.dataset.img;
+			if (card.dataset.title) fTitle.textContent = card.dataset.title;
+			if (card.dataset.date) fDate.textContent = card.dataset.date;
+			if (card.dataset.desc) fText.innerHTML = `<p>${card.dataset.desc}</p><p>${card.dataset.desc}</p>`;
+			if (card.dataset.img) fImage.src = card.dataset.img;
 
 			// Force reflow
 			featuredArticle.offsetHeight;
@@ -303,6 +307,7 @@ const loopPosts = [...posts, ...posts, ...posts];
 	};
 
 	const showIntro = () => {
+		if (!mainDisplay || !featuredArticle || !introView) return;
 		const activeCard = document.querySelector('.blog-post-card.is-active');
 		if (!activeCard) return;
 
@@ -325,7 +330,7 @@ const loopPosts = [...posts, ...posts, ...posts];
 		}, 600);
 	};
 
-	cards.forEach(card => card.addEventListener('click', () => showPost(card)));
+	cards.forEach(card => card.addEventListener('click', () => showPost(card as HTMLElement)));
 	backBtn?.addEventListener('click', showIntro);
 	upBtn?.addEventListener('click', () => move(-1));
 	downBtn?.addEventListener('click', () => move(1));
