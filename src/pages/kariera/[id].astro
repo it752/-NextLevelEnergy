@@ -83,32 +83,55 @@ const { job } = Astro.props;
 							</p>
 						</div>
 
-						<form id="standalone-app-form" class="app-form">
+						<form
+							id="standalone-app-form"
+							class="app-form"
+							action="https://hook.eu1.make.com/2irtulb5xv4x825gwjnd3z8oz3cuwkpo"
+							method="POST"
+							enctype="multipart/form-data">
 							<!-- Step 1 Data -->
 							<div class="form-grid">
 								<div class="input-wrapper">
 									<label for="app_name">Imię</label>
-									<input type="text" id="app_name" required placeholder="Jan" />
+									<input type="text" id="app_name" name="app_name" required placeholder="Jan" />
 								</div>
 								<div class="input-wrapper">
 									<label for="app_surname">Nazwisko</label>
-									<input type="text" id="app_surname" required placeholder="Kowalski" />
+									<input
+										type="text"
+										id="app_surname"
+										name="app_surname"
+										required
+										placeholder="Kowalski"
+									/>
 								</div>
 							</div>
 
 							<div class="input-wrapper">
 								<label for="app_email">Adres E-mail</label>
-								<input type="email" id="app_email" required placeholder="jan@example.com" />
+								<input
+									type="email"
+									id="app_email"
+									name="app_email"
+									required
+									placeholder="jan@example.com"
+								/>
 							</div>
 
 							<div class="form-grid">
 								<div class="input-wrapper">
 									<label for="app_phone">Telefon</label>
-									<input type="tel" id="app_phone" required placeholder="+48 000 000 000" />
+									<input
+										type="tel"
+										id="app_phone"
+										name="app_phone"
+										required
+										placeholder="+48 000 000 000"
+									/>
 								</div>
 								<div class="input-wrapper">
 									<label for="app_city">Miasto</label>
-									<input type="text" id="app_city" required placeholder="Warszawa" />
+									<input type="text" id="app_city" name="app_city" required placeholder="Warszawa" />
 								</div>
 							</div>
 
@@ -182,7 +205,14 @@ const { job } = Astro.props;
 
 							<div class="file-upload-section">
 								<label class="file-dropzone" for="cv_upload">
-									<input type="file" id="cv_upload" accept=".pdf,.doc,.docx" required hidden />
+									<input
+										type="file"
+										id="cv_upload"
+										name="cv_upload"
+										accept=".pdf,.doc,.docx"
+										required
+										hidden
+									/>
 									<div class="drop-content">
 										<svg
 											viewBox="0 0 24 24"
@@ -889,9 +919,11 @@ const { job } = Astro.props;
 		});
 	}
 
-	// Final Submission Fake Logic
-	document.getElementById('standalone-app-form')?.addEventListener('submit', e => {
+	// Final Submission Logic (Make.com Integration)
+	document.getElementById('standalone-app-form')?.addEventListener('submit', async e => {
 		e.preventDefault();
+
+		const form = e.target as HTMLFormElement;
 
 		// If custom dropdown hasn't been selected yet, alert user
 		if (!hiddenInput.value) {
@@ -902,37 +934,57 @@ const { job } = Astro.props;
 
 		const submitBtn = document.getElementById('btn-submit-form') as HTMLButtonElement;
 
-		// UX Fake Loading
+		// UX Loading
 		const originalText = submitBtn.innerHTML;
 		submitBtn.innerHTML = 'Wysyłanie...';
 		submitBtn.style.opacity = '0.7';
 		submitBtn.style.pointerEvents = 'none';
 
-		setTimeout(() => {
-			submitBtn.innerHTML = 'Wysłano pomyślnie! ✔';
-			submitBtn.style.background = '#28a745';
+		try {
+			const formData = new FormData(form);
+
+			// POST request to Make.com Webhook URL defined in form action
+			const response = await fetch(form.action, {
+				method: form.method,
+				body: formData, // the browser will automatically set the correct Content-Type for multipart/form-data
+			});
+
+			if (response.ok) {
+				submitBtn.innerHTML = 'Wysłano pomyślnie! ✔';
+				submitBtn.style.background = '#28a745';
+				submitBtn.style.opacity = '1';
+
+				// Reset after success
+				setTimeout(() => {
+					submitBtn.innerHTML = originalText;
+					submitBtn.style.background = '';
+					submitBtn.style.pointerEvents = 'all';
+
+					// Clear form
+					form.reset();
+					if (fileNameDisplay) fileNameDisplay.textContent = '';
+
+					// Reset custom dropdown
+					hiddenInput.value = '';
+					if (selectedText) selectedText.textContent = 'Wybierz formę zatrudnienia';
+					if (dropdownContainer) dropdownContainer.classList.remove('has-selection');
+					const dropdownOptions = document.querySelectorAll('.dropdown-option');
+					dropdownOptions.forEach(opt => {
+						opt.classList.remove('is-selected');
+						opt.setAttribute('aria-selected', 'false');
+					});
+				}, 3000);
+			} else {
+				throw new Error('Wystąpił problem z serwerem Make.com');
+			}
+		} catch (error) {
+			console.error('Błąd podczas wysyłania formularza:', error);
+			alert('Wystąpił błąd podczas wysyłania aplikacji. Spróbuj ponownie.');
+
+			// Reset button state on error
+			submitBtn.innerHTML = originalText;
 			submitBtn.style.opacity = '1';
-
-			// Optional Reset after success
-			setTimeout(() => {
-				submitBtn.innerHTML = originalText;
-				submitBtn.style.background = '';
-				submitBtn.style.pointerEvents = 'all';
-
-				// Clear form
-				(document.getElementById('standalone-app-form') as HTMLFormElement).reset();
-				if (fileNameDisplay) fileNameDisplay.textContent = '';
-
-				// Reset custom dropdown
-				hiddenInput.value = '';
-				if (selectedText) selectedText.textContent = 'Wybierz formę zatrudnienia';
-				if (dropdownContainer) dropdownContainer.classList.remove('has-selection');
-				const dropdownOptions = document.querySelectorAll('.dropdown-option');
-				dropdownOptions.forEach(opt => {
-					opt.classList.remove('is-selected');
-					opt.setAttribute('aria-selected', 'false');
-				});
-			}, 3000);
-		}, 1500);
+			submitBtn.style.pointerEvents = 'all';
+		}
 	});
 </script>
