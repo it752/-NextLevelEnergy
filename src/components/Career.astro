@@ -344,6 +344,11 @@ import imgAfter from '../assets/przed-po/po.jpeg';
 		align-items: center;
 		justify-content: center;
 		will-change: left, transform;
+		cursor: grab;
+	}
+
+	.scroll-divider:active {
+		cursor: grabbing;
 	}
 
 	.divider-line {
@@ -407,7 +412,10 @@ import imgAfter from '../assets/przed-po/po.jpeg';
 	const scrollDivider = document.querySelector('.scroll-divider') as HTMLElement;
 
 	if (section && afterLayer && scrollDivider) {
+		let isDragging = false;
+
 		const updateProgress = () => {
+			if (isDragging) return; // Let drag control the visuals directly
 			const rect = section.getBoundingClientRect();
 			const windowHeight = window.innerHeight;
 
@@ -435,5 +443,65 @@ import imgAfter from '../assets/przed-po/po.jpeg';
 		window.addEventListener('scroll', updateProgress, { passive: true });
 		window.addEventListener('resize', updateProgress, { passive: true });
 		updateProgress(); // Initial call
+
+		// DRAG LOGIC
+		const startDrag = (e: MouseEvent | TouchEvent) => {
+			isDragging = true;
+			document.body.style.userSelect = 'none';
+			document.body.style.cursor = 'grabbing';
+			scrollDivider.style.cursor = 'grabbing';
+		};
+
+		const endDrag = () => {
+			if (!isDragging) return;
+			isDragging = false;
+			document.body.style.userSelect = '';
+			document.body.style.cursor = '';
+			scrollDivider.style.cursor = '';
+			// Snap scroll to the new exact visually dragged position
+			updateProgress();
+		};
+
+		const onDrag = (e: MouseEvent | TouchEvent) => {
+			if (!isDragging) return;
+			e.preventDefault(); // Prevent text selection/scrolling on touch devices while dragging
+
+			// Get X coordinate
+			const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
+			const windowWidth = window.innerWidth;
+
+			// Visual Update First (Immediate UX)
+			// Calculate the new percentage from right to left (100% left means 0 progress)
+			const insetLeft = (clientX / windowWidth) * 100;
+			const clampedInset = Math.min(Math.max(insetLeft, 0), 100);
+
+			afterLayer.style.clipPath = `inset(0 0 0 ${clampedInset}%)`;
+			scrollDivider.style.left = `${clampedInset}%`;
+
+			// Scroll Page to match progress in background
+			const rect = section.getBoundingClientRect();
+			const windowHeight = window.innerHeight;
+			const maxScroll = Math.max(rect.height - windowHeight, 1);
+
+			// insetLeft = 100 - (progress * 100)
+			// progress * 100 = 100 - insetLeft
+			// progress = (100 - insetLeft) / 100
+			const newProgress = Math.min(Math.max((100 - clampedInset) / 100, 0), 1);
+			const targetScrollY = section.offsetTop + newProgress * maxScroll;
+
+			window.scrollTo({
+				top: targetScrollY,
+				behavior: 'instant',
+			});
+		};
+
+		scrollDivider.addEventListener('mousedown', startDrag);
+		scrollDivider.addEventListener('touchstart', startDrag, { passive: false });
+
+		window.addEventListener('mouseup', endDrag);
+		window.addEventListener('touchend', endDrag);
+
+		window.addEventListener('mousemove', onDrag);
+		window.addEventListener('touchmove', onDrag, { passive: false });
 	}
 </script>
