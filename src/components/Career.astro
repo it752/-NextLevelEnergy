@@ -1,0 +1,439 @@
+---
+import { Image } from 'astro:assets';
+import imgBefore from '../assets/przed-po/przed.jpeg';
+import imgAfter from '../assets/przed-po/po.jpeg';
+---
+
+<section id="ścieżka-kariery" class="career-section">
+	<div class="career-sticky-container">
+		<!-- "Przed" Layer (Base) -->
+		<div class="career-layer before-layer">
+			<Image src={imgBefore} class="bg-img" alt="Przed - Standardowy etat" loading="lazy" />
+			<div class="overlay dark-overlay"></div>
+
+			<div class="content-wrapper">
+				<h2 class="state-label">ŚCIEŻKA KARIERY - PRZED</h2>
+
+				<div class="bg-text-container">
+					<span class="outline-text">PRZED<br />PRZED<br />PRZED</span>
+				</div>
+
+				<div class="info-block">
+					<span class="tag">TWOJE WYZWANIA</span>
+					<h3 class="main-heading">STANDARDOWY<br />ETAT</h3>
+					<p class="description">
+						Praca od 8 do 16, ograniczony rozwój i sztywny, szklany sufit finansowy, którego nie
+						przeskoczysz. Robisz wyniki, ale profity trafiają do kogoś innego. Zmęczenie rutyną i brak
+						realnego przełożenia Twojego zaangażowania na Twoje finanse.
+					</p>
+
+					<div class="stats-grid">
+						<div class="stat-item">
+							<span class="stat-value">Limity</span>
+							<span class="stat-label">zarobków</span>
+						</div>
+						<div class="stat-item">
+							<span class="stat-value">Rutyna</span>
+							<span class="stat-label">w działaniu</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- "Po" Layer (Revealed on scroll) -->
+		<div class="career-layer after-layer">
+			<Image src={imgAfter} class="bg-img" alt="Po - Sukces z Level Up" loading="lazy" />
+			<div class="overlay accent-overlay"></div>
+
+			<div class="content-wrapper">
+				<h2 class="state-label">ŚCIEŻKA KARIERY - PO</h2>
+
+				<div class="bg-text-container right-align">
+					<span class="outline-text">PO<br />PO<br />PO</span>
+				</div>
+
+				<div class="info-block">
+					<span class="tag accent">TWOJE BENEFITY</span>
+					<h3 class="main-heading">LEVEL UP<br />W KARIERZE</h3>
+					<p class="description">
+						Nielimitowane prowizje, prestiż i pełna niezależność. Osiągasz ponadprzeciętne wyniki dzięki
+						sprawdzonemu modelowi sprzedaży. Zarabiasz na miarę swojego pełnego zaangażowania, dołączając do
+						elitarnego grona profesjonalistów The Next Level.
+					</p>
+
+					<div class="level-up-action">
+						<a href="#kariera" class="btn-level-up">
+							Level Up
+							<svg
+								viewBox="0 0 24 24"
+								fill="none"
+								class="arrow-icon"
+								stroke="currentColor"
+								stroke-width="3">
+								<path d="M7 11l5-5 5 5M7 18l5-5 5 5"></path>
+							</svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Scroll Indicator / Divider -->
+		<div class="scroll-divider">
+			<div class="divider-line"></div>
+			<div class="divider-handle">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M15 18l-6-6 6-6"></path>
+					<path d="M9 18l6-6-6-6"></path>
+				</svg>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.career-section {
+		/* Height controls how long the scroll pinned state lasts */
+		height: 300vh;
+		background: #0b111d;
+		position: relative;
+	}
+
+	.career-sticky-container {
+		position: sticky;
+		top: 0;
+		height: 100vh;
+		width: 100%;
+		overflow: hidden;
+	}
+
+	.career-layer {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		color: white;
+	}
+
+	/* The background image */
+	.bg-img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		z-index: 0;
+		opacity: 0.6; /* Slightly dimmed for text readability */
+	}
+
+	/* Overlays */
+	.overlay {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+	}
+
+	.dark-overlay {
+		background: linear-gradient(90deg, #0b111d 0%, rgba(11, 17, 29, 0.6) 40%, rgba(11, 17, 29, 0.2) 100%);
+	}
+
+	.accent-overlay {
+		/* A dark purple overlay blending to transparent */
+		background: linear-gradient(90deg, #0b111d 0%, rgba(18, 5, 29, 0.8) 40%, rgba(162, 19, 218, 0.2) 100%);
+	}
+
+	/* Clipping path for "Po" layer to slide in from right to left */
+	/* 100% means clipped from left fully to right -> invisible */
+	.after-layer {
+		clip-path: inset(0 0 0 100%);
+		will-change: clip-path;
+		transform: translateZ(0); /* Force GPU acceleration */
+		z-index: 10;
+		/* Drop shadow on the clipped edge gives depth to the slider */
+		filter: drop-shadow(-10px 0 20px rgba(0, 0, 0, 0.5));
+	}
+
+	/* Content wrapper constraints */
+	.content-wrapper {
+		position: relative;
+		z-index: 5;
+		width: 100%;
+		max-width: 1440px;
+		margin: 0 auto;
+		padding: 0 5%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.state-label {
+		position: absolute;
+		top: 6rem;
+		left: 5%;
+		font-size: 0.8rem;
+		font-weight: 800;
+		color: rgba(255, 255, 255, 0.4);
+		letter-spacing: 0.2em;
+	}
+
+	/* For mobile adjustment */
+	@media (max-width: 1023px) {
+		.state-label {
+			top: 5rem;
+		}
+	}
+
+	.bg-text-container {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		transform: translateY(-50%);
+		z-index: -1;
+		pointer-events: none;
+		user-select: none;
+	}
+
+	.bg-text-container.right-align {
+		left: auto;
+		right: 0;
+		text-align: right;
+	}
+
+	.outline-text {
+		font-size: clamp(8rem, 15vw, 18rem);
+		font-family: 'Outfit', sans-serif;
+		font-weight: 900;
+		line-height: 0.85;
+		color: transparent;
+		-webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.05);
+		display: block;
+		will-change: transform; /* Prevent text rendering glitches during scroll */
+	}
+
+	.after-layer .outline-text {
+		-webkit-text-stroke: 1.5px rgba(162, 19, 218, 0.15); /* Purple tint for "Po" */
+	}
+
+	/* Typography & Info Block */
+	.info-block {
+		max-width: 500px;
+		position: relative;
+		z-index: 10;
+	}
+
+	.after-layer .info-block {
+		margin-left: auto; /* Push to right */
+	}
+
+	@media (max-width: 1023px) {
+		.after-layer .info-block {
+			margin-left: 0; /* Align left on mobile for readability */
+			text-align: left;
+		}
+
+		/* Switch dark overlay direction on right side mobile */
+		.accent-overlay {
+			background: linear-gradient(90deg, #0b111d 0%, rgba(18, 5, 29, 0.8) 60%, transparent 100%);
+		}
+	}
+
+	.tag {
+		font-size: 0.8rem;
+		font-weight: 800;
+		color: rgba(255, 255, 255, 0.5);
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+		margin-bottom: 1rem;
+		display: block;
+	}
+
+	.tag.accent {
+		color: #a213da;
+	}
+
+	.main-heading {
+		font-size: clamp(3rem, 5vw, 4.5rem);
+		font-weight: 900;
+		line-height: 1.1;
+		color: white;
+		margin-bottom: 1.5rem;
+		text-transform: uppercase;
+		text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+	}
+
+	.description {
+		font-size: 1.1rem;
+		color: rgba(255, 255, 255, 0.8);
+		line-height: 1.6;
+		margin-bottom: 2.5rem;
+		font-weight: 400;
+	}
+
+	/* Stats in Before */
+	.stats-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 2rem;
+		margin-top: 2rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		padding-top: 2rem;
+	}
+
+	.stat-item {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.stat-value {
+		font-size: 1.5rem;
+		font-weight: 800;
+		color: #ff3b3b; /* Reddish for negative before state */
+		margin-bottom: 0.2rem;
+	}
+
+	.stat-label {
+		font-size: 0.85rem;
+		color: rgba(255, 255, 255, 0.5);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	/* Button in After */
+	.btn-level-up {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.8rem;
+		padding: 1rem 2.5rem;
+		border-radius: 9999px;
+		border: 1px solid #a213da;
+		background: rgba(162, 19, 218, 0.1);
+		backdrop-filter: blur(10px);
+		color: white;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-weight: 800;
+		font-size: 0.9rem;
+		letter-spacing: 0.15em;
+		transition: all 0.3s ease;
+	}
+
+	.btn-level-up:hover {
+		background: #a213da;
+		box-shadow: 0 0 30px rgba(162, 19, 218, 0.4);
+	}
+
+	.arrow-icon {
+		width: 1.2rem;
+		height: 1.2rem;
+	}
+
+	/* Divider */
+	.scroll-divider {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 100%;
+		z-index: 20;
+		transform: translateX(-50%) translateZ(0); /* Hardware acceleration */
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		will-change: left, transform;
+	}
+
+	.divider-line {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 50%;
+		width: 2px;
+		background: rgba(255, 255, 255, 0.2);
+		transform: translateX(-50%);
+	}
+
+	.divider-handle {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background: rgba(11, 17, 29, 0.8);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		backdrop-filter: blur(10px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		position: relative;
+		z-index: 2;
+	}
+
+	.divider-handle svg {
+		width: 24px;
+		height: 24px;
+		opacity: 0.7;
+	}
+
+	@media (max-width: 768px) {
+		.career-section {
+			height: 250vh; /* slightly shorter scroll on mobile */
+		}
+
+		.main-heading {
+			font-size: clamp(2.5rem, 10vw, 3rem);
+		}
+
+		.outline-text {
+			font-size: 8rem;
+		}
+
+		.description {
+			font-size: 0.95rem;
+		}
+
+		.bg-text-container {
+			opacity: 0.5; /* Fade out on mobile to keep readable text */
+		}
+	}
+</style>
+
+<script>
+	// Scroll-driven animation logic for Before/After Slider
+	const section = document.querySelector('.career-section') as HTMLElement;
+	const afterLayer = document.querySelector('.after-layer') as HTMLElement;
+	const scrollDivider = document.querySelector('.scroll-divider') as HTMLElement;
+
+	if (section && afterLayer && scrollDivider) {
+		const updateProgress = () => {
+			const rect = section.getBoundingClientRect();
+			const windowHeight = window.innerHeight;
+
+			let progress = 0;
+
+			// rect.top is 0 when the section hits the top of the viewport
+			if (rect.top <= 0) {
+				const maxScroll = Math.max(rect.height - windowHeight, 1); // Avoid division by 0
+				const currentScroll = -rect.top;
+
+				// Clamp progress between 0 and 1
+				progress = Math.min(Math.max(currentScroll / maxScroll, 0), 1);
+			}
+
+			// percentage of width to display (100 is fully hidden, 0 is fully visible)
+			const percentage = progress * 100;
+			const insetLeft = 100 - percentage;
+
+			// Inset format: top right bottom left
+			afterLayer.style.clipPath = `inset(0 0 0 ${insetLeft}%)`;
+			scrollDivider.style.left = `${insetLeft}%`;
+		};
+
+		// Run initially and on scroll/resize
+		window.addEventListener('scroll', updateProgress, { passive: true });
+		window.addEventListener('resize', updateProgress, { passive: true });
+		updateProgress(); // Initial call
+	}
+</script>

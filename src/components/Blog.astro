@@ -77,8 +77,8 @@ const loopPosts = [...posts, ...posts, ...posts];
 		<div class="blog-layout h-full">
 			<!-- LEFT: STACKED LIST (Infinite-ish loop) -->
 			<div class="list-column h-full">
-				<button class="nav-arrow up" id="scroll-up">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+				<button class="nav-arrow up" id="scroll-up" aria-label="Przewiń wpisy do góry">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 						><path d="M18 15l-6-6-6 6"></path></svg
 					>
 				</button>
@@ -109,9 +109,9 @@ const loopPosts = [...posts, ...posts, ...posts];
 					<div class="edge-fade bottom"></div>
 				</div>
 
-				<button class="nav-arrow down" id="scroll-down">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-						><path d="M6 9l6 6 6-6"></path></svg
+				<button class="nav-arrow down" id="scroll-down" aria-label="Przewiń wpisy w dół">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+						><path d="M19 9l-7 7-7-7"></path></svg
 					>
 				</button>
 			</div>
@@ -140,8 +140,8 @@ const loopPosts = [...posts, ...posts, ...posts];
 					<div class="article-media">
 						<img src="" alt="" id="featured-image" class="main-img" />
 						<div class="media-blur-bottom"></div>
-						<button id="back-to-intro" class="close-article">
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+						<button id="back-to-intro" class="close-article" aria-label="Zamknij artykuł">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 								><path d="M18 6L6 18M6 6l12 12"></path></svg
 							>
 						</button>
