@@ -1,0 +1,114 @@
+---
+import Layout from './Layout.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Layout title={`${title} - The Next Level Energy`} description={description}>
+	<main class="legal-page">
+		<!-- Background Elements -->
+
+		<div class="legal-container">
+			<header class="legal-header">
+				<h1>{title}</h1>
+			</header>
+
+			<div class="legal-content">
+				<slot />
+			</div>
+		</div>
+	</main>
+
+	<Footer />
+</Layout>
+
+<style is:global>
+	.legal-page {
+		position: relative;
+		min-height: 100vh;
+		padding-top: 150px;
+		padding-bottom: 100px;
+		background: #0b111d;
+		overflow: hidden;
+	}
+
+	.legal-container {
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 0 2rem;
+		position: relative;
+		z-index: 10;
+	}
+
+	.legal-header {
+		margin-bottom: 4rem;
+		text-align: center;
+	}
+
+	.legal-header h1 {
+		font-size: clamp(2.5rem, 5vw, 4rem);
+		font-weight: 900;
+		color: white;
+		margin-bottom: 1rem;
+		text-transform: uppercase;
+		letter-spacing: -0.02em;
+	}
+
+	.legal-content {
+		color: rgba(255, 255, 255, 0.7);
+		font-size: 1.1rem;
+		line-height: 1.7;
+	}
+
+	.legal-content h2 {
+		color: white;
+		font-size: 2rem;
+		font-weight: 800;
+		margin-top: 3rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.legal-content h3 {
+		color: white;
+		font-size: 1.4rem;
+		font-weight: 700;
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+	}
+
+	.legal-content p {
+		margin-bottom: 1.5rem;
+	}
+
+	.legal-content ul,
+	.legal-content ol {
+		margin-bottom: 1.5rem;
+		padding-left: 1.5rem;
+	}
+
+	.legal-content li {
+		margin-bottom: 0.5rem;
+	}
+
+	.legal-content a {
+		color: #a213da;
+		text-decoration: none;
+		transition: color 0.3s;
+	}
+
+	.legal-content a:hover {
+		color: #c026d3;
+		text-decoration: underline;
+	}
+
+	.legal-content strong {
+		color: white;
+		font-weight: 600;
+	}
+</style>

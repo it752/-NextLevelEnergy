@@ -41,3 +41,31 @@ body {
   color: white;
   overflow-x: hidden;
 }
+
+/* Cookie Consent Theme Overrides */
+:root {
+  --cc-font-family: 'Inter', sans-serif;
+  --cc-bg: #111823;
+  --cc-text: #ffffff;
+  --cc-btn-primary-bg: #A213DA;
+  --cc-btn-primary-text: #ffffff;
+  --cc-btn-primary-hover-bg: #C026D3;
+  --cc-btn-secondary-bg: #1e293b;
+  --cc-btn-secondary-text: #ffffff;
+  --cc-btn-secondary-hover-bg: #334155;
+  --cc-toggle-on-bg: #A213DA;
+  --cc-toggle-off-bg: #475569;
+  --cc-toggle-readonly-bg: #334155;
+  --cc-block-bg: #1e293b;
+  --cc-block-text: #f8fafc;
+  --cc-cookie-category-block-bg: #1e293b;
+  --cc-cookie-category-block-bg-hover: #334155;
+  --cc-separator-border-color: #334155;
+  --cc-btn-border-radius: 999px;
+  --cc-modal-border-radius: 16px;
+  --cc-modal-margin: 1rem;
+  
+  /* Make all text elements pure white for maximum contrast on dark mode */
+  --cc-primary-color: #ffffff;
+  --cc-secondary-color: #e2e8f0;
+}
