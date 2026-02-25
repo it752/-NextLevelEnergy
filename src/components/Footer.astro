@@ -1,0 +1,512 @@
+---
+// Footer.astro
+import { Image } from 'astro:assets';
+import bgFooter from '../assets/footer/bg-footer.png';
+---
+
+<section id="contact" class="footer-stack-container">
+	<!-- LAYER 1: NEWSLETTER -->
+	<div class="footer-layer layer-newsletter">
+		<Image src={bgFooter} alt="" class="bg-img" quality={90} format="webp" />
+		<div class="overlay dark-overlay"></div>
+
+		<div class="layer-content">
+			<div class="newsletter-inner">
+				<svg class="nf-bolt" viewBox="0 0 24 24" fill="currentColor">
+					<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+				</svg>
+				<h2>Zapisz się do<br />naszego Newslettera</h2>
+				<p>
+					Bądź na bieżąco z najnowszymi informacjami ze świata odnawialnych źródeł energii. Odbieraj porady
+					ekspertów i dedykowane oferty The Next Level prosto na swoją skrzynkę.
+				</p>
+
+				<form class="newsletter-form">
+					<div class="input-group">
+						<label for="newsletter-email">Wpisz Twój adres e-mail</label>
+						<input type="email" id="newsletter-email" required />
+					</div>
+
+					<label class="nl-checkbox">
+						<input type="checkbox" required />
+						<span class="nl-mark"></span>
+						<span class="nl-text"
+							>Wyrażam zgodę na otrzymywanie informacji handlowych drogą elektroniczną od The Next Level.
+							Administratorem danych jest The Next Level sp. z o.o. Zapoznałem się z polityką prywatności.</span
+						>
+					</label>
+
+					<button type="submit" class="btn-outline">
+						Zapisz się teraz
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M5 12h14M12 5l7 7-7 7"></path>
+						</svg>
+					</button>
+				</form>
+
+				<div class="btn-bottom-center">
+					<a href="#kariera" class="btn-outline btn-small">
+						Level Up
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 19V5M5 12l7-7 7 7"></path>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- LAYER 2: CONTACT -->
+	<div class="footer-layer layer-contact">
+		<Image src={bgFooter} alt="" class="bg-img" quality={90} format="webp" />
+		<div class="overlay glass-overlay"></div>
+
+		<div class="layer-content">
+			<div class="contact-inner">
+				<svg class="nf-bolt" viewBox="0 0 24 24" fill="currentColor">
+					<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+				</svg>
+				<h2>Skontaktuj się<br />z nami!</h2>
+				<p>
+					Masz pytania dotyczące naszej oferty lub chcesz dołączyć do zespołu? Pomożemy Ci wybrać najlepsze
+					rozwiązanie i odpowiemy na każdą wiadomość w przeciągu 24 godzin.
+				</p>
+
+				<form class="contact-form">
+					<div class="form-row">
+						<div class="input-group">
+							<label for="contact-name">Wpisz Twoje imię</label>
+							<input type="text" id="contact-name" required />
+						</div>
+						<div class="input-group">
+							<label for="contact-email">Wpisz Twój adres e-mail</label>
+							<input type="email" id="contact-email" required />
+						</div>
+					</div>
+
+					<div class="input-group">
+						<label for="contact-phone">Wpisz Twój numer telefonu (opcjonalnie)</label>
+						<input type="tel" id="contact-phone" />
+					</div>
+
+					<div class="input-group">
+						<label for="contact-msg">Treść wiadomości</label>
+						<textarea id="contact-msg" rows="1" required></textarea>
+					</div>
+
+					<label class="nl-checkbox">
+						<input type="checkbox" required />
+						<span class="nl-mark"></span>
+						<span class="nl-text"
+							>Wyrażam zgodę na przetwarzanie moich danych osobowych przez The Next Level w celu
+							nawiązania kontaktu / obsługi zapytania. Sprawdź naszą politykę prywatności, aby dowiedzieć
+							się więcej.</span
+						>
+					</label>
+
+					<div class="btn-center">
+						<button type="submit" class="btn-outline">
+							Wyślij wiadomość
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M5 12h14M12 5l7 7-7 7"></path>
+							</svg>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- LAYER 3: REAL FOOTER -->
+	<div class="footer-layer layer-bottom">
+		<Image src={bgFooter} alt="" class="bg-img" quality={90} format="webp" />
+		<div class="overlay solid-overlay"></div>
+
+		<div class="layer-content">
+			<div class="bottom-inner">
+				<div class="company-address">
+					KOPANINA 34 • 60-105 POZNAŃ<br />
+					BIURO@NEXTLEVELENERGY.PL<br />
+					+48 729 979 179
+				</div>
+				<div class="social-links">
+					<a href="#">INSTAGRAM</a>
+					<a href="#">FACEBOOK</a>
+					<a href="#">TWITTER</a>
+					<a href="#">LINKEDIN</a>
+				</div>
+				<div class="bottom-legal">
+					<span>Regulamin</span> / <span>RODO</span> / <span>Polityka prywatności</span><br />
+					<span>Copyright © 2024. All rights reserved. Powered by Niezależni</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	/* Global Background for the whole stack */
+	.footer-stack-container {
+		position: relative;
+		width: 100%;
+		/* Background with subtle subtle stars/nebula effect */
+		background:
+			radial-gradient(circle at 20% 50%, rgba(162, 19, 218, 0.08) 0%, transparent 50%),
+			radial-gradient(circle at 80% 80%, rgba(0, 71, 255, 0.05) 0%, transparent 50%), #0b111d;
+		/* The container doesn't need a set height, it grows with its relative children OR we can just use sticky stacking */
+	}
+
+	/* Each layer acts as a sticky card that takes up 100vh */
+	.footer-layer {
+		position: sticky;
+		top: 0;
+		height: 100vh;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+
+		/* Give each layer a top border to distinguish stacking if needed */
+		border-top: 1px solid rgba(255, 255, 255, 0.03);
+		/* And a dark blurred background to hide the content underneath */
+		background: rgba(11, 17, 29, 0.95);
+		backdrop-filter: blur(20px);
+		box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.5);
+	}
+
+	/* Background Image and Overlays */
+	.bg-img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		z-index: 0;
+	}
+
+	.overlay {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+	}
+
+	.dark-overlay {
+		background: radial-gradient(circle at 50% 50%, rgba(11, 17, 29, 0.4) 0%, rgba(11, 17, 29, 0.9) 100%);
+	}
+
+	.glass-overlay {
+		background: rgba(11, 17, 29, 0.85);
+		backdrop-filter: blur(25px);
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	.solid-overlay {
+		background: rgba(11, 17, 29, 0.98);
+		border-top: 1px solid rgba(255, 255, 255, 0.02);
+	}
+
+	/* Disable border/shadow on the first layer overrides */
+	.layer-newsletter {
+		box-shadow: none;
+		background: transparent;
+	}
+
+	.layer-bottom {
+		height: 100vh;
+	}
+
+	/* Content Layouts */
+	.layer-content {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 2rem;
+		text-align: center;
+		color: white;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.nf-bolt {
+		display: block;
+		width: 48px;
+		height: 48px;
+		color: #a213da;
+		margin: 0 auto 1.5rem auto;
+	}
+
+	h2 {
+		font-size: clamp(2.5rem, 5vw, 4rem);
+		font-weight: 800;
+		line-height: 1.1;
+		margin-bottom: 1.5rem;
+		letter-spacing: -0.02em;
+	}
+
+	p {
+		color: rgba(255, 255, 255, 0.6);
+		font-size: 0.95rem;
+		max-width: 600px;
+		margin: 0 auto 3rem;
+		line-height: 1.6;
+	}
+
+	/* Form Elements */
+	form {
+		width: 100%;
+		max-width: 700px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.form-row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 2rem;
+	}
+
+	.input-group {
+		position: relative;
+		width: 100%;
+		text-align: left;
+	}
+
+	.input-group label {
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		color: rgba(255, 255, 255, 0.5);
+		font-size: 0.9rem;
+		pointer-events: none;
+		transition: all 0.3s ease;
+	}
+
+	.input-group input,
+	.input-group textarea {
+		width: 100%;
+		background: transparent;
+		border: none;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		padding: 0.8rem 0;
+		color: white;
+		font-size: 1rem;
+		font-family: inherit;
+		resize: none;
+	}
+
+	.input-group textarea {
+		min-height: 40px;
+	}
+
+	.input-group input:focus,
+	.input-group textarea:focus,
+	.input-group input:valid,
+	.input-group textarea:valid {
+		outline: none;
+		border-bottom-color: #a213da;
+	}
+
+	.input-group input:focus ~ label,
+	.input-group textarea:focus ~ label,
+	.input-group input:valid ~ label,
+	.input-group textarea:valid ~ label {
+		top: -10px;
+		font-size: 0.75rem;
+		color: #a213da;
+	}
+
+	/* Custom Checkbox */
+	.nl-checkbox {
+		display: flex;
+		align-items: flex-start;
+		gap: 1rem;
+		text-align: left;
+		cursor: pointer;
+		margin-top: -0.5rem;
+	}
+
+	.nl-checkbox input {
+		display: none;
+	}
+
+	.nl-mark {
+		width: 18px;
+		height: 18px;
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		border-radius: 4px;
+		margin-top: 2px;
+		position: relative;
+		flex-shrink: 0;
+		transition: all 0.2s;
+	}
+
+	.nl-checkbox:hover .nl-mark {
+		border-color: rgba(255, 255, 255, 0.6);
+	}
+
+	.nl-mark::after {
+		content: '';
+		position: absolute;
+		display: none;
+		left: 6px;
+		top: 2px;
+		width: 4px;
+		height: 8px;
+		border: solid white;
+		border-width: 0 2px 2px 0;
+		transform: rotate(45deg);
+	}
+
+	.nl-checkbox input:checked ~ .nl-mark {
+		background: #a213da;
+		border-color: #a213da;
+	}
+	.nl-checkbox input:checked ~ .nl-mark::after {
+		display: block;
+	}
+
+	.nl-text {
+		color: rgba(255, 255, 255, 0.4);
+		font-size: 0.7rem;
+		line-height: 1.5;
+	}
+
+	/* Buttons */
+	.btn-outline {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.8rem;
+		padding: 1rem 2.5rem;
+		border: 1px solid rgba(162, 19, 218, 0.5);
+		border-radius: 99px;
+		background: rgba(162, 19, 218, 0.05);
+		color: white;
+		font-weight: 600;
+		font-size: 0.9rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		cursor: pointer;
+		transition: all 0.3s;
+		text-decoration: none;
+		width: fit-content;
+		margin: 1.5rem auto 0;
+	}
+
+	.btn-outline:hover {
+		background: #a213da;
+		color: white;
+		box-shadow: 0 10px 20px rgba(162, 19, 218, 0.2);
+	}
+
+	.btn-outline svg {
+		width: 18px;
+		height: 18px;
+		transition: transform 0.3s;
+	}
+
+	.btn-outline:hover svg {
+		transform: translateX(3px);
+	}
+
+	.btn-center {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+	}
+
+	.btn-bottom-center {
+		position: absolute;
+		bottom: 3rem;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.btn-small {
+		padding: 0.6rem 1.5rem;
+		font-size: 0.8rem;
+	}
+	.btn-small svg {
+		transform: rotate(-90deg);
+	}
+	.btn-small:hover svg {
+		transform: rotate(-90deg) translateY(-3px);
+	}
+
+	/* Layer 3 - Bottom Info */
+	.bottom-inner {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 3rem;
+	}
+
+	.company-address {
+		font-size: 1.2rem;
+		font-weight: 700;
+		line-height: 1.8;
+		letter-spacing: 0.05em;
+	}
+
+	.social-links {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.social-links a {
+		color: rgba(255, 255, 255, 0.6);
+		text-decoration: none;
+		font-size: 0.85rem;
+		letter-spacing: 0.1em;
+		transition: color 0.3s;
+	}
+
+	.social-links a:hover {
+		color: #a213da;
+	}
+
+	.bottom-legal {
+		margin-top: 2rem;
+		font-size: 0.75rem;
+		color: rgba(255, 255, 255, 0.3);
+		line-height: 2;
+	}
+
+	.bottom-legal span {
+		cursor: pointer;
+		transition: color 0.3s;
+	}
+	.bottom-legal span:hover {
+		color: white;
+	}
+
+	/* Responsive Details */
+	@media (max-width: 768px) {
+		.form-row {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		h2 {
+			font-size: 2.2rem;
+		}
+
+		.layer-content {
+			padding: 1.5rem;
+		}
+
+		.btn-bottom-center {
+			bottom: 1.5rem;
+		}
+	}
+</style>
