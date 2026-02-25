@@ -1,0 +1,1379 @@
+---
+// Dane oparte na strukturze Sanity, gotowe do podpięcia przez @sanity/client
+const jobOffers = [
+	{
+		id: 'przedstawiciel-handlowy-oze',
+		title: 'Przedstawiciel Handlowy ds. OZE',
+		department: 'Sprzedaż',
+		salary: '8 000 - 25 000 zł',
+		location: 'Cala Polska',
+		description:
+			'Dołącz do struktur sprzedażowych i zostań twarzą transformacji energetycznej w Polsce. Szukamy osób zaangażowanych, nastawionych na cel i gotowych na ponadprzeciętne zyski w modelu B2B i B2C.',
+		responsibilities: [
+			'Aktywne pozyskiwanie klientów na rynku B2B / B2C',
+			'Przeprowadzanie audytów energetycznych',
+			'Doradztwo w zakresie rozwiązań odnawialnych źródeł energii',
+			'Prowadzenie negocjacji i przygotowywanie ofert handlowych',
+			'Utrzymywanie długofalowych relacji biznesowych',
+		],
+		requirements: [
+			'Wysokie umiejętności komunikacyjne i negocjacyjne',
+			'Doświadczenie w sprzedaży (mile widziana branża OZE)',
+			'Nastawienie na realizację celów biznesowych',
+			'Prawo jazdy kat. B',
+			'Gotowość do pracy w terenie',
+		],
+	},
+	{
+		id: 'doradca-klienta-biznesowego',
+		title: 'Doradca Klienta Biznesowego',
+		department: 'Sprzedaż',
+		salary: '12 000 - 30 000 zł',
+		location: 'Trójmiasto / Warszawa',
+		description:
+			'Eksperckie stanowisko doradcze skierowane wyłącznie na sektor przedsiębiorstw średnich i dużych (MŚP i Enterprise).',
+		responsibilities: [
+			'Analiza profili energetycznych przedsiębiorstw',
+			'Projektowanie dedykowanych rozwiązań OZE dla biznesu',
+			'Współpraca z zarządami i dyrektorami finansowymi',
+			'Monitorowanie i raportowanie wyników sprzedażowych',
+		],
+		requirements: [
+			'Minimum 3-letnie doświadczenie w sprzedaży B2B',
+			'Znajomość specyfiki rynku energetycznego (mile widziana)',
+			'Umiejętność prezentowania danych finansowych (ROI, LCOE)',
+			'Samodzielność w organizacji pracy własnej',
+		],
+	},
+	{
+		id: 'inzynier-projektant-pv',
+		title: 'Inżynier Projektant Instalacji',
+		department: 'Inżynieria',
+		salary: '9 000 - 15 000 zł',
+		location: 'Gdańsk',
+		description:
+			'Kluczowe stanowisko zaplecza inżynieryjnego. Twoim zadaniem będzie tworzenie koncepcji i projektów instalacji PV, magazynów energii i stacji ładowania EV.',
+		responsibilities: [
+			'Sporządzanie projektów koncepcyjnych i wykonawczych PV',
+			'Wykonywanie analiz nasłonecznienia i doborów sprzętowych',
+			'Wsparcie techniczne dla działu handlowego',
+			'Weryfikacja warunków przyłączeniowych i dokumentacji',
+		],
+		requirements: [
+			'Wykształcenie techniczne (Kierunki: Elektrotechnika, OZE itp.)',
+			'Dobra znajomość programów CAD (AutoCAD, PVSyst, PV*SOL)',
+			'Uprawnienia SEP do 1kV (mile widziane)',
+			'Zdolność analitycznego myślenia',
+		],
+	},
+	{
+		id: 'koordynator-ds-montazu',
+		title: 'Koordynator Działu Montaży',
+		department: 'Montaż',
+		salary: '7 000 - 12 000 zł',
+		location: 'Polska Północna',
+		description:
+			'Osoba odpowiedzialna za sprawny i bezproblemowy przebieg procesu inwestycyjnego od podpisania umowy do uruchomienia instalacji.',
+		responsibilities: [
+			'Planowanie i koordynacja pracy ekip monterskich',
+			'Zamawianie komponentów i zarządzanie logistyką na obiekty',
+			'Odbiory techniczne instalacji fotowoltaicznych',
+			'Dbanie o przestrzeganie procedur BHP',
+		],
+		requirements: [
+			'Zdolności organizacyjne i umiejętność pracy pod presją czasu',
+			'Doświadczenie na podobnym stanowisku',
+			'Znajomość prawa budowlanego (w podstawowym zakresie)',
+			'Czynne prawo jazdy kat. B',
+		],
+	},
+];
+---
+
+<section id="kariera" class="job-offers-section">
+	<div class="job-offers-container">
+		<!-- Left Column: List -->
+		<div class="list-column">
+			<div class="list-header">
+				<h2 class="section-title">Kariera</h2>
+				<p class="section-subtitle">Dołącz do ekipy The Next Level</p>
+			</div>
+
+			<div class="filters-container">
+				<div class="city-filter-wrapper">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+						<circle cx="12" cy="10" r="3"></circle>
+					</svg>
+					<select id="city-filter" class="city-selector" aria-label="Filtruj po lokalizacji">
+						<option value="all">Wszystkie lokalizacje</option>
+						{
+							Array.from(new Set(jobOffers.map(offer => offer.location))).map(loc => (
+								<option value={loc}>{loc}</option>
+							))
+						}
+					</select>
+				</div>
+			</div>
+
+			<div class="offers-list">
+				{
+					jobOffers.map((offer, index) => (
+						<button
+							class="offer-card"
+							data-index={index}
+							data-location={offer.location}
+							aria-label={`Zobacz szczegóły oferty ${offer.title}`}>
+							<div class="offer-content">
+								<h3 class="offer-title">{offer.title}</h3>
+								<div class="offer-meta">
+									<span class="meta-item salary">
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+											<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+										</svg>
+										{offer.salary}
+									</span>
+									<span class="meta-item location">
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+											<>
+												<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+												<circle cx="12" cy="10" r="3" />
+											</>
+										</svg>
+										{offer.location}
+									</span>
+								</div>
+							</div>
+							<div class="offer-arrow">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M5 12h14M12 5l7 7-7 7" />
+								</svg>
+							</div>
+						</button>
+					))
+				}
+			</div>
+		</div>
+
+		<!-- Right Column: Details & Forms -->
+		<div class="details-column">
+			<!-- State 0: Empty/Welcome State -->
+			<div id="state-welcome" class="detail-state active-state">
+				<div class="welcome-graphics">
+					<div class="glow-orb primary"></div>
+					<div class="glow-orb secondary"></div>
+
+					<div class="welcome-center">
+						<span class="nf-badge">NEXT LEVEL</span>
+						<h3 class="welcome-title">Wybierz swoją ścieżkę</h3>
+						<p class="welcome-desc">
+							Kliknij interesującą Cię ofertę po lewej stronie, aby wyświetlić szczegóły i formularz
+							aplikacyjny.
+						</p>
+					</div>
+
+					<div class="grid-overlay"></div>
+				</div>
+			</div>
+
+			<!-- State 1: Details -->
+			<div id="state-details" class="detail-state">
+				<!-- Injected by JS -->
+				<div id="details-content-target" class="content-scrollable">
+					<!-- Details will be rendered here -->
+				</div>
+			</div>
+
+			<!-- State 2: App Form Step 1 -->
+			<div id="state-form-step1" class="detail-state">
+				<div class="form-wrapper content-scrollable">
+					<div class="form-header">
+						<button class="back-link btn-back-to-details" aria-label="Wróc do szczegółów">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+								><path d="M19 12H5M12 19l-7-7 7-7"></path></svg
+							>
+							Powrót do oferty
+						</button>
+						<h3 class="form-title">Formularz aplikacyjny</h3>
+						<span class="form-step">Krok 1 / 2</span>
+					</div>
+
+					<form id="app-form" class="app-form">
+						<div class="input-wrapper">
+							<label for="app_name">Imię</label>
+							<input type="text" id="app_name" required placeholder="Wpisz Twoje Imię" />
+						</div>
+
+						<div class="input-wrapper">
+							<label for="app_surname">Nazwisko</label>
+							<input type="text" id="app_surname" required placeholder="Wpisz Twoje Nazwisko" />
+						</div>
+
+						<div class="input-wrapper">
+							<label for="app_email">E-mail</label>
+							<input type="email" id="app_email" required placeholder="Wpisz Twój Adres E-mail" />
+						</div>
+
+						<div class="input-wrapper">
+							<label for="app_phone">Telefon</label>
+							<input type="tel" id="app_phone" required placeholder="Wpisz Twój Numer Telefonu" />
+						</div>
+
+						<div class="input-wrapper">
+							<label for="app_city">Miasto</label>
+							<input type="text" id="app_city" required placeholder="Wpisz Twoje Miasto" />
+						</div>
+
+						<div class="form-actions right">
+							<button type="button" id="btn-next-step" class="btn-primary">
+								Następny krok
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									><path d="M5 12h14M12 5l7 7-7 7"></path></svg
+								>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!-- State 3: App Form Step 2 -->
+			<div id="state-form-step2" class="detail-state">
+				<div class="form-wrapper content-scrollable">
+					<div class="form-header">
+						<button class="back-link btn-back-to-step1" aria-label="Wróć do kroku pierwszego">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+								><path d="M19 12H5M12 19l-7-7 7-7"></path></svg
+							>
+							Powrót do danych
+						</button>
+						<h3 class="form-title">Formularz aplikacyjny</h3>
+						<span class="form-step">Krok 2 / 2</span>
+					</div>
+
+					<form id="app-form-final" class="app-form">
+						<div class="input-wrapper select-group">
+							<label for="app_type">Typ współpracy</label>
+							<select id="app_type" required>
+								<option value="" disabled selected>Preferowana forma zatrudnienia</option>
+								<option value="b2b">B2B</option>
+								<option value="uz">Umowa Zlecenie</option>
+								<option value="uop">Umowa o Pracę</option>
+							</select>
+						</div>
+
+						<div class="radio-section">
+							<p class="radio-label">Prawo jazdy kategorii B:</p>
+							<div class="radio-group">
+								<label class="radio-custom">
+									<input type="radio" name="driver_license" value="yes" required checked />
+									<span class="radio-mark"></span>
+									Posiadam
+								</label>
+								<label class="radio-custom">
+									<input type="radio" name="driver_license" value="no" required />
+									<span class="radio-mark"></span>
+									Nie posiadam
+								</label>
+							</div>
+						</div>
+
+						<div class="file-upload-section">
+							<label class="file-dropzone" for="cv_upload">
+								<input type="file" id="cv_upload" accept=".pdf,.doc,.docx" hidden />
+								<div class="drop-content">
+									<svg
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#A213DA"
+										stroke-width="2"
+										width="32"
+										height="32">
+										<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+										<polyline points="17 8 12 3 7 8"></polyline>
+										<line x1="12" y1="3" x2="12" y2="15"></line>
+									</svg>
+									<span class="drop-title">Załącz CV</span>
+									<span class="drop-desc">Dostępne formaty: pdf, doc, docx</span>
+									<span id="file-name-display" class="file-chosen-text"></span>
+								</div>
+							</label>
+						</div>
+
+						<div class="checkbox-group">
+							<label class="custom-checkbox">
+								<input type="checkbox" required />
+								<span class="checkmark"></span>
+								<span class="check-text">
+									Wyrażam zgodę na przetwarzanie moich danych osobowych przez The Next Level w celu
+									prowadzenia rekrutacji na aplikowane stanowisko.
+								</span>
+							</label>
+						</div>
+
+						<div class="form-actions right">
+							<button type="submit" id="btn-submit-form" class="btn-primary success-variant">
+								Wyślij aplikację
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg
+								>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Pushing data safely to JS -->
+<div id="job-data" data-offers={JSON.stringify(jobOffers)} style="display: none;"></div>
+
+<style>
+	.job-offers-section {
+		background: #0b111d;
+		min-height: 100vh;
+		display: flex;
+		justify-content: center;
+		padding: 5rem 1.5rem;
+		position: relative;
+	}
+
+	.job-offers-container {
+		display: flex;
+		max-width: 1400px;
+		width: 100%;
+		gap: 2rem;
+		border-radius: 20px;
+		/* Subtle glow rim for the whole container */
+		background: rgba(15, 23, 42, 0.4);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(20px);
+		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+		overflow: hidden;
+		height: 80vh; /* Fixed height for internal scrolling */
+		min-height: 700px;
+	}
+
+	/* Scrollbar styling for internal content */
+	.content-scrollable {
+		height: 100%;
+		overflow-y: auto;
+		padding-right: 0.5rem;
+	}
+
+	.content-scrollable::-webkit-scrollbar {
+		width: 6px;
+	}
+	.content-scrollable::-webkit-scrollbar-track {
+		background: rgba(255, 255, 255, 0.02);
+		border-radius: 10px;
+	}
+	.content-scrollable::-webkit-scrollbar-thumb {
+		background: rgba(162, 19, 218, 0.2);
+		border-radius: 10px;
+	}
+	.content-scrollable::-webkit-scrollbar-thumb:hover {
+		background: rgba(162, 19, 218, 0.5);
+	}
+
+	/* ======== LEFT COLUMN ======== */
+	.list-column {
+		width: 35%;
+		border-right: 1px solid rgba(255, 255, 255, 0.05);
+		display: flex;
+		flex-direction: column;
+		background: rgba(11, 17, 29, 0.6);
+	}
+
+	.list-header {
+		padding: 2.5rem 2rem 1.5rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	.filters-container {
+		display: flex;
+		gap: 0.5rem;
+		padding: 1rem 1.5rem 0;
+		flex-wrap: wrap;
+	}
+
+	.city-filter-wrapper {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 99px;
+		padding: 0.6rem 1.2rem;
+		width: 100%;
+		max-width: 300px;
+		transition: all 0.3s;
+	}
+
+	.city-filter-wrapper:focus-within {
+		border-color: #a213da;
+		background: rgba(162, 19, 218, 0.05);
+	}
+
+	.city-filter-wrapper svg {
+		width: 16px;
+		height: 16px;
+		color: #a213da;
+		flex-shrink: 0;
+	}
+
+	.city-selector {
+		background: transparent;
+		border: none;
+		color: white;
+		font-size: 0.9rem;
+		font-weight: 600;
+		width: 100%;
+		outline: none;
+		cursor: pointer;
+	}
+
+	.city-selector option {
+		background: #0b111d;
+		color: white;
+	}
+
+	.section-title {
+		font-size: 2rem;
+		font-weight: 800;
+		color: white;
+		margin-bottom: 0.2rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.section-subtitle {
+		font-size: 0.9rem;
+		color: rgba(255, 255, 255, 0.5);
+	}
+
+	.offers-list {
+		flex: 1;
+		overflow-y: auto;
+		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	/* Hide scrollbar for list but keep functionality */
+	.offers-list::-webkit-scrollbar {
+		display: none;
+	}
+	.offers-list {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+
+	.offer-card {
+		background: rgba(255, 255, 255, 0.02);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		border-radius: 12px;
+		padding: 1.5rem;
+		text-align: left;
+		cursor: pointer;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		transition: all 0.3s ease;
+		color: white;
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* Selected state and hover */
+	.offer-card.is-active,
+	.offer-card:hover {
+		background: rgba(162, 19, 218, 0.1);
+		border-color: rgba(162, 19, 218, 0.4);
+		transform: translateX(5px);
+	}
+
+	.offer-card.is-active::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 4px;
+		background: #a213da;
+	}
+
+	.offer-title {
+		font-size: 1.1rem;
+		font-weight: 700;
+		margin-bottom: 0.8rem;
+		line-height: 1.3;
+	}
+
+	.offer-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	.meta-item {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-size: 0.8rem;
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+	.meta-item svg {
+		width: 14px;
+		height: 14px;
+		opacity: 0.7;
+	}
+
+	.salary {
+		color: #a213da;
+		font-weight: 600;
+	}
+
+	.offer-arrow {
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.05);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		transition: all 0.3s;
+	}
+
+	.offer-arrow svg {
+		width: 16px;
+		height: 16px;
+		color: rgba(255, 255, 255, 0.5);
+		transition: color 0.3s;
+	}
+
+	.offer-card.is-active .offer-arrow,
+	.offer-card:hover .offer-arrow {
+		background: #a213da;
+	}
+
+	.offer-card.is-active .offer-arrow svg,
+	.offer-card:hover .offer-arrow svg {
+		color: white;
+	}
+
+	/* ======== RIGHT COLUMN (State Machine) ======== */
+	.details-column {
+		width: 65%;
+		position: relative;
+		overflow: hidden;
+		background: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h40v40H0V0zm20 20h20v20H20V20z" fill="rgba(255,255,255,0.01)"/></svg>');
+	}
+
+	.detail-state {
+		position: absolute;
+		inset: 0;
+		padding: 3rem;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateX(20px);
+		transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+		z-index: 1;
+	}
+
+	.detail-state.active-state {
+		opacity: 1;
+		visibility: visible;
+		transform: translateX(0);
+		z-index: 10;
+	}
+
+	/* WELCOME GRAPHICS (Zamiast Mapy) */
+	.welcome-graphics {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: radial-gradient(circle at center, rgba(162, 19, 218, 0.05) 0%, transparent 60%);
+	}
+
+	.glow-orb {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(80px);
+		z-index: 0;
+		opacity: 0.4;
+		animation: drift 10s infinite alternate ease-in-out;
+	}
+
+	.glow-orb.primary {
+		width: 400px;
+		height: 400px;
+		background: #a213da;
+		top: 10%;
+		right: -10%;
+	}
+
+	.glow-orb.secondary {
+		width: 300px;
+		height: 300px;
+		background: #0047ff;
+		bottom: -10%;
+		left: 10%;
+		animation-delay: -5s;
+	}
+
+	@keyframes drift {
+		0% {
+			transform: translate(0, 0) scale(1);
+		}
+		100% {
+			transform: translate(-50px, 30px) scale(1.1);
+		}
+	}
+
+	.welcome-center {
+		position: relative;
+		z-index: 2;
+		text-align: center;
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.nf-badge {
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.02);
+		backdrop-filter: blur(10px);
+		padding: 0.4rem 1.2rem;
+		border-radius: 99px;
+		font-size: 0.8rem;
+		font-weight: 800;
+		color: #a213da;
+		letter-spacing: 0.1em;
+	}
+
+	.welcome-title {
+		font-size: 2.5rem;
+		font-weight: 900;
+		color: white;
+		margin: 0;
+	}
+
+	.welcome-desc {
+		color: rgba(255, 255, 255, 0.6);
+		max-width: 350px;
+		line-height: 1.5;
+	}
+
+	/* DYNAMIC DETAILS STYLES */
+	.dyn-header {
+		margin-bottom: 2.5rem;
+		position: relative;
+	}
+
+	.dyn-back-mobile {
+		display: none; /* Only on mobile to return to list */
+		align-items: center;
+		gap: 0.5rem;
+		color: #a213da;
+		background: none;
+		border: none;
+		font-weight: 600;
+		font-size: 0.9rem;
+		margin-bottom: 1.5rem;
+		padding: 0;
+		cursor: pointer;
+	}
+
+	.dyn-title {
+		font-size: 2.2rem;
+		font-weight: 800;
+		color: white;
+		line-height: 1.2;
+		margin-bottom: 1rem;
+	}
+
+	.dyn-meta {
+		display: flex;
+		gap: 2rem;
+		padding-bottom: 1.5rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.dyn-meta-item {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: #a213da;
+		font-weight: 600;
+	}
+	.dyn-meta-item svg {
+		width: 18px;
+		height: 18px;
+	}
+	.dyn-meta-item.location {
+		color: rgba(255, 255, 255, 0.7);
+		font-weight: 400;
+	}
+
+	.dyn-body h4 {
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: white;
+		margin: 2rem 0 1rem;
+	}
+
+	.dyn-desc {
+		color: rgba(255, 255, 255, 0.8);
+		line-height: 1.7;
+	}
+
+	.dyn-list {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.8rem;
+	}
+
+	.dyn-list li {
+		color: rgba(255, 255, 255, 0.7);
+		line-height: 1.5;
+		position: relative;
+		padding-left: 1.5rem;
+	}
+
+	.dyn-list li::before {
+		content: '•';
+		color: #a213da;
+		font-size: 1.5rem;
+		position: absolute;
+		left: 0;
+		top: -4px;
+	}
+
+	.dyn-actions {
+		margin-top: 3rem;
+		display: flex;
+	}
+
+	.btn-primary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.8rem;
+		padding: 1rem 2.5rem;
+		background: #a213da;
+		color: white;
+		border: none;
+		border-radius: 99px;
+		font-weight: 700;
+		font-size: 0.9rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		cursor: pointer;
+		transition: all 0.3s;
+	}
+
+	.btn-primary:hover {
+		background: #b515f2;
+		transform: translateY(-2px);
+		box-shadow: 0 10px 20px rgba(162, 19, 218, 0.3);
+	}
+
+	.btn-primary svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	/* FORMS UI */
+	.form-wrapper {
+		width: 100%;
+		max-width: 500px;
+		padding-bottom: 2rem;
+	}
+
+	.form-header {
+		margin-bottom: 2.5rem;
+	}
+
+	.back-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		color: #a213da;
+		background: none;
+		border: none;
+		font-weight: 600;
+		font-size: 0.9rem;
+		padding: 0;
+		margin-bottom: 1.5rem;
+		cursor: pointer;
+		transition: opacity 0.3s;
+	}
+
+	.back-link:hover {
+		opacity: 0.8;
+	}
+	.back-link svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	.form-title {
+		font-size: 1.8rem;
+		font-weight: 700;
+		color: white;
+		margin-bottom: 0.5rem;
+	}
+
+	.form-step {
+		font-size: 0.85rem;
+		color: rgba(255, 255, 255, 0.4);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.app-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.2rem;
+	}
+
+	.input-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		width: 100%;
+	}
+
+	.input-wrapper label {
+		font-size: 0.85rem;
+		color: rgba(255, 255, 255, 0.8);
+		font-weight: 600;
+	}
+
+	.input-wrapper input,
+	.input-wrapper select {
+		width: 100%;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 8px;
+		padding: 1rem;
+		font-size: 0.95rem;
+		color: white;
+		transition: all 0.3s;
+	}
+
+	.input-wrapper select option {
+		background: #0b111d;
+		color: white;
+	}
+
+	.input-wrapper input:focus,
+	.input-wrapper select:focus {
+		outline: none;
+		border-color: #a213da;
+		background: rgba(162, 19, 218, 0.08);
+		box-shadow: 0 0 0 4px rgba(162, 19, 218, 0.1);
+	}
+
+	.input-wrapper input::placeholder {
+		color: rgba(255, 255, 255, 0.3);
+	}
+
+	/* Custom Checkbox/Radio */
+	.radio-section {
+		margin: 1rem 0;
+	}
+	.radio-label {
+		font-size: 0.9rem;
+		color: rgba(255, 255, 255, 0.7);
+		margin-bottom: 0.8rem;
+	}
+
+	.radio-group {
+		display: flex;
+		gap: 2rem;
+	}
+
+	.radio-custom,
+	.custom-checkbox {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.8rem;
+		position: relative;
+		cursor: pointer;
+		font-size: 0.95rem;
+		color: rgba(255, 255, 255, 0.8);
+		user-select: none;
+	}
+
+	.radio-custom input,
+	.custom-checkbox input {
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+	}
+
+	.radio-mark {
+		width: 20px;
+		height: 20px;
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		border-radius: 50%;
+		position: relative;
+		margin-top: 2px;
+		flex-shrink: 0;
+		transition: all 0.2s;
+	}
+
+	.radio-custom:hover .radio-mark {
+		border-color: rgba(255, 255, 255, 0.6);
+	}
+
+	.radio-mark::after {
+		content: '';
+		position: absolute;
+		display: none;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background: #a213da;
+	}
+
+	.radio-custom input:checked ~ .radio-mark {
+		border-color: #a213da;
+	}
+	.radio-custom input:checked ~ .radio-mark::after {
+		display: block;
+	}
+
+	.checkmark {
+		width: 20px;
+		height: 20px;
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		border-radius: 4px;
+		position: relative;
+		margin-top: 2px;
+		flex-shrink: 0;
+		transition: all 0.2s;
+	}
+
+	.custom-checkbox:hover .checkmark {
+		border-color: rgba(255, 255, 255, 0.6);
+	}
+
+	.checkmark::after {
+		content: '';
+		position: absolute;
+		display: none;
+		left: 6px;
+		top: 2px;
+		width: 5px;
+		height: 10px;
+		border: solid white;
+		border-width: 0 2px 2px 0;
+		transform: rotate(45deg);
+	}
+
+	.custom-checkbox input:checked ~ .checkmark {
+		background-color: #a213da;
+		border-color: #a213da;
+	}
+
+	.custom-checkbox input:checked ~ .checkmark::after {
+		display: block;
+	}
+
+	.check-text {
+		font-size: 0.8rem;
+		color: rgba(255, 255, 255, 0.5);
+		line-height: 1.5;
+	}
+
+	/* File Upload Dropzone */
+	.file-upload-section {
+		margin: 1.5rem 0;
+	}
+
+	.file-dropzone {
+		border: 1px dashed rgba(255, 255, 255, 0.2);
+		border-radius: 12px;
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		cursor: pointer;
+		transition: all 0.3s;
+		background: rgba(255, 255, 255, 0.01);
+	}
+
+	.file-dropzone:hover {
+		border-color: #a213da;
+		background: rgba(162, 19, 218, 0.05);
+	}
+
+	.drop-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		pointer-events: none;
+	}
+
+	.drop-title {
+		color: white;
+		font-weight: 600;
+		font-size: 1rem;
+	}
+	.drop-desc {
+		color: rgba(255, 255, 255, 0.4);
+		font-size: 0.8rem;
+	}
+	.file-chosen-text {
+		color: #a213da;
+		font-size: 0.85rem;
+		font-weight: 600;
+		margin-top: 0.5rem;
+	}
+
+	/* Action alignment */
+	.form-actions {
+		margin-top: 1rem;
+	}
+	.form-actions.right {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	/* RESPONSIVE DESIGN */
+	@media (max-width: 1024px) {
+		.job-offers-section {
+			padding: 4rem 1rem;
+		}
+		.job-offers-container {
+			flex-direction: column;
+			height: 85vh;
+			min-height: 800px;
+		}
+
+		/* Switch to Stacked UI */
+		.list-column {
+			width: 100%;
+			height: 40%; /* Top area */
+			border-right: none;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		}
+
+		.details-column {
+			width: 100%;
+			height: 60%; /* Bottom area */
+		}
+
+		.detail-state {
+			padding: 2rem 1.5rem;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.job-offers-section {
+			padding: 0;
+			min-height: auto;
+		}
+		.job-offers-container {
+			height: 100vh; /* Take full viewport height on mobile */
+			border-radius: 0;
+			border: none;
+			min-height: auto;
+		}
+
+		/* Mobile - Offcanvas approach for Details */
+		.list-column {
+			height: 100%;
+			border-bottom: none;
+		}
+
+		/* Move Details Column completely off-screen by default, overlaying the list */
+		.details-column {
+			position: absolute;
+			inset: 0;
+			height: 100%;
+			background: #0b111d;
+			transform: translateX(100%);
+			transition: transform 0.4s ease;
+			z-index: 50;
+		}
+
+		/* Class added by JS to body/container when offer selected */
+		.job-offers-container.show-mobile-details .details-column {
+			transform: translateX(0);
+		}
+
+		/* Enable the mobile back button */
+		.dyn-back-mobile {
+			display: flex;
+		}
+
+		.welcome-graphics {
+			display: none;
+		} /* Useless on mobile layered approach */
+
+		/* Adjust paddings */
+		.list-header {
+			padding: 2rem 1.5rem 1rem;
+		}
+		.offers-list {
+			padding: 1rem 1.5rem;
+		}
+	}
+</style>
+
+<script>
+	// Safe data parsing
+	const dataEl = document.getElementById('job-data');
+	let jobOffers: any[] = [];
+	try {
+		jobOffers = dataEl ? JSON.parse(dataEl.getAttribute('data-offers') || '[]') : [];
+	} catch (e) {
+		console.error('Failed to parse job data', e);
+	}
+
+	// DOM Elements
+	const container = document.querySelector('.job-offers-container');
+	const offerCards = document.querySelectorAll('.offer-card');
+	const cityFilter = document.getElementById('city-filter') as HTMLSelectElement;
+
+	// State Containers
+	const states = {
+		welcome: document.getElementById('state-welcome'),
+		details: document.getElementById('state-details'),
+		form1: document.getElementById('state-form-step1'),
+		form2: document.getElementById('state-form-step2'),
+	};
+
+	const detailsTarget = document.getElementById('details-content-target');
+	const fileInput = document.getElementById('cv_upload') as HTMLInputElement;
+	const fileNameDisplay = document.getElementById('file-name-display');
+
+	// Active context
+	let activeJobIndex = -1;
+
+	// State Switcher Utility
+	function switchState(targetStateKey: keyof typeof states) {
+		Object.values(states).forEach(state => {
+			if (state) state.classList.remove('active-state');
+		});
+		if (states[targetStateKey]) {
+			states[targetStateKey].classList.add('active-state');
+
+			// Scroll content back to top inside the container
+			const scrollable = states[targetStateKey].querySelector('.content-scrollable');
+			if (scrollable) scrollable.scrollTop = 0;
+		}
+	}
+
+	// Render specific job details HTML
+	function renderDetails(jobData: any) {
+		if (!detailsTarget) return;
+
+		const responsibilitiesHTML = jobData.responsibilities.map((r: string) => `<li>${r}</li>`).join('');
+		const requirementsHTML = jobData.requirements.map((r: string) => `<li>${r}</li>`).join('');
+
+		const html = `
+			<div class="dyn-header">
+				<button class="dyn-back-mobile" aria-label="Wróc do listy">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+					Wróc do listy ofert
+				</button>
+				<h3 class="dyn-title">${jobData.title}</h3>
+				<div class="dyn-meta">
+					<div class="dyn-meta-item salary">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+						${jobData.salary}
+					</div>
+					<div class="dyn-meta-item location">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+						${jobData.location}
+					</div>
+				</div>
+			</div>
+			
+			<div class="dyn-body">
+				<h4>Opis stanowiska</h4>
+				<p class="dyn-desc">${jobData.description}</p>
+				
+				<h4>Zakres obowiązków</h4>
+				<ul class="dyn-list">
+					${responsibilitiesHTML}
+				</ul>
+
+				<h4>Nasze wymagania</h4>
+				<ul class="dyn-list">
+					${requirementsHTML}
+				</ul>
+
+				<div class="dyn-actions">
+					<button id="btn-start-apply" class="btn-primary">
+						Aplikuj teraz
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+					</button>
+				</div>
+			</div>
+		`;
+
+		detailsTarget.innerHTML = html;
+		bindDynamicListeners();
+	}
+
+	// Listeners for elements dynamically injected by renderDetails()
+	function bindDynamicListeners() {
+		const btnStartApply = document.getElementById('btn-start-apply');
+		const btnMobileBack = document.querySelector('.dyn-back-mobile');
+
+		if (btnStartApply) {
+			btnStartApply.addEventListener('click', () => switchState('form1'));
+		}
+
+		if (btnMobileBack) {
+			btnMobileBack.addEventListener('click', () => {
+				// Hide mobile overlay
+				container?.classList.remove('show-mobile-details');
+				// Reset active selection in list
+				offerCards.forEach(c => c.classList.remove('is-active'));
+				activeJobIndex = -1;
+				// Reset to welcome state so it's ready for future use
+				switchState('welcome');
+			});
+		}
+	}
+
+	// List Selection Logic
+	offerCards.forEach(card => {
+		card.addEventListener('click', () => {
+			const indexStr = card.getAttribute('data-index');
+			if (!indexStr) return;
+			const idx = parseInt(indexStr);
+
+			// UI state
+			offerCards.forEach(c => c.classList.remove('is-active'));
+			card.classList.add('is-active');
+
+			// Trigger Mobile Slide-in
+			container?.classList.add('show-mobile-details');
+
+			// Load Data
+			if (activeJobIndex !== idx && jobOffers[idx]) {
+				activeJobIndex = idx;
+				renderDetails(jobOffers[idx]);
+				switchState('details');
+			} else if (jobOffers[idx]) {
+				// If already selected but maybe on mobile it needs to open again
+				switchState('details');
+			}
+		});
+	});
+
+	// Filtering Logic by City
+	if (cityFilter) {
+		cityFilter.addEventListener('change', () => {
+			const filterValue = cityFilter.value;
+
+			// Show/Hide cards
+			offerCards.forEach(card => {
+				const cardHtml = card as HTMLElement;
+				if (filterValue === 'all' || cardHtml.getAttribute('data-location') === filterValue) {
+					cardHtml.style.display = 'flex';
+				} else {
+					cardHtml.style.display = 'none';
+				}
+			});
+
+			// If active card is hidden by filter, reset right panel
+			const activeCard = Array.from(offerCards).find(c => c.classList.contains('is-active'));
+			if (activeCard && (activeCard as HTMLElement).style.display === 'none') {
+				activeCard.classList.remove('is-active');
+				activeJobIndex = -1;
+				switchState('welcome');
+				container?.classList.remove('show-mobile-details');
+			}
+		});
+	}
+
+	// File Upload Display
+	if (fileInput && fileNameDisplay) {
+		fileInput.addEventListener('change', e => {
+			const target = e.target as HTMLInputElement;
+			if (target.files && target.files.length > 0) {
+				fileNameDisplay.textContent = `Wybrano: ${target.files[0].name}`;
+			} else {
+				fileNameDisplay.textContent = '';
+			}
+		});
+	}
+
+	// Navigation Between Form Steps
+	document.querySelector('.btn-back-to-details')?.addEventListener('click', e => {
+		e.preventDefault();
+		switchState('details');
+	});
+
+	document.getElementById('btn-next-step')?.addEventListener('click', e => {
+		e.preventDefault();
+
+		// Optional: basic HTML5 validation trigger for step 1
+		const form1 = document.getElementById('app-form') as HTMLFormElement;
+		if (form1.checkValidity()) {
+			switchState('form2');
+		} else {
+			form1.reportValidity();
+		}
+	});
+
+	document.querySelector('.btn-back-to-step1')?.addEventListener('click', e => {
+		e.preventDefault();
+		switchState('form1');
+	});
+
+	// Final Submission
+	document.getElementById('app-form-final')?.addEventListener('submit', e => {
+		e.preventDefault();
+		const submitBtn = document.getElementById('btn-submit-form') as HTMLButtonElement;
+
+		// UX Fake Loading
+		const originalText = submitBtn.innerHTML;
+		submitBtn.innerHTML = 'Wysyłanie...';
+		submitBtn.style.opacity = '0.7';
+
+		setTimeout(() => {
+			submitBtn.innerHTML = 'Wysłano pomyślnie! ✔';
+			submitBtn.style.background = '#28a745';
+			submitBtn.style.opacity = '1';
+
+			// Optional Reset
+			setTimeout(() => {
+				submitBtn.innerHTML = originalText;
+				submitBtn.style.background = '';
+				container?.classList.remove('show-mobile-details');
+				offerCards.forEach(c => c.classList.remove('is-active'));
+				switchState('welcome');
+
+				// Clear form
+				(document.getElementById('app-form') as HTMLFormElement).reset();
+				(document.getElementById('app-form-final') as HTMLFormElement).reset();
+				if (fileNameDisplay) fileNameDisplay.textContent = '';
+			}, 3000);
+		}, 1500);
+	});
+</script>
