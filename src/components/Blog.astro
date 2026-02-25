@@ -765,11 +765,20 @@ const loopPosts = [...posts, ...posts, ...posts];
 	/* MOBILE DESIGN */
 	@media (max-width: 1023px) {
 		.blog-section {
-			height: auto;
-			min-height: auto;
+			height: auto !important;
+			min-height: auto !important;
+			max-height: none !important;
 			padding: 100px 0;
 			display: block;
 			overflow: visible;
+		}
+		.blog-container,
+		.blog-layout,
+		.list-column,
+		.main-display {
+			height: auto !important;
+			min-height: auto !important;
+			max-height: none !important;
 		}
 		.blog-layout {
 			display: flex;
@@ -827,20 +836,21 @@ const loopPosts = [...posts, ...posts, ...posts];
 		}
 
 		.featured-article {
-			height: 520px; /* Fixed height for internal scroll */
+			height: auto; /* Let it fit the content */
 			min-height: auto;
 			backdrop-filter: blur(20px);
 			-webkit-backdrop-filter: blur(20px);
 			display: none;
-			border-width: 1px; /* Slightly thinner for smaller screens */
+			border-width: 1px;
 		}
 		.article-media {
 			height: 200px;
 		}
 		.article-scroll-container {
 			padding: 30px;
-			mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-			-webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+			overflow-y: visible; /* Show full content without internal scroll */
+			mask-image: none; /* Remove the fade-out mask to show all text clearly */
+			-webkit-mask-image: none;
 		}
 	}
 </style>
