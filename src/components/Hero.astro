@@ -5,299 +5,275 @@ import heroRight from '../assets/hero/hero-right.png';
 import logoWhite from '../assets/logo/logo-white.svg';
 ---
 
-<section id="hero">
-	<div class="hero-container">
-		<!-- Background Image - Optimized with fetchpriority -->
-		<div class="bg-layer">
-			<Image
-				src={heroBg}
-				alt=""
-				class="bg-img"
-				widths={[640, 1024, 1440, 1920]}
-				sizes="100vw"
-				loading="eager"
-				fetchpriority="high"
-				quality={80}
-			/>
+<section id="hero-next">
+	<!-- Preloader (Curtain Effect) -->
+	<div id="preloader" class="preloader">
+		<div class="preloader-panel left-panel"></div>
+		<div class="preloader-panel right-panel"></div>
+		<div class="preloader-center">
+			<Image src={logoWhite} alt="NF Logo" class="preloader-logo" loading="eager" />
+			<div class="loading-line"></div>
 		</div>
+	</div>
 
-		<!-- Main Purple Gradient Overlay -->
-		<div class="hero-main-gradient"></div>
+	<!-- Fixed Branding & Navigation (Restored) -->
+	<nav class="navbar" id="global-nav">
+		<a href="/" class="logo-link" aria-label="Strona główna">
+			<Image src={logoWhite} alt="NF Logo" class="logo-img" loading="eager" />
+		</a>
+		<button id="menu-toggle" class="menu-btn" aria-label="Otwórz menu">
+			<span class="bar bar-long"></span>
+			<span class="bar bar-short"></span>
+			<span class="bar bar-long"></span>
+		</button>
+	</nav>
 
-		<!-- Secondary Dark Overlays -->
-		<div class="dark-overlay-r"></div>
-		<div class="dark-overlay-t"></div>
-
-		<!-- Person Image - Optimized and responsive visibility -->
-		<div class="person-wrapper">
-			<Image
-				src={heroRight}
-				alt="Mateusz Pawluk"
-				class="person-img"
-				widths={[400, 800, 1200]}
-				sizes="(max-width: 768px) 90vw, (max-width: 1024px) 60vw, 45vw"
-				loading="eager"
-				fetchpriority="high"
-				quality={90}
-			/>
-		</div>
-
-		<!-- Fixed Branding & Navigation -->
-		<nav class="navbar" id="global-nav">
-			<a href="/" class="logo-link" aria-label="Strona główna">
-				<Image src={logoWhite} alt="NF Logo" class="logo-img" loading="eager" />
-			</a>
-			<button id="menu-toggle" class="menu-btn" aria-label="Otwórz menu">
-				<span class="bar bar-long"></span>
-				<span class="bar bar-short"></span>
-				<span class="bar bar-long"></span>
+	<!-- Menu Overlay (Restored) -->
+	<div id="menu-overlay" class="menu-overlay">
+		<div class="menu-header">
+			<Image src={logoWhite} alt="NF Logo" class="logo-img" />
+			<button id="close-menu" class="close-btn" aria-label="Zamknij menu">
+				<svg viewBox="0 0 24 24" width="32" height="32" stroke="white" stroke-width="2" fill="none">
+					<path d="M18 6L6 18M6 6l12 12"></path>
+				</svg>
 			</button>
-		</nav>
-
-		<!-- Menu Overlay -->
-		<div id="menu-overlay" class="menu-overlay">
-			<div class="menu-header">
-				<Image src={logoWhite} alt="NF Logo" class="logo-img" />
-				<button id="close-menu" class="close-btn" aria-label="Zamknij menu">
-					<svg viewBox="0 0 24 24" width="32" height="32" stroke="white" stroke-width="2" fill="none">
-						<path d="M18 6L6 18M6 6l12 12"></path>
-					</svg>
-				</button>
-			</div>
-
-			<div class="menu-links">
-				{
-					['Idea', 'Historia', 'Zespół', 'O nas', 'Ścieżka kariery', 'Kariera'].map((item, index) => (
-						<a
-							href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-							class="menu-item-link"
-							style={`--index: ${index}`}>
-							<span class="menu-item-text">{item}</span>
-							<svg
-								class="menu-item-arrow"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2">
-								<path d="M5 12h14m-7-7l7 7-7 7" />
-							</svg>
-						</a>
-					))
-				}
-			</div>
 		</div>
 
-		<!-- Content Layer -->
-		<div class="hero-content">
-			<!-- Main Text Area -->
-			<div class="main-text-area">
-				<div class="text-group">
-					<h1 class="hero-title">
-						TWOJA<br />
-						EFEKTYWNOŚĆ<br />
-						ENERGETYCZNA
-					</h1>
-					<p class="hero-desc">
-						Zmień sposób, w jaki Twoja firma korzysta z energii. Od zaawansowanych systemów HVAC po pełną
-						niezależność fotowoltaiczną. Jako Next Level Energy dostarczamy inteligentne rozwiązania
-						podnoszące zyskowność, komfort i standardy Twojego biznesu.
-					</p>
-				</div>
-			</div>
-
-			<!-- Bottom Button -->
-			<div class="btn-container">
-				<a href="#idea" class="level-up-btn">
-					<span class="btn-text">
-						Level Up
+		<div class="menu-links">
+			{
+				[
+					{ label: 'Idea', href: '#idea' },
+					{ label: 'Historia', href: '#history' },
+					{ label: 'Zespół', href: '#team' },
+					{ label: 'Ścieżka kariery', href: '#ścieżka-kariery' },
+					{ label: 'Kariera', href: '#kariera' },
+					{ label: 'Kontakt', href: '#contact' },
+				].map((item, index) => (
+					<a
+						href={item.href}
+						class="menu-item-link"
+						style={`--index: ${index}`}>
+						<span class="menu-item-text">{item.label}</span>
 						<svg
-							class="arrow-svg"
+							class="menu-item-arrow"
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
-							stroke-width="3"
-							stroke-linecap="round"
-							stroke-linejoin="round">
-							<path d="M7 11l5-5 5 5"></path>
-							<path d="M7 18l5-5 5 5"></path>
+							stroke-width="2">
+							<path d="M5 12h14m-7-7l7 7-7 7" />
 						</svg>
-					</span>
-				</a>
+					</a>
+				))
+			}
+		</div>
+	</div>
+
+	<!-- Dashboard Container -->
+	<div class="hero-container-dashboard">
+		<div class="glass-dashboard">
+			<!-- Background Texture & Glows -->
+			<div class="dashboard-bg">
+				<Image
+					src={heroBg}
+					alt=""
+					class="bg-texture"
+					widths={[640, 1024, 1440]}
+					sizes="100vw"
+					loading="eager"
+					fetchpriority="high"
+					quality={50}
+				/>
+				<div class="glow-sphere sphere-1"></div>
+				<div class="glow-sphere sphere-2"></div>
+				<div class="noise-overlay"></div>
+			</div>
+
+			<!-- Dashboard Content -->
+			<div class="dash-content-wrapper hero-content-anim">
+				<!-- Left Text Column -->
+				<div class="dash-text-col">
+					<h1 class="main-heading">
+						<span class="heading-line line-1">Nowa Era</span>
+						<span class="heading-line line-2">
+							<span class="gradient-text">Efektywności</span>
+						</span>
+						<span class="heading-line line-3">Energetycznej</span>
+					</h1>
+					<p class="dash-desc">
+						Zmień sposób, w jaki Twoja firma korzysta z energii. Od zaawansowanych systemów HVAC po pełną
+						niezależność fotowoltaiczną. Najwyższy standard inteligentnych rozwiązań.
+					</p>
+
+					<!-- Restored CTA Button -->
+					<div class="btn-container">
+						<a href="#idea" class="level-up-btn">
+							<span class="btn-text">
+								Level Up
+								<svg
+									class="arrow-svg"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="3"
+									stroke-linecap="round"
+									stroke-linejoin="round">
+									<path d="M7 11l5-5 5 5"></path>
+									<path d="M7 18l5-5 5 5"></path>
+								</svg>
+							</span>
+						</a>
+					</div>
+				</div>
+
+				<!-- Right Person -->
+				<div class="dash-person-col">
+					<div class="person-img-wrapper">
+						<Image
+							src={heroRight}
+							alt="Mateusz Pawluk"
+							class="dash-person"
+							widths={[400, 800]}
+							sizes="(max-width: 1024px) 80vw, 40vw"
+							loading="eager"
+							fetchpriority="high"
+						/>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </section>
 
 <script>
-	const menuToggle = document.getElementById('menu-toggle');
-	const closeMenu = document.getElementById('close-menu');
-	const menuOverlay = document.getElementById('menu-overlay');
+	document.addEventListener('DOMContentLoaded', () => {
+		// Płynne ładowanie (Preloader)
+		document.body.style.overflow = 'hidden';
 
-	if (menuToggle && closeMenu && menuOverlay) {
-		const toggleScrollLock = (lock: boolean) => {
-			document.body.style.overflow = lock ? 'hidden' : '';
-		};
+		setTimeout(() => {
+			const preloader = document.getElementById('preloader');
+			if (preloader) {
+				preloader.classList.add('hide');
+				document.body.style.overflow = '';
 
-		menuToggle.addEventListener('click', () => {
-			menuOverlay.classList.add('active');
-			toggleScrollLock(true);
-		});
+				const animContainer = document.querySelector('.hero-content-anim');
+				if (animContainer) {
+					animContainer.classList.add('animate-in');
+				}
+			}
+		}, 800);
 
-		closeMenu.addEventListener('click', () => {
-			menuOverlay.classList.remove('active');
-			toggleScrollLock(false);
-		});
+		// Navbar Original Scripts
+		const menuToggle = document.getElementById('menu-toggle');
+		const closeMenu = document.getElementById('close-menu');
+		const menuOverlay = document.getElementById('menu-overlay');
 
-		// Close menu on link click
-		const menuLinks = menuOverlay.querySelectorAll('.menu-item-link');
-		menuLinks.forEach(link => {
-			link.addEventListener('click', () => {
+		if (menuToggle && closeMenu && menuOverlay) {
+			const toggleScrollLock = (lock: boolean) => {
+				document.body.style.overflow = lock ? 'hidden' : '';
+			};
+
+			menuToggle.addEventListener('click', () => {
+				menuOverlay.classList.add('active');
+				toggleScrollLock(true);
+			});
+
+			closeMenu.addEventListener('click', () => {
 				menuOverlay.classList.remove('active');
 				toggleScrollLock(false);
 			});
-		});
 
-		// Apple-style Smart Navbar
-		let lastScroll = 0;
-		const nav = document.getElementById('global-nav');
+			// Close menu on link click
+			const menuLinks = menuOverlay.querySelectorAll('.menu-item-link');
+			menuLinks.forEach(link => {
+				link.addEventListener('click', () => {
+					menuOverlay.classList.remove('active');
+					toggleScrollLock(false);
+				});
+			});
 
-		if (nav) {
-			window.addEventListener(
-				'scroll',
-				() => {
-					const currentScroll = window.pageYOffset;
+			// Apple-style Smart Navbar
+			let lastScroll = 0;
+			const nav = document.getElementById('global-nav');
 
-					// Always show at top
-					if (currentScroll <= 100) {
-						nav.classList.remove('navbar-hidden');
-						nav.classList.remove('navbar-scrolled');
-						return;
-					}
+			if (nav) {
+				window.addEventListener(
+					'scroll',
+					() => {
+						const currentScroll = window.pageYOffset;
 
-					// Background state when scrolled
-					if (currentScroll > 100) {
-						nav.classList.add('navbar-scrolled');
-					}
+						// Always show at top
+						if (currentScroll <= 100) {
+							nav.classList.remove('navbar-hidden');
+							nav.classList.remove('navbar-scrolled');
+							return;
+						}
 
-					// Scroll direction logic
-					if (currentScroll > lastScroll && !nav.classList.contains('navbar-hidden') && currentScroll > 200) {
-						// Scrolling down - hide
-						nav.classList.add('navbar-hidden');
-					} else if (currentScroll < lastScroll && nav.classList.contains('navbar-hidden')) {
-						// Scrolling up - show
-						nav.classList.remove('navbar-hidden');
-					}
+						// Background state when scrolled
+						if (currentScroll > 100) {
+							nav.classList.add('navbar-scrolled');
+						}
 
-					lastScroll = currentScroll;
-				},
-				{ passive: true },
-			);
+						// Scroll direction logic
+						if (
+							currentScroll > lastScroll &&
+							!nav.classList.contains('navbar-hidden') &&
+							currentScroll > 200
+						) {
+							// Scrolling down - hide
+							nav.classList.add('navbar-hidden');
+						} else if (currentScroll < lastScroll && nav.classList.contains('navbar-hidden')) {
+							// Scrolling up - show
+							nav.classList.remove('navbar-hidden');
+						}
+
+						lastScroll = currentScroll;
+					},
+					{ passive: true },
+				);
+			}
 		}
-	}
+	});
 </script>
 
 <style>
-	#hero {
+	#hero-next {
 		width: 100%;
 		height: 100vh;
-		/* Use svh if supported for better mobile height handling */
 		height: 100svh;
-		position: relative;
-		overflow: hidden;
-		background-color: #0b111d;
-	}
-
-	.hero-container {
-		position: relative;
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-	}
-
-	.bg-layer {
-		position: absolute;
-		inset: 0;
-		will-change: transform;
-		z-index: 0;
-	}
-
-	.bg-img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	.hero-main-gradient {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-		background: linear-gradient(
-			to right,
-			rgba(15, 23, 42, 0.4) 0%,
-			transparent 25%,
-			transparent 40%,
-			rgba(162, 19, 218, 0.3) 55%,
-			rgba(162, 19, 218, 0.8) 75%,
-			#a213da 100%
-		);
-		z-index: 1;
-	}
-
-	.dark-overlay-r {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(to right, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 40%, transparent 65%);
-		z-index: 2;
-	}
-
-	.dark-overlay-t {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: 300px; /* Only bottom area */
-		background: linear-gradient(to top, #0b111d 0%, transparent 100%);
-		pointer-events: none;
-		z-index: 10;
-	}
-
-	/* Person Wrapper Responsive */
-	.person-wrapper {
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		height: 100%;
-		/* width: 50%; */
-		pointer-events: none;
+		background-color: #020202; /* Very dark outside background */
 		display: flex;
-		align-items: flex-end;
-		justify-content: flex-end;
-		/* Mask to fade person at the very bottom */
-		mask-image: linear-gradient(to top, transparent 0%, black 10%, black 100%);
-		-webkit-mask-image: linear-gradient(to top, transparent 0%, black 10%, black 100%);
-		z-index: 25; /* Above hero-content (20), below navbar (2000) */
-	}
-
-	.person-img {
-		height: 108%;
-		width: auto;
-		object-fit: cover;
-		object-position: right bottom;
-		transform: translateY(8%);
-		filter: drop-shadow(-30px 0 40px rgba(0, 0, 0, 0.4));
-		will-change: filter;
-	}
-
-	.hero-content {
+		align-items: center;
+		justify-content: center;
+		padding: 2rem;
+		overflow: hidden;
 		position: relative;
+	}
+
+	.hero-container-dashboard {
+		width: 100%;
+		height: 100%;
+		max-width: 1920px;
+		margin: 0 auto;
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.glass-dashboard {
+		width: 100%;
+		height: 100%;
+		border-radius: 40px;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: #0b111d;
+		overflow: hidden;
+		position: relative;
+		box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
 		display: flex;
 		flex-direction: column;
-		height: 100%;
-		z-index: auto; /* Allow interleaving */
 	}
 
-	/* Fixed Navbar - Transparent & Sharp */
+	/* FIXED NAVBAR RESTORED */
 	.navbar {
 		position: fixed;
 		top: 0;
@@ -308,30 +284,40 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		padding: 1.5rem;
 		width: 100%;
 		z-index: 2000;
-		transition:
-			transform 0.4s cubic-bezier(0.19, 1, 0.22, 1),
-			background 0.3s ease,
-			backdrop-filter 0.3s ease;
+		transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 		background: transparent;
 	}
 
+	/* Keep desktop nav inside the dashboard padding gap initially */
+	@media (min-width: 1024px) {
+		.navbar {
+			left: 2rem;
+			top: 2rem;
+			width: calc(100% - 4rem);
+			padding: 2rem 4rem;
+			border-radius: 40px 40px 0 0;
+		}
+	}
+
 	.navbar.navbar-scrolled {
+		top: 0;
+		left: 0;
+		width: 100%;
 		background: rgba(11, 17, 29, 0.8);
 		backdrop-filter: blur(10px);
 		-webkit-backdrop-filter: blur(10px);
 		padding: 1rem 1.5rem;
+		border-radius: 0; /* Removing border radius when it sticks */
+	}
+
+	@media (min-width: 1024px) {
+		.navbar.navbar-scrolled {
+			padding: 1rem 4rem;
+		}
 	}
 
 	.navbar.navbar-hidden {
 		transform: translateY(-100%);
-	}
-
-	.menu-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 1.5rem;
-		width: 100%;
 	}
 
 	.logo-img {
@@ -343,9 +329,7 @@ import logoWhite from '../assets/logo/logo-white.svg';
 	.menu-btn,
 	.close-btn {
 		display: flex;
-		flex-direction: column; /* Default for menu-btn, close-btn will override if needed */
-		align-items: flex-end;
-		justify-content: center;
+		align-items: center;
 		background: none;
 		border: none;
 		cursor: pointer;
@@ -355,12 +339,13 @@ import logoWhite from '../assets/logo/logo-white.svg';
 	}
 
 	.menu-btn {
-		gap: 6px; /* Specific to menu-btn */
+		flex-direction: column;
+		align-items: flex-end;
+		justify-content: center;
+		gap: 6px;
 	}
 
 	.close-btn {
-		flex-direction: row; /* Override for close-btn to center SVG */
-		align-items: center;
 		justify-content: center;
 	}
 
@@ -385,170 +370,7 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		width: 32px;
 	}
 
-	/* Main Text Area Responsive */
-	.main-text-area {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start; /* Top on mobile */
-		padding: 3rem 1.5rem 0;
-		position: relative;
-		z-index: 20; /* Behind person (25) */
-	}
-
-	.hero-title {
-		font-size: clamp(2.5rem, 10vw, 6rem);
-		font-weight: 950;
-		line-height: 1.1;
-		color: white;
-		text-transform: uppercase;
-		margin-bottom: 1.5rem;
-		letter-spacing: -0.03em;
-		filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
-	}
-
-	.hero-desc {
-		font-size: clamp(0.9rem, 1.3vw, 1.15rem);
-		line-height: 1.5;
-		color: rgba(255, 255, 255, 0.85);
-		max-width: 480px;
-		font-weight: 500;
-	}
-
-	/* Bottom Button Responsive */
-	.btn-container {
-		padding: 2.5rem 0;
-		display: flex;
-		justify-content: center;
-		position: relative;
-		z-index: 30; /* On top of person (25) */
-	}
-
-	.level-up-btn {
-		display: inline-flex;
-		align-items: center;
-		padding: 0.9rem 2.2rem;
-		border-radius: 9999px;
-		border: 1px solid rgba(255, 255, 255, 0.25);
-		background: rgba(255, 255, 255, 0.1);
-		backdrop-filter: blur(12px);
-		-webkit-backdrop-filter: blur(12px);
-		color: white;
-		font-weight: 800;
-		text-transform: uppercase;
-		letter-spacing: 0.15em;
-		font-size: 0.8rem;
-		transition:
-			transform 0.3s ease,
-			background 0.3s ease,
-			box-shadow 0.3s ease;
-		text-decoration: none;
-	}
-
-	.btn-text {
-		display: flex;
-		align-items: center;
-		gap: 0.8rem;
-	}
-
-	.arrow-svg {
-		width: 1rem;
-		height: 1rem;
-		animation: bounce-up 2s infinite ease-in-out;
-	}
-
-	@keyframes bounce-up {
-		0%,
-		100% {
-			transform: translateY(0);
-		}
-		50% {
-			transform: translateY(-4px);
-		}
-	}
-
-	/* MEDIA QUERIES */
-
-	/* Tablet */
-	@media (min-width: 768px) and (max-width: 1023px) {
-		.navbar,
-		.menu-header {
-			padding: 2.5rem 3rem;
-		}
-		.logo-img {
-			height: 2.8rem;
-		}
-		.main-text-area {
-			padding: 10rem 4rem 0; /* Increased from 5rem to 10rem */
-			justify-content: flex-start;
-		}
-		.person-wrapper {
-			width: 65%;
-			height: 55%;
-		}
-		.person-img {
-			height: 110%; /* Slightly smaller than 115% */
-		}
-		.hero-title {
-			font-size: clamp(4rem, 10vw, 5.5rem);
-			margin-bottom: 2rem;
-		}
-		.btn-container {
-			padding: 5rem 0;
-		}
-	}
-
-	/* Desktop */
-	@media (min-width: 1024px) {
-		.navbar,
-		.menu-header {
-			padding: 3rem 4rem;
-		}
-		.logo-img {
-			height: 3.2rem;
-		}
-		.main-text-area {
-			padding: 0 6rem;
-			justify-content: center; /* Keep centered on desktop */
-		}
-		.person-wrapper {
-			/* width: 45%; */
-		}
-	}
-
-	/* PSI Optimization: Adjust mobile person display to not overlap text too much */
-	@media (max-width: 767px) {
-		.main-text-area {
-			padding: 6rem 1.5rem 0; /* Increased top padding from 3rem to 6rem */
-		}
-		.person-wrapper {
-			width: 100%;
-			height: 50%; /* Limit height to bottom half */
-			z-index: 1;
-		}
-		.person-img {
-			height: 100%; /* Fill the lower half */
-			transform: translateY(5%); /* Slight adjustment */
-		}
-		.hero-content {
-			z-index: 2;
-		}
-		.hero-title {
-			font-size: clamp(1.75rem, 9vw, 3.5rem);
-		}
-		.hero-desc {
-			max-width: 300px; /* Narrower for mobile readability */
-		}
-	}
-
-	/* Accessibility & Performance */
-	@media (prefers-reduced-motion: reduce) {
-		.arrow-svg {
-			animation: none;
-		}
-	}
-
-	/* Menu Overlay Styles - Apple-style Bubble Expansion */
+	/* MENU OVERLAY RESTORED */
 	.menu-overlay {
 		position: fixed;
 		top: 0;
@@ -562,7 +384,6 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		flex-direction: column;
 		opacity: 0;
 		visibility: hidden;
-		/* Grow from the burger button location */
 		clip-path: circle(0% at 92% 4%);
 		transition:
 			clip-path 0.8s cubic-bezier(0.19, 1, 0.22, 1),
@@ -649,7 +470,6 @@ import logoWhite from '../assets/logo/logo-white.svg';
 	.menu-item-link:hover::before {
 		left: 0;
 	}
-
 	.menu-item-link:hover .menu-item-text {
 		color: white;
 		-webkit-text-stroke: 1.5px transparent;
@@ -671,40 +491,506 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		transform: translateX(0);
 	}
 
-	/* Landscape Mobile Optimization */
-	@media (orientation: landscape) and (max-height: 500px) {
-		#hero {
-			height: auto;
-			min-height: 100svh;
-			overflow-y: auto;
+	/* Preloader */
+	.preloader {
+		position: fixed;
+		inset: 0;
+		z-index: 10000;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		pointer-events: none;
+	}
+	.preloader-panel {
+		position: absolute;
+		top: 0;
+		width: 50vw;
+		height: 100vh;
+		background-color: #050505;
+		transition: transform 1.2s cubic-bezier(0.8, 0, 0.1, 1);
+		will-change: transform;
+	}
+	.left-panel {
+		left: 0;
+		border-right: 1px solid rgba(255, 255, 255, 0.05);
+	}
+	.right-panel {
+		right: 0;
+	}
+	.preloader.hide .left-panel {
+		transform: translateX(-100%);
+	}
+	.preloader.hide .right-panel {
+		transform: translateX(100%);
+	}
+	.preloader-center {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.5rem;
+		transition: opacity 0.4s ease;
+	}
+	.preloader.hide .preloader-center {
+		opacity: 0;
+	}
+	.preloader-logo {
+		height: 30px;
+		width: auto;
+		filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+	}
+	.loading-line {
+		width: 140px;
+		height: 2px;
+		background: rgba(255, 255, 255, 0.1);
+		position: relative;
+		overflow: hidden;
+		border-radius: 2px;
+	}
+	.loading-line::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 30%;
+		background: #a213da;
+		animation: loading-bar 1.5s infinite ease-in-out;
+		border-radius: 2px;
+	}
+	@keyframes loading-bar {
+		0% {
+			transform: translateX(-100%);
 		}
-		.hero-content {
-			height: auto;
-			min-height: 100svh;
+		100% {
+			transform: translateX(350%);
 		}
-		.main-text-area {
-			padding: 1rem 1.5rem;
-			justify-content: flex-start;
+	}
+
+	/* Dashboard Background Layer */
+	.dashboard-bg {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+	}
+	.bg-texture {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		opacity: 0.15;
+		mix-blend-mode: color-dodge;
+	}
+	.glow-sphere {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(100px);
+		opacity: 0.5;
+		will-change: transform;
+	}
+	.sphere-1 {
+		width: 800px;
+		height: 800px;
+		background: radial-gradient(circle, rgba(162, 19, 218, 0.8) 0%, rgba(162, 19, 218, 0) 70%);
+		right: 10%;
+		top: 30%;
+		transform: translate(0, -50%);
+		animation: float-pulse 12s infinite alternate ease-in-out;
+	}
+	.sphere-2 {
+		width: 600px;
+		height: 600px;
+		background: radial-gradient(circle, rgba(255, 0, 85, 0.6) 0%, rgba(255, 0, 85, 0) 70%);
+		left: 10%;
+		bottom: 10%;
+		animation: float-pulse-reverse 15s infinite alternate ease-in-out;
+	}
+	.noise-overlay {
+		position: absolute;
+		inset: 0;
+		background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+		opacity: 0.03;
+		mix-blend-mode: overlay;
+	}
+
+	@keyframes float-pulse {
+		0% {
+			transform: translate(0, -50%) scale(1);
+			opacity: 0.4;
 		}
-		.hero-title {
-			font-size: 2rem;
-			margin-bottom: 1rem;
+		100% {
+			transform: translate(-50px, -40%) scale(1.1);
+			opacity: 0.6;
 		}
-		.hero-desc {
-			font-size: 0.9rem;
-			max-width: 100%;
+	}
+	@keyframes float-pulse-reverse {
+		0% {
+			transform: translate(0, 0) scale(1.1);
+			opacity: 0.5;
 		}
-		.person-wrapper {
-			display: none; /* Hide person image in landscape to save critical space */
+		100% {
+			transform: translate(50px, -20px) scale(1);
+			opacity: 0.3;
 		}
-		.navbar {
-			padding: 1rem 1.5rem;
+	}
+
+	/* Desktop Layout Content */
+	.dash-content-wrapper {
+		flex: 1;
+		position: relative;
+		z-index: 10;
+		display: flex;
+		padding: 0 6rem;
+		align-items: center;
+	}
+
+	/* Typography & Animations */
+	.dash-text-col {
+		width: 55%;
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+		opacity: 0;
+		transform: translateY(40px);
+	}
+	.dash-person-col {
+		width: 45%;
+		height: 100%;
+		position: absolute;
+		right: 0;
+		top: 0;
+		opacity: 0;
+		transform: translateX(40px);
+		pointer-events: none;
+	}
+	.hero-content-anim.animate-in .dash-text-col {
+		animation: fadeUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.8s;
+	}
+	.hero-content-anim.animate-in .dash-person-col {
+		animation: fadeLeft 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards 1s;
+	}
+
+	@keyframes fadeUp {
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	@keyframes fadeLeft {
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	.main-heading {
+		font-size: clamp(3.5rem, 6.5vw, 6.5rem);
+		font-weight: 850;
+		line-height: 1.05;
+		letter-spacing: -0.04em;
+		display: flex;
+		flex-direction: column;
+	}
+	.heading-line {
+		display: block;
+	}
+
+	/* Dodałem flex dla linii z Efektywnością aby trzymać sparkle zablokowany idealnie obok */
+	.heading-line.line-2 {
+		display: flex;
+		align-items: center;
+		flex-wrap: nowrap;
+	}
+
+	.gradient-text {
+		background: linear-gradient(100deg, #a213da, #ff0055);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		display: inline-block;
+		padding-right: 15px; /* Wiekszy padding żeby sparkle mial miejsce i nie uciekał za border */
+	}
+	.sparkle-icon {
+		flex-shrink: 0; /* Zapewnia że ikona nie zostanie zgnieciona */
+		display: block;
+		margin-top: -10px;
+		animation: spin-slow 8s infinite linear;
+	}
+	@keyframes spin-slow {
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	.dash-desc {
+		font-size: 1.15rem;
+		color: rgba(255, 255, 255, 0.7);
+		line-height: 1.6;
+		max-width: 550px;
+		letter-spacing: 0.01em;
+		font-weight: 400;
+	}
+
+	/* CTA BUTTON RESTORED */
+	.btn-container {
+		padding: 2.5rem 0 0 0;
+		display: flex;
+		justify-content: flex-start;
+		position: relative;
+		z-index: 30;
+	}
+
+	.level-up-btn {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.9rem 2.2rem;
+		border-radius: 9999px;
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		color: white;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		font-size: 0.8rem;
+		transition:
+			transform 0.3s ease,
+			background 0.3s ease,
+			box-shadow 0.3s ease;
+		text-decoration: none;
+	}
+
+	.level-up-btn:hover {
+		background: rgba(255, 255, 255, 0.2);
+		transform: translateY(-2px);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+	}
+
+	.btn-text {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+	}
+
+	.arrow-svg {
+		width: 1rem;
+		height: 1rem;
+		animation: bounce-up 2s infinite ease-in-out;
+	}
+
+	@keyframes bounce-up {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-4px);
+		}
+	}
+
+	/* Person Display */
+	.person-img-wrapper {
+		position: absolute;
+		bottom: -5px;
+		right: 10%;
+		height: 105%;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		mask-image: linear-gradient(to top, transparent 0%, black 5%, black 100%);
+		-webkit-mask-image: linear-gradient(to top, transparent 0%, black 5%, black 100%);
+	}
+	.dash-person {
+		height: 100%;
+		width: auto;
+		object-fit: contain;
+		object-position: bottom;
+		filter: drop-shadow(-30px 10px 40px rgba(0, 0, 0, 0.6));
+	}
+
+	/* Card inside Right Column */
+	.floating-glass-card {
+		position: absolute;
+		bottom: 6rem;
+		left: 0;
+		width: 340px;
+		background: rgba(11, 17, 29, 0.4);
+		backdrop-filter: blur(30px);
+		-webkit-backdrop-filter: blur(30px);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		border-top: 1px solid rgba(255, 255, 255, 0.3);
+		border-radius: 24px;
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		box-shadow:
+			0 30px 60px rgba(0, 0, 0, 0.5),
+			inset 0 1px 0 rgba(255, 255, 255, 0.1);
+		pointer-events: auto;
+	}
+	.card-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.card-eyebrow {
+		font-size: 0.65rem;
+		color: rgba(255, 255, 255, 0.5);
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+	.card-arrow {
+		background: rgba(255, 255, 255, 0.1);
+		width: 28px;
+		height: 28px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		color: white;
+		text-decoration: none;
+		transition: background 0.3s;
+	}
+	.card-arrow:hover {
+		background: rgba(255, 255, 255, 0.2);
+	}
+	.card-title {
+		font-size: 1.25rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+	}
+	.card-text {
+		font-size: 0.85rem;
+		color: rgba(255, 255, 255, 0.6);
+		line-height: 1.6;
+	}
+	.card-footer {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-top: 0.5rem;
+	}
+	.footer-text {
+		font-size: 0.65rem;
+		letter-spacing: 0.1em;
+		color: rgba(255, 255, 255, 0.4);
+	}
+	.footer-line {
+		flex: 1;
+		height: 1px;
+		background: rgba(255, 255, 255, 0.1);
+	}
+
+	/* Responsive Design */
+	@media (max-width: 1440px) {
+		.dash-content-wrapper {
+			padding: 0 4rem;
+		}
+		.main-heading {
+			font-size: clamp(3rem, 5vw, 5rem);
+		}
+		.dash-text-col {
+			width: 50%;
+		}
+		.dash-person-col {
+			width: 50%;
+		}
+	}
+
+	@media (max-width: 1024px) {
+		#hero-next {
+			padding: 0;
+		}
+		.glass-dashboard {
+			border-radius: 0;
+			border: none;
+		}
+
+		/* Match original mobile nav spacing */
+		/* Desktop-styled padding is handled by max width overrides above, 
+		   this is strictly for up to 1024px */
+		.navbar,
+		.menu-header {
+			padding: 2rem 2.5rem;
 		}
 		.logo-img {
-			height: 1.5rem;
+			height: 2.5rem;
+		}
+
+		.dash-content-wrapper {
+			flex-direction: column;
+			padding: 0 2rem;
+			justify-content: center;
+			margin-top: 8rem; /* Space for the navbar */
+			text-align: center;
+		}
+		.dash-text-col {
+			width: 100%;
+			align-items: center;
+			margin-bottom: 2rem;
+			height: 45vh; /* Ograniczamy wysokosc by wykorzystac space around */
+			justify-content: space-around; /* Rozłożenie napisu i buttona na mobile */
+		}
+
+		/* Ukrycie gwiazdki na mobile tak jak prosiles */
+		.sparkle-icon {
+			display: none !important;
+		}
+
+		.dash-desc {
+			text-align: center;
 		}
 		.btn-container {
-			padding: 2rem 0;
+			justify-content: center;
+		} /* Center button on mobile */
+
+		/* Hide the person image column completely on mobile */
+		.dash-person-col {
+			display: none !important;
+		}
+		.person-img-wrapper {
+			right: 50%;
+			transform: translateX(50%);
+		}
+		.floating-glass-card {
+			bottom: 1rem;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 90%;
+			max-width: 400px;
+			padding: 1.5rem;
+			text-align: left;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.navbar,
+		.menu-header {
+			padding: 1.5rem;
+		}
+		.logo-img {
+			height: 2rem;
+		}
+		.dash-content-wrapper {
+			padding: 0 1.5rem;
+			margin-top: 6rem;
+		}
+		.main-heading {
+			font-size: clamp(2.5rem, 11vw, 3.5rem);
+		}
+		.dash-person-col {
+			height: 40vh;
+		}
+		.floating-glass-card {
+			bottom: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.arrow-svg {
+			animation: none;
 		}
 	}
 </style>
