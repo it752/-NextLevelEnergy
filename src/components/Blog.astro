@@ -67,6 +67,8 @@ const posts = [
 	<!-- Ambient Background Glows -->
 	<div class="ambient-glow glow-primary"></div>
 	<div class="ambient-glow glow-secondary"></div>
+	<div class="edge-fade edge-fade-top"></div>
+	<div class="edge-fade edge-fade-bottom"></div>
 
 	<div class="bento-container">
 		<!-- Header -->
@@ -245,6 +247,23 @@ const posts = [
 		height: 600px;
 		background-color: #a213da;
 		opacity: 0.05;
+	}
+
+	.edge-fade {
+		position: absolute;
+		left: 0;
+		right: 0;
+		height: 150px;
+		z-index: 10;
+		pointer-events: none;
+	}
+	.edge-fade-top {
+		top: 0;
+		background: linear-gradient(to bottom, #0b111d 0%, transparent 100%);
+	}
+	.edge-fade-bottom {
+		bottom: 0;
+		background: linear-gradient(to top, #0b111d 0%, transparent 100%);
 	}
 
 	.bento-container {
