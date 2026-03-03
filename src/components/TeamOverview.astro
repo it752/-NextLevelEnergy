@@ -1,4 +1,6 @@
 ---
+import { GlowingEffect } from './ui/glowing-effect.tsx';
+
 const stats = [
 	{ value: '50+', label: 'Pracowników' },
 	{ value: '1 mld', label: 'Dotacji dla klientów' },
@@ -76,7 +78,20 @@ const teamMembers = [
 			{
 				teamMembers.map((m, i) => (
 					<div class="to-card" style={`--delay: ${i * 0.08}s`}>
-						<div class="to-card-face to-card-front">
+						<div
+							class="glowing-effect-container absolute inset-0 pointer-events-none"
+							style="border-radius: 16px; z-index: 0;">
+							<GlowingEffect
+								spread={40}
+								glow={true}
+								disabled={false}
+								proximity={64}
+								inactiveZone={0.01}
+								borderWidth={3}
+								client:load
+							/>
+						</div>
+						<div class="to-card-face to-card-front" style="z-index: 10;">
 							<div class="to-avatar">
 								{m.name
 									.split(' ')
@@ -88,7 +103,7 @@ const teamMembers = [
 								<span class="to-role">{m.role}</span>
 							</div>
 						</div>
-						<div class="to-card-face to-card-back">
+						<div class="to-card-face to-card-back" style="z-index: 10;">
 							<div class="to-back-top">
 								<h3>{m.name}</h3>
 								<a href={m.linkedin} aria-label="LinkedIn" class="to-li">

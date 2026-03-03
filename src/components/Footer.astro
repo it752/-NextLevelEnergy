@@ -2,6 +2,7 @@
 // Footer.astro
 import { Image } from 'astro:assets';
 import bgFooter from '../assets/footer/bg-footer.png';
+import { GlowingEffect } from './ui/glowing-effect.tsx';
 ---
 
 <section id="contact" class="footer-next-container">
@@ -52,8 +53,23 @@ import bgFooter from '../assets/footer/bg-footer.png';
 			<div class="action-grid">
 				<!-- Column 1: Contact Form Glass Card -->
 				<div class="glass-card contact-card">
-					<h3 class="card-title">Wyślij zapytanie</h3>
-					<form class="contact-form">
+					<!-- Glow effect container sits perfectly on the border -->
+					<div class="glowing-effect-container absolute inset-0 pointer-events-none">
+						<GlowingEffect
+							spread={40}
+							glow={true}
+							disabled={false}
+							proximity={64}
+							inactiveZone={0.01}
+							borderWidth={3}
+							client:load
+						/>
+					</div>
+					<!-- Background Glass Layer that correctly clips internal overflow without clipping the outside glow -->
+					<div class="glass-bg-layer absolute inset-0 rounded-[24px] pointer-events-none"></div>
+
+					<h3 class="card-title relative z-10">Wyślij zapytanie</h3>
+					<form class="contact-form relative z-10">
 						<div class="form-row">
 							<div class="input-group">
 								<input type="text" id="contact-name" placeholder="Imię i nazwisko" required />
@@ -96,13 +112,28 @@ import bgFooter from '../assets/footer/bg-footer.png';
 				<!-- Column 2: Newsletter & Info -->
 				<div class="info-column">
 					<div class="glass-card newsletter-card">
-						<div class="card-header-small">
+						<div class="glowing-effect-container absolute inset-0 pointer-events-none">
+							<GlowingEffect
+								spread={40}
+								glow={true}
+								disabled={false}
+								proximity={64}
+								inactiveZone={0.01}
+								borderWidth={3}
+								client:load
+							/>
+						</div>
+						<div class="glass-bg-layer absolute inset-0 rounded-[24px] pointer-events-none"></div>
+
+						<div class="card-header-small relative z-10">
 							<span class="card-eyebrow">SYSTEM UPDATE</span>
 						</div>
-						<h3 class="card-title">Newsletter</h3>
-						<p class="card-text">Odbieraj powiadomienia o nowych technologiach i rozwiązaniach OZE.</p>
+						<h3 class="card-title relative z-10">Newsletter</h3>
+						<p class="card-text relative z-10">
+							Odbieraj powiadomienia o nowych technologiach i rozwiązaniach OZE.
+						</p>
 
-						<form class="newsletter-form">
+						<form class="newsletter-form relative z-10">
 							<div class="input-group">
 								<input type="email" id="newsletter-email" placeholder="Twój e-mail" required />
 							</div>
@@ -116,8 +147,21 @@ import bgFooter from '../assets/footer/bg-footer.png';
 					</div>
 
 					<div class="glass-card details-card">
-						<h3 class="card-title">Centrala</h3>
-						<div class="company-address">
+						<div class="glowing-effect-container absolute inset-0 pointer-events-none">
+							<GlowingEffect
+								spread={40}
+								glow={true}
+								disabled={false}
+								proximity={64}
+								inactiveZone={0.01}
+								borderWidth={3}
+								client:load
+							/>
+						</div>
+						<div class="glass-bg-layer absolute inset-0 rounded-[24px] pointer-events-none"></div>
+
+						<h3 class="card-title relative z-10">Centrala</h3>
+						<div class="company-address relative z-10">
 							ul. Kopanina 34<br />
 							60-105 Poznań<br />
 							<a href="mailto:biuro@nextlevelenergy.pl">biuro@nextlevelenergy.pl</a><br />
@@ -322,18 +366,38 @@ import bgFooter from '../assets/footer/bg-footer.png';
 		gap: 2rem;
 	}
 
-	/* Glassmorphism Cards */
+	/* Glassmorphism Cards Container Layer */
 	.glass-card {
+		position: relative;
+		/* overflow: hidden removed to let glowing borders bleed out */
+		border-radius: 24px;
+		padding: 2.5rem;
+	}
+
+	/* Inner background layer for glass effect & shadows */
+	.glass-bg-layer {
 		background: rgba(11, 17, 29, 0.4);
 		backdrop-filter: blur(30px);
 		-webkit-backdrop-filter: blur(30px);
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-top: 1px solid rgba(255, 255, 255, 0.2);
 		border-radius: 24px;
-		padding: 2.5rem;
 		box-shadow:
 			0 30px 60px rgba(0, 0, 0, 0.3),
 			inset 0 1px 0 rgba(255, 255, 255, 0.05);
+		overflow: hidden; /* Only clip the background contents */
+		z-index: 1;
+	}
+
+	/* The actual glowing component sits behind/around the content but effectively on top of bg */
+	.glowing-effect-container {
+		z-index: 2; /* Needs to be above the glass background layer so border shows correctly */
+	}
+
+	/* Ensure all card actual content stays on top of both the background and the glow */
+	.glass-card > *:not(.glowing-effect-container):not(.glass-bg-layer) {
+		position: relative;
+		z-index: 10;
 	}
 
 	.contact-card {
