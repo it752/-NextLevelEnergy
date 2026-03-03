@@ -355,7 +355,7 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
           alpha: true
         });
         this.renderer.setSize(container.offsetWidth, container.offsetHeight, false);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
         this.composer = new EffectComposer(this.renderer);
         container.append(this.renderer.domElement);
 
@@ -403,6 +403,12 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
         this.speedUpTarget = 0;
         this.speedUp = 0;
         this.timeOffset = 0;
+
+        this.isVisible = true;
+        this.observer = new IntersectionObserver((entries) => {
+          this.isVisible = entries[0].isIntersecting;
+        });
+        this.observer.observe(this.container);
 
         this.tick = this.tick.bind(this);
         this.init = this.init.bind(this);
@@ -576,6 +582,10 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
       dispose() {
         this.disposed = true;
 
+        if (this.observer) {
+          this.observer.disconnect();
+        }
+
         if (this.renderer) {
           this.renderer.dispose();
         }
@@ -605,6 +615,13 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
 
       tick() {
         if (this.disposed || !this) return;
+        requestAnimationFrame(this.tick);
+
+        if (!this.isVisible) {
+          this.clock.getDelta(); // keep delta fresh
+          return;
+        }
+
         if (resizeRendererToDisplaySize(this.renderer, this.setSize)) {
           const canvas = this.renderer.domElement;
           this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
@@ -613,7 +630,6 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
         const delta = this.clock.getDelta();
         this.render(delta);
         this.update(delta);
-        requestAnimationFrame(this.tick);
       }
     }
 
