@@ -49,10 +49,7 @@ import logoWhite from '../assets/logo/logo-white.svg';
 					{ label: 'Kariera', href: '#kariera' },
 					{ label: 'Kontakt', href: '#contact' },
 				].map((item, index) => (
-					<a
-						href={item.href}
-						class="menu-item-link"
-						style={`--index: ${index}`}>
+					<a href={item.href} class="menu-item-link" style={`--index: ${index}`}>
 						<span class="menu-item-text">{item.label}</span>
 						<svg
 							class="menu-item-arrow"
@@ -704,9 +701,7 @@ import logoWhite from '../assets/logo/logo-white.svg';
 	}
 
 	.gradient-text {
-		background: linear-gradient(100deg, #a213da, #ff0055);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
+		color: #a213da;
 		display: inline-block;
 		padding-right: 15px; /* Wiekszy padding żeby sparkle mial miejsce i nie uciekał za border */
 	}

@@ -4,137 +4,150 @@ import { Image } from 'astro:assets';
 import bgFooter from '../assets/footer/bg-footer.png';
 ---
 
-<section id="contact" class="footer-stack-container">
-	<!-- LAYER 1: NEWSLETTER -->
-	<div class="footer-layer layer-newsletter">
-		<Image src={bgFooter} alt="" class="bg-img" quality={90} format="webp" />
-		<div class="overlay dark-overlay"></div>
-
-		<div class="layer-content">
-			<div class="newsletter-inner">
-				<svg class="nf-bolt" viewBox="0 0 24 24" fill="currentColor">
-					<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-				</svg>
-				<h2>Zapisz się do<br />naszego Newslettera</h2>
-				<p>
-					Bądź na bieżąco z najnowszymi informacjami ze świata odnawialnych źródeł energii. Odbieraj porady
-					ekspertów i dedykowane oferty The Next Level prosto na swoją skrzynkę.
-				</p>
-
-				<form class="newsletter-form">
-					<div class="input-group">
-						<label for="newsletter-email">Wpisz Twój adres e-mail</label>
-						<input type="email" id="newsletter-email" required />
-					</div>
-
-					<label class="nl-checkbox">
-						<input type="checkbox" required />
-						<span class="nl-mark"></span>
-						<span class="nl-text"
-							>Wyrażam zgodę na otrzymywanie informacji handlowych drogą elektroniczną od The Next Level.
-							Administratorem danych jest The Next Level sp. z o.o. Zapoznałem się z polityką prywatności.</span
-						>
-					</label>
-
-					<button type="submit" class="btn-outline">
-						Zapisz się teraz
-						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M5 12h14M12 5l7 7-7 7"></path>
-						</svg>
-					</button>
-				</form>
-			</div>
+<section id="contact" class="footer-next-container">
+	<!-- Dashboard Container -->
+	<div class="footer-dashboard">
+		<!-- Background Texture & Glows -->
+		<div class="dashboard-bg">
+			<Image src={bgFooter} alt="" class="bg-texture" quality={70} format="webp" />
+			<div class="glow-sphere sphere-1"></div>
+			<div class="glow-sphere sphere-2"></div>
+			<div class="noise-overlay"></div>
 		</div>
-	</div>
 
-	<!-- LAYER 2: CONTACT -->
-	<div class="footer-layer layer-contact">
-		<Image src={bgFooter} alt="" class="bg-img" quality={90} format="webp" />
-		<div class="overlay glass-overlay"></div>
-
-		<div class="layer-content">
-			<div class="contact-inner">
-				<svg class="nf-bolt" viewBox="0 0 24 24" fill="currentColor">
-					<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-				</svg>
-				<h2>Skontaktuj się<br />z nami!</h2>
-				<p>
-					Masz pytania dotyczące naszej oferty lub chcesz dołączyć do zespołu? Pomożemy Ci wybrać najlepsze
-					rozwiązanie i odpowiemy na każdą wiadomość w przeciągu 24 godzin.
-				</p>
-
-				<form class="contact-form">
-					<div class="form-row">
-						<div class="input-group">
-							<label for="contact-name">Wpisz Twoje imię</label>
-							<input type="text" id="contact-name" required />
-						</div>
-						<div class="input-group">
-							<label for="contact-email">Wpisz Twój adres e-mail</label>
-							<input type="email" id="contact-email" required />
-						</div>
-					</div>
-
-					<div class="input-group">
-						<label for="contact-phone">Wpisz Twój numer telefonu (opcjonalnie)</label>
-						<input type="tel" id="contact-phone" />
-					</div>
-
-					<div class="input-group">
-						<label for="contact-msg">Treść wiadomości</label>
-						<textarea id="contact-msg" rows="1" required></textarea>
-					</div>
-
-					<label class="nl-checkbox">
-						<input type="checkbox" required />
-						<span class="nl-mark"></span>
-						<span class="nl-text"
-							>Wyrażam zgodę na przetwarzanie moich danych osobowych przez The Next Level w celu
-							nawiązania kontaktu / obsługi zapytania. Sprawdź naszą politykę prywatności, aby dowiedzieć
-							się więcej.</span
-						>
-					</label>
-
-					<div class="btn-center">
-						<button type="submit" class="btn-outline">
-							Wyślij wiadomość
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M5 12h14M12 5l7 7-7 7"></path>
-							</svg>
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- LAYER 3: REAL FOOTER -->
-	<div class="footer-layer layer-bottom">
-		<Image src={bgFooter} alt="" class="bg-img" quality={90} format="webp" />
-		<div class="overlay solid-overlay"></div>
-
-		<div class="layer-content">
-			<div class="bottom-inner">
-				<div class="company-address">
-					KOPANINA 34 • 60-105 POZNAŃ<br />
-					BIURO@NEXTLEVELENERGY.PL<br />
-					+48 729 979 179
+		<div class="dashboard-content">
+			<!-- Header / Title Area -->
+			<div class="footer-header">
+				<div class="header-eyebrow">
+					<svg class="nf-bolt" viewBox="0 0 24 24" fill="currentColor">
+						<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+					</svg>
+					<span>THE NEXT SYSTEM</span>
 				</div>
+				<h2 class="main-heading">
+					<span class="heading-line line-1">Inicjuj</span>
+					<span class="heading-line line-2">
+						<span class="gradient-text">Połączenie</span>
+						<svg
+							class="sparkle-icon"
+							width="48"
+							height="48"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"
+								fill="#A213DA"
+								filter="drop-shadow(0 0 10px #FF0055)"></path>
+						</svg>
+					</span>
+				</h2>
+				<p class="dash-desc">
+					Gotowy na optymalizację energetyczną? Skontaktuj się z nami lub dołącz do globalnej sieci
+					informacyjnej Next Level Energy.
+				</p>
+			</div>
+
+			<!-- Two Column Action Area -->
+			<div class="action-grid">
+				<!-- Column 1: Contact Form Glass Card -->
+				<div class="glass-card contact-card">
+					<h3 class="card-title">Wyślij zapytanie</h3>
+					<form class="contact-form">
+						<div class="form-row">
+							<div class="input-group">
+								<input type="text" id="contact-name" placeholder="Imię i nazwisko" required />
+							</div>
+							<div class="input-group">
+								<input type="email" id="contact-email" placeholder="Adres e-mail" required />
+							</div>
+						</div>
+						<div class="input-group">
+							<input type="tel" id="contact-phone" placeholder="Numer telefonu (opcjonalnie)" />
+						</div>
+						<div class="input-group">
+							<textarea id="contact-msg" rows="3" placeholder="Treść wiadomości" required></textarea>
+						</div>
+
+						<label class="nl-checkbox">
+							<input type="checkbox" required />
+							<span class="nl-mark"></span>
+							<span class="nl-text"
+								>Akceptuję politykę prywatności i wyrażam zgodę na przetwarzanie danych.</span
+							>
+						</label>
+
+						<button type="submit" class="primary-btn-neon w-full">
+							<span class="btn-icon">
+								<svg
+									viewBox="0 0 24 24"
+									width="16"
+									height="16"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg
+								>
+							</span>
+							Transmituj Wiadomość
+						</button>
+					</form>
+				</div>
+
+				<!-- Column 2: Newsletter & Info -->
+				<div class="info-column">
+					<div class="glass-card newsletter-card">
+						<div class="card-header-small">
+							<span class="card-eyebrow">SYSTEM UPDATE</span>
+						</div>
+						<h3 class="card-title">Newsletter</h3>
+						<p class="card-text">Odbieraj powiadomienia o nowych technologiach i rozwiązaniach OZE.</p>
+
+						<form class="newsletter-form">
+							<div class="input-group">
+								<input type="email" id="newsletter-email" placeholder="Twój e-mail" required />
+							</div>
+							<label class="nl-checkbox">
+								<input type="checkbox" required />
+								<span class="nl-mark"></span>
+								<span class="nl-text">Zgadzam się na otrzymywanie informacji handlowych.</span>
+							</label>
+							<button type="submit" class="outline-btn-neon w-full">Zasubskrybuj kanał</button>
+						</form>
+					</div>
+
+					<div class="glass-card details-card">
+						<h3 class="card-title">Centrala</h3>
+						<div class="company-address">
+							ul. Kopanina 34<br />
+							60-105 Poznań<br />
+							<a href="mailto:biuro@nextlevelenergy.pl">biuro@nextlevelenergy.pl</a><br />
+							<a href="tel:+48729979179">+48 729 979 179</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Bottom Footer Bar -->
+			<div class="footer-bottom-bar">
 				<div class="social-links">
-					<a href="#">INSTAGRAM</a>
-					<a href="#">FACEBOOK</a>
-					<a href="#">TWITTER</a>
-					<a href="#">LINKEDIN</a>
+					<a href="#">IG</a>
+					<a href="#">FB</a>
+					<a href="#">X</a>
+					<a href="#">IN</a>
 				</div>
 				<div class="bottom-legal">
-					<a href="/regulamin">Regulamin</a> / <a href="/rodo">RODO</a> / <a href="/polityka-prywatnosci"
-						>Polityka prywatności</a
-					> / <a href="#" data-cc="show-preferencesModal">Ustawienia Cookies</a><br />
-					<span
-						>Copyright © 2024. All rights reserved. Powered by <a
-							href="https://pawlukstudio.pl/pl"
-							target="_blank"
-							rel="noopener noreferrer">Pawluk Studio</a
+					<a href="/regulamin">Regulamin</a>
+					<span class="dot">•</span>
+					<a href="/rodo">RODO</a>
+					<span class="dot">•</span>
+					<a href="/polityka-prywatnosci">Polityka prywatności</a>
+					<span class="dot">•</span>
+					<button type="button" data-cc="show-preferencesModal" class="cookie-link">Cookies</button>
+				</div>
+				<div class="copyright">
+					© 2024 Next Level. <span class="creator"
+						>Powered by <a href="https://pawlukstudio.pl/pl" target="_blank" rel="noopener noreferrer"
+							>Pawluk Studio</a
 						></span
 					>
 				</div>
@@ -144,199 +157,268 @@ import bgFooter from '../assets/footer/bg-footer.png';
 </section>
 
 <style>
-	/* Global Background for the whole stack */
-	.footer-stack-container {
-		position: relative;
+	.footer-next-container {
 		width: 100%;
-		/* Background with subtle subtle stars/nebula effect */
-		background:
-			radial-gradient(circle at 20% 50%, rgba(162, 19, 218, 0.08) 0%, transparent 50%),
-			radial-gradient(circle at 80% 80%, rgba(0, 71, 255, 0.05) 0%, transparent 50%), #0b111d;
-		/* The container doesn't need a set height, it grows with its relative children OR we can just use sticky stacking */
-	}
-
-	/* Each layer acts as a sticky card that takes up 100vh */
-	.footer-layer {
-		position: sticky;
-		top: 0;
-		height: 100vh;
-		width: 100%;
+		min-height: 100vh;
+		background-color: #020202; /* Very dark outside background matching Hero */
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		padding: 2rem;
 		overflow: hidden;
-
-		/* Give each layer a top border to distinguish stacking if needed */
-		border-top: 1px solid rgba(255, 255, 255, 0.03);
-		/* And a dark blurred background to hide the content underneath */
-		background: rgba(11, 17, 29, 0.95);
-		backdrop-filter: blur(20px);
-		box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.5);
+		position: relative;
 	}
 
-	/* Background Image and Overlays */
-	.bg-img {
+	.footer-dashboard {
+		width: 100%;
+		height: 100%;
+		min-height: 85vh;
+		max-width: 1440px; /* Nieco węższy od hero żeby był skupiony wokół formularza */
+		margin: 0 auto;
+		border-radius: 40px;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: #0b111d;
+		overflow: hidden;
+		position: relative;
+		box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* Dashboard Background Layer */
+	.dashboard-bg {
 		position: absolute;
 		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+	}
+	.bg-texture {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		object-position: center;
-		z-index: 0;
+		opacity: 0.15;
+		mix-blend-mode: color-dodge;
 	}
-
-	.overlay {
+	.glow-sphere {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(100px);
+		opacity: 0.4;
+		will-change: transform;
+	}
+	.sphere-1 {
+		width: 800px;
+		height: 800px;
+		background: radial-gradient(circle, rgba(162, 19, 218, 0.7) 0%, rgba(162, 19, 218, 0) 70%);
+		right: 0%;
+		top: 10%;
+		transform: translate(30%, -30%);
+	}
+	.sphere-2 {
+		width: 600px;
+		height: 600px;
+		background: radial-gradient(circle, rgba(255, 0, 85, 0.4) 0%, rgba(255, 0, 85, 0) 70%);
+		left: -10%;
+		bottom: -10%;
+	}
+	.noise-overlay {
 		position: absolute;
 		inset: 0;
-		z-index: 1;
+		background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+		opacity: 0.03;
+		mix-blend-mode: overlay;
 	}
 
-	.dark-overlay {
-		background: radial-gradient(circle at 50% 50%, rgba(11, 17, 29, 0.4) 0%, rgba(11, 17, 29, 0.9) 100%);
-	}
-
-	.glass-overlay {
-		background: rgba(11, 17, 29, 0.85);
-		backdrop-filter: blur(25px);
-		border-top: 1px solid rgba(255, 255, 255, 0.05);
-	}
-
-	.solid-overlay {
-		background: rgba(11, 17, 29, 0.98);
-		border-top: 1px solid rgba(255, 255, 255, 0.02);
-	}
-
-	/* Disable border/shadow on the first layer overrides */
-	.layer-newsletter {
-		box-shadow: none;
-		background: transparent;
-	}
-
-	.layer-bottom {
-		height: 100vh;
-	}
-
-	/* Content Layouts */
-	.layer-content {
+	/* Main Content Wrapper */
+	.dashboard-content {
 		position: relative;
-		z-index: 2;
-		width: 100%;
-		max-width: 900px;
-		margin: 0 auto;
-		padding: 2rem;
-		text-align: center;
+		z-index: 10;
+		padding: 4rem 6rem 2rem;
+		display: flex;
+		flex-direction: column;
+		flex: 1;
 		color: white;
+	}
+
+	/* Header Typography */
+	.footer-header {
+		text-align: center;
+		margin-bottom: 4rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
 	}
-
-	.nf-bolt {
-		display: block;
-		width: 48px;
-		height: 48px;
-		color: #a213da;
-		margin: 0 auto 1.5rem auto;
-	}
-
-	h2 {
-		font-size: clamp(2.5rem, 5vw, 4rem);
-		font-weight: 800;
-		line-height: 1.1;
+	.header-eyebrow {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.75rem;
+		letter-spacing: 0.2em;
+		color: rgba(255, 255, 255, 0.5);
+		text-transform: uppercase;
 		margin-bottom: 1.5rem;
-		letter-spacing: -0.02em;
+	}
+	.nf-bolt {
+		width: 16px;
+		height: 16px;
+		color: #a213da;
 	}
 
-	p {
-		color: rgba(255, 255, 255, 0.6);
-		font-size: 0.95rem;
-		max-width: 600px;
-		margin: 0 auto 3rem;
+	.main-heading {
+		font-size: clamp(3rem, 5vw, 4.5rem);
+		font-weight: 850;
+		line-height: 1.05;
+		letter-spacing: -0.04em;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 1.5rem;
+	}
+	.heading-line {
+		display: block;
+	}
+	.heading-line.line-2 {
+		display: flex;
+		align-items: center;
+		flex-wrap: nowrap;
+	}
+	.gradient-text {
+		background: linear-gradient(100deg, #a213da, #ff0055);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		display: inline-block;
+		padding-right: 15px;
+	}
+	.sparkle-icon {
+		flex-shrink: 0;
+		display: block;
+		margin-top: -10px;
+		animation: spin-slow 8s infinite linear;
+	}
+	@keyframes spin-slow {
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	.dash-desc {
+		font-size: 1.1rem;
+		color: rgba(255, 255, 255, 0.7);
 		line-height: 1.6;
+		max-width: 600px;
+		font-weight: 400;
 	}
 
-	/* Form Elements */
-	form {
-		width: 100%;
-		max-width: 700px;
-		margin: 0 auto;
+	/* Grid Layout */
+	.action-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 2rem;
+		flex: 1;
+		align-items: stretch;
+	}
+
+	.info-column {
 		display: flex;
 		flex-direction: column;
 		gap: 2rem;
+	}
+
+	/* Glassmorphism Cards */
+	.glass-card {
+		background: rgba(11, 17, 29, 0.4);
+		backdrop-filter: blur(30px);
+		-webkit-backdrop-filter: blur(30px);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-top: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 24px;
+		padding: 2.5rem;
+		box-shadow:
+			0 30px 60px rgba(0, 0, 0, 0.3),
+			inset 0 1px 0 rgba(255, 255, 255, 0.05);
+	}
+
+	.contact-card {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.card-title {
+		font-size: 1.5rem;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		margin-bottom: 0.5rem;
+	}
+
+	.card-text {
+		font-size: 0.9rem;
+		color: rgba(255, 255, 255, 0.6);
+		line-height: 1.6;
+		margin-bottom: 1.5rem;
+	}
+
+	.card-eyebrow {
+		font-size: 0.65rem;
+		color: rgba(255, 255, 255, 0.5);
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		display: block;
+		margin-bottom: 1rem;
+	}
+
+	/* Forms inside cards */
+	form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		width: 100%;
 	}
 
 	.form-row {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: 2rem;
-	}
-
-	.input-group {
-		position: relative;
-		width: 100%;
-		text-align: left;
-	}
-
-	.input-group label {
-		position: absolute;
-		left: 0;
-		top: 50%;
-		transform: translateY(-50%);
-		color: rgba(255, 255, 255, 0.5);
-		font-size: 0.9rem;
-		pointer-events: none;
-		transition: all 0.3s ease;
+		gap: 1.25rem;
 	}
 
 	.input-group input,
 	.input-group textarea {
 		width: 100%;
-		background: transparent;
-		border: none;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-		padding: 0.8rem 0;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 12px;
+		padding: 1rem 1.25rem;
 		color: white;
-		font-size: 1rem;
+		font-size: 0.95rem;
 		font-family: inherit;
+		transition: all 0.3s ease;
 		resize: none;
 	}
 
-	.input-group textarea {
-		min-height: 40px;
+	.input-group input::placeholder,
+	.input-group textarea::placeholder {
+		color: rgba(255, 255, 255, 0.3);
 	}
 
 	.input-group input:focus,
-	.input-group textarea:focus,
-	.input-group input:valid,
-	.input-group textarea:valid {
+	.input-group textarea:focus {
 		outline: none;
-		border-bottom-color: #a213da;
+		border-color: #a213da;
+		background: rgba(255, 255, 255, 0.05);
+		box-shadow: 0 0 0 4px rgba(162, 19, 218, 0.1);
 	}
 
-	.input-group input:focus ~ label,
-	.input-group textarea:focus ~ label,
-	.input-group input:valid ~ label,
-	.input-group textarea:valid ~ label {
-		top: -10px;
-		font-size: 0.75rem;
-		color: #a213da;
-	}
-
-	/* Custom Checkbox */
+	/* Checkboxes */
 	.nl-checkbox {
 		display: flex;
 		align-items: flex-start;
-		gap: 1rem;
-		text-align: left;
+		gap: 0.75rem;
 		cursor: pointer;
-		margin-top: -0.5rem;
+		margin-top: 0.5rem;
 	}
-
 	.nl-checkbox input {
 		display: none;
 	}
-
 	.nl-mark {
 		width: 18px;
 		height: 18px;
@@ -347,11 +429,9 @@ import bgFooter from '../assets/footer/bg-footer.png';
 		flex-shrink: 0;
 		transition: all 0.2s;
 	}
-
 	.nl-checkbox:hover .nl-mark {
 		border-color: rgba(255, 255, 255, 0.6);
 	}
-
 	.nl-mark::after {
 		content: '';
 		position: absolute;
@@ -364,7 +444,6 @@ import bgFooter from '../assets/footer/bg-footer.png';
 		border-width: 0 2px 2px 0;
 		transform: rotate(45deg);
 	}
-
 	.nl-checkbox input:checked ~ .nl-mark {
 		background: #a213da;
 		border-color: #a213da;
@@ -372,140 +451,201 @@ import bgFooter from '../assets/footer/bg-footer.png';
 	.nl-checkbox input:checked ~ .nl-mark::after {
 		display: block;
 	}
-
 	.nl-text {
 		color: rgba(255, 255, 255, 0.4);
-		font-size: 0.7rem;
+		font-size: 0.75rem;
 		line-height: 1.5;
 	}
 
-	/* Buttons */
-	.btn-outline {
+	/* Buttons styling matched to Hero */
+	.primary-btn-neon {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: 0.8rem;
-		padding: 1rem 2.5rem;
-		border: 1px solid rgba(162, 19, 218, 0.5);
+		gap: 1.25rem;
+		padding: 0.5rem 2rem 0.5rem 0.5rem;
 		border-radius: 99px;
-		background: rgba(162, 19, 218, 0.05);
+		background: linear-gradient(90deg, #ff0055, #a213da);
 		color: white;
 		font-weight: 600;
-		font-size: 0.9rem;
+		text-transform: uppercase;
+		text-decoration: none;
+		letter-spacing: 0.05em;
+		font-size: 0.85rem;
+		border: none;
+		cursor: pointer;
+		box-shadow: 0 10px 30px rgba(162, 19, 218, 0.4);
+		transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+		margin-top: 1rem;
+	}
+	.primary-btn-neon:hover {
+		transform: translateY(-3px) scale(1.02);
+		box-shadow: 0 15px 40px rgba(255, 0, 85, 0.5);
+	}
+	.primary-btn-neon.w-full {
+		width: 100%;
+		padding-right: 1.5rem;
+		justify-content: flex-start;
+	}
+
+	.btn-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		background: rgba(255, 255, 255, 0.2);
+		border-radius: 50%;
+		backdrop-filter: blur(5px);
+		-webkit-backdrop-filter: blur(5px);
+	}
+
+	.outline-btn-neon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem 2rem;
+		border-radius: 99px;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		background: transparent;
+		color: white;
+		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
+		font-size: 0.85rem;
 		cursor: pointer;
 		transition: all 0.3s;
-		text-decoration: none;
-		width: fit-content;
-		margin: 1.5rem auto 0;
+		margin-top: 1rem;
 	}
-
-	.btn-outline:hover {
-		background: #a213da;
-		color: white;
-		box-shadow: 0 10px 20px rgba(162, 19, 218, 0.2);
+	.outline-btn-neon:hover {
+		background: rgba(255, 255, 255, 0.1);
+		border-color: white;
 	}
-
-	.btn-outline svg {
-		width: 18px;
-		height: 18px;
-		transition: transform 0.3s;
-	}
-
-	.btn-outline:hover svg {
-		transform: translateX(3px);
-	}
-
-	.btn-center {
-		display: flex;
-		justify-content: center;
+	.outline-btn-neon.w-full {
 		width: 100%;
 	}
 
-	.btn-bottom-center {
-		position: absolute;
-		bottom: 3rem;
-		left: 50%;
-		transform: translateX(-50%);
-	}
-
-	.btn-small {
-		padding: 0.6rem 1.5rem;
-		font-size: 0.8rem;
-	}
-	.btn-small svg {
-		transform: rotate(-90deg);
-	}
-	.btn-small:hover svg {
-		transform: rotate(-90deg) translateY(-3px);
-	}
-
-	/* Layer 3 - Bottom Info */
-	.bottom-inner {
+	/* Company Address Column */
+	.details-card {
+		flex: 1;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		gap: 3rem;
+		justify-content: center;
 	}
 
 	.company-address {
-		font-size: 1.2rem;
-		font-weight: 700;
+		font-size: 1rem;
+		font-weight: 500;
 		line-height: 1.8;
-		letter-spacing: 0.05em;
+		color: rgba(255, 255, 255, 0.8);
+	}
+	.company-address a {
+		color: white;
+		text-decoration: none;
+		transition: color 0.3s;
+	}
+	.company-address a:hover {
+		color: #a213da;
+	}
+
+	/* Bottom Footer Bar */
+	.footer-bottom-bar {
+		margin-top: 5rem;
+		padding-top: 2rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1.5rem;
 	}
 
 	.social-links {
 		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
+		gap: 1.5rem;
 	}
-
 	.social-links a {
 		color: rgba(255, 255, 255, 0.6);
 		text-decoration: none;
 		font-size: 0.85rem;
-		letter-spacing: 0.1em;
+		font-weight: 600;
 		transition: color 0.3s;
 	}
-
 	.social-links a:hover {
-		color: #a213da;
-	}
-
-	.bottom-legal {
-		margin-top: 2rem;
-		font-size: 0.75rem;
-		color: rgba(255, 255, 255, 0.3);
-		line-height: 2;
-	}
-
-	.bottom-legal span {
-		cursor: pointer;
-		transition: color 0.3s;
-	}
-	.bottom-legal span:hover {
 		color: white;
 	}
 
-	/* Responsive Details */
-	@media (max-width: 768px) {
+	.bottom-legal {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		font-size: 0.8rem;
+		color: rgba(255, 255, 255, 0.5);
+	}
+	.bottom-legal a,
+	.cookie-link {
+		color: inherit;
+		text-decoration: none;
+		transition: color 0.3s;
+		background: none;
+		border: none;
+		font-family: inherit;
+		font-size: inherit;
+		cursor: pointer;
+		padding: 0;
+	}
+	.bottom-legal a:hover,
+	.cookie-link:hover {
+		color: white;
+	}
+	.dot {
+		opacity: 0.3;
+	}
+
+	.copyright {
+		font-size: 0.8rem;
+		color: rgba(255, 255, 255, 0.4);
+	}
+	.creator a {
+		color: rgba(255, 255, 255, 0.7);
+		text-decoration: none;
+	}
+	.creator a:hover {
+		color: white;
+	}
+
+	/* Responsive */
+	@media (max-width: 1024px) {
+		.action-grid {
+			grid-template-columns: 1fr;
+		}
+		.dashboard-content {
+			padding: 4rem 3rem 2rem;
+		}
 		.form-row {
 			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.footer-next-container {
+			padding: 0;
+		}
+		.footer-dashboard {
+			border-radius: 0;
+			border: none;
+		}
+		.dashboard-content {
+			padding: 4rem 1.5rem 2rem;
+		}
+		.footer-bottom-bar {
+			flex-direction: column;
+			text-align: center;
 			gap: 2rem;
 		}
-
-		h2 {
-			font-size: 2.2rem;
-		}
-
-		.layer-content {
-			padding: 1.5rem;
-		}
-
-		.btn-bottom-center {
-			bottom: 1.5rem;
+		.bottom-legal {
+			flex-wrap: wrap;
+			justify-content: center;
 		}
 	}
 </style>
