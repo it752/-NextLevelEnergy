@@ -1,8 +1,7 @@
 ---
 import { Image } from 'astro:assets';
-import heroBg from '../assets/hero/hero-bg.png';
-import heroRight from '../assets/hero/hero-right.png';
 import logoWhite from '../assets/logo/logo-white.svg';
+import Hyperspeed from './Hyperspeed.jsx';
 ---
 
 <section id="hero-next">
@@ -66,76 +65,80 @@ import logoWhite from '../assets/logo/logo-white.svg';
 	</div>
 
 	<!-- Dashboard Container -->
-	<div class="hero-container-dashboard">
-		<div class="glass-dashboard">
-			<!-- Background Texture & Glows -->
-			<div class="dashboard-bg">
-				<Image
-					src={heroBg}
-					alt=""
-					class="bg-texture"
-					widths={[640, 1024, 1440]}
-					sizes="100vw"
-					loading="eager"
-					fetchpriority="high"
-					quality={50}
-				/>
-				<div class="glow-sphere sphere-1"></div>
-				<div class="glow-sphere sphere-2"></div>
-				<div class="noise-overlay"></div>
-			</div>
+	<!-- Background Texture & Glows -->
+	<div class="dashboard-bg">
+		<Hyperspeed
+			client:load
+			effectOptions={{
+				onSpeedUp: () => {},
+				onSlowDown: () => {},
+				distortion: 'turbulentDistortion',
+				length: 400,
+				roadWidth: 10,
+				islandWidth: 2,
+				lanesPerRoad: 3,
+				fov: 90,
+				fovSpeedUp: 150,
+				speedUp: 2,
+				carLightsFade: 0.4,
+				totalSideLightSticks: 20,
+				lightPairsPerRoadWay: 40,
+				shoulderLinesWidthPercentage: 0.05,
+				brokenLinesWidthPercentage: 0.1,
+				brokenLinesLengthPercentage: 0.5,
+				lightStickWidth: [0.12, 0.5],
+				lightStickHeight: [1.3, 1.7],
+				movingAwaySpeed: [60, 80],
+				movingCloserSpeed: [-120, -160],
+				carLightsLength: [12, 80],
+				carLightsRadius: [0.05, 0.14],
+				carWidthPercentage: [0.3, 0.5],
+				carShiftX: [-0.8, 0.8],
+				carFloorSeparation: [0, 5],
+				colors: {
+					roadColor: 526344,
+					islandColor: 657930,
+					background: 0x0b111d,
+					shoulderLines: 1250072,
+					brokenLines: 1250072,
+					leftCars: [14177983, 6770850, 12732332],
+					rightCars: [242627, 941733, 3294549],
+					sticks: 242627,
+				},
+			}}
+		/>
+	</div>
 
-			<!-- Dashboard Content -->
-			<div class="dash-content-wrapper hero-content-anim">
-				<!-- Left Text Column -->
-				<div class="dash-text-col">
-					<h1 class="main-heading">
-						<span class="heading-line line-1">Nowa Era</span>
-						<span class="heading-line line-2">
-							<span class="gradient-text">Efektywności</span>
-						</span>
-						<span class="heading-line line-3">Energetycznej</span>
-					</h1>
-					<p class="dash-desc">
-						Zmień sposób, w jaki Twoja firma korzysta z energii. Od zaawansowanych systemów HVAC po pełną
-						niezależność fotowoltaiczną. Najwyższy standard inteligentnych rozwiązań.
-					</p>
+	<!-- Dashboard Content -->
+	<div class="dash-content-wrapper hero-content-anim">
+		<!-- Centered Text Column -->
+		<div class="dash-text-col">
+			<h1 class="main-heading">
+				<span class="heading-line line-1">Nowa Era</span>
+				<span class="heading-line line-2">
+					<span class="gradient-text">Efektywności</span>
+				</span>
+				<span class="heading-line line-3">Energetycznej</span>
+			</h1>
 
-					<!-- Restored CTA Button -->
-					<div class="btn-container">
-						<a href="#idea" class="level-up-btn">
-							<span class="btn-text">
-								Level Up
-								<svg
-									class="arrow-svg"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="3"
-									stroke-linecap="round"
-									stroke-linejoin="round">
-									<path d="M7 11l5-5 5 5"></path>
-									<path d="M7 18l5-5 5 5"></path>
-								</svg>
-							</span>
-						</a>
-					</div>
-				</div>
-
-				<!-- Right Person -->
-				<div class="dash-person-col">
-					<div class="person-img-wrapper">
-						<Image
-							src={heroRight}
-							alt="Mateusz Pawluk"
-							class="dash-person"
-							widths={[400, 800]}
-							sizes="(max-width: 1024px) 80vw, 40vw"
-							loading="eager"
-							fetchpriority="high"
-						/>
-					</div>
-				</div>
+			<!-- Restored CTA Button -->
+			<div class="btn-container">
+				<a href="#idea" class="level-up-btn">
+					<span class="btn-text">
+						Level Up
+						<svg
+							class="arrow-svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="3"
+							stroke-linecap="round"
+							stroke-linejoin="round">
+							<path d="M7 11l5-5 5 5"></path>
+							<path d="M7 18l5-5 5 5"></path>
+						</svg>
+					</span>
+				</a>
 			</div>
 		</div>
 	</div>
@@ -244,30 +247,6 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		padding: 2rem;
 		overflow: hidden;
 		position: relative;
-	}
-
-	.hero-container-dashboard {
-		width: 100%;
-		height: 100%;
-		max-width: 1920px;
-		margin: 0 auto;
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.glass-dashboard {
-		width: 100%;
-		height: 100%;
-		border-radius: 40px;
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		background: #0b111d;
-		overflow: hidden;
-		position: relative;
-		box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
-		display: flex;
-		flex-direction: column;
 	}
 
 	/* FIXED NAVBAR RESTORED */
@@ -634,22 +613,30 @@ import logoWhite from '../assets/logo/logo-white.svg';
 
 	/* Desktop Layout Content */
 	.dash-content-wrapper {
-		flex: 1;
+		width: 100vw;
+		min-height: 100vh;
+		min-height: 100lvh;
 		position: relative;
 		z-index: 10;
 		display: flex;
-		padding: 0 6rem;
+		padding: 0 2rem;
 		align-items: center;
+		justify-content: center;
+		pointer-events: none;
 	}
 
 	/* Typography & Animations */
 	.dash-text-col {
-		width: 55%;
+		width: 100%;
+		max-width: 800px;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
+		text-align: center;
 		gap: 2.5rem;
 		opacity: 0;
 		transform: translateY(40px);
+		pointer-events: auto;
 	}
 	.dash-person-col {
 		width: 45%;
@@ -717,20 +704,11 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		}
 	}
 
-	.dash-desc {
-		font-size: 1.15rem;
-		color: rgba(255, 255, 255, 0.7);
-		line-height: 1.6;
-		max-width: 550px;
-		letter-spacing: 0.01em;
-		font-weight: 400;
-	}
-
 	/* CTA BUTTON RESTORED */
 	.btn-container {
 		padding: 2.5rem 0 0 0;
 		display: flex;
-		justify-content: flex-start;
+		justify-content: center;
 		position: relative;
 		z-index: 30;
 	}
@@ -898,10 +876,6 @@ import logoWhite from '../assets/logo/logo-white.svg';
 		#hero-next {
 			padding: 0;
 		}
-		.glass-dashboard {
-			border-radius: 0;
-			border: none;
-		}
 
 		/* Match original mobile nav spacing */
 		/* Desktop-styled padding is handled by max width overrides above, 
@@ -918,15 +892,18 @@ import logoWhite from '../assets/logo/logo-white.svg';
 			flex-direction: column;
 			padding: 0 2rem;
 			justify-content: center;
-			margin-top: 8rem; /* Space for the navbar */
 			text-align: center;
+			height: 100vh;
+			height: 100lvh;
 		}
 		.dash-text-col {
 			width: 100%;
 			align-items: center;
 			margin-bottom: 2rem;
-			height: 45vh; /* Ograniczamy wysokosc by wykorzystac space around */
-			justify-content: space-around; /* Rozłożenie napisu i buttona na mobile */
+			height: 70vh; /* Większa wysokość dla rozstrzelenia */
+			padding-top: 6rem; /* Odstęp od góry (navbara) */
+			padding-bottom: 3rem; /* Odstęp od dołu */
+			justify-content: space-between; /* H1 leci na górę, Level Up na dół */
 		}
 
 		/* Ukrycie gwiazdki na mobile tak jak prosiles */
@@ -934,9 +911,6 @@ import logoWhite from '../assets/logo/logo-white.svg';
 			display: none !important;
 		}
 
-		.dash-desc {
-			text-align: center;
-		}
 		.btn-container {
 			justify-content: center;
 		} /* Center button on mobile */
