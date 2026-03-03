@@ -3,854 +3,816 @@ import { Image } from 'astro:assets';
 import blog1 from '../assets/blog/blog-1.png';
 import blog2 from '../assets/blog/blog-2.png';
 import blog3 from '../assets/blog/blog-3.png';
+import { GlowingEffect } from './ui/glowing-effect.tsx';
 
 const posts = [
 	{
 		id: 1,
-		title: 'Nowoczesne systemy klimatyzacji',
+		title: 'Integracja zespołu w polskich górach',
 		date: '12.02.2025',
-		excerpt: 'Efektywność jednostek HVAC w biurach.',
+		excerpt: 'Weekend pełen wyzwań i wspólnej zabawy.',
 		fullText:
-			'W dzisiejszych czasach efektywność energetyczna staje się kluczowym elementem strategii każdego nowoczesnego przedsiębiorstwa. Inwestycja w nowoczesne systemy HVAC oraz odnawialne źródła energii to nie tylko ukłon w stronę planety, ale przede wszystkim realne oszczędności operacyjne. Nasze systemy projektowane są z myślą o maksymalnej wydajności przy minimalnym zużyciu zasobów. Skupiamy się na inteligentnym zarządzaniu temperaturą i jakością powietrza, co bezpośrednio przekłada się na komfort pracy pracowników i ich efektywność. Wykorzystujemy najnowszą technologię inwerterową oraz ekologiczne czynniki chłodnicze. Integracja z systemami smart-grid pozwala na jeszcze lepsze zarządzanie nadwyżkami energii.',
+			'W naszej firmie wierzymy, że najlepsze pomysły rodzą się z dala od biurek. Nasz ostatni wyjazd integracyjny do Zakopanego to nie tylko kilometry pokonane na szlakach, ale też dziesiątki godzin rozmów i wspólnych gier, które zbliżyły nas do siebie. Po wymagającym sezonie projektowym taki odpoczynek był nam wszystkim potrzebny. W górach nauczyliśmy się ufać sobie nawzajem i jeszcze sprawniej rozwiązywać problemy jako zespół. Zobaczcie sami, jak Level Up ładuje baterie przed kolejnymi wyzwaniami w branży OZE!',
 		image: blog1,
 	},
 	{
 		id: 2,
-		title: 'Przyszłość energii odnawialnej',
+		title: 'Akademia Liderów – pierwsza edycja',
 		date: '08.02.2025',
-		excerpt: 'Fotowoltaika jako fundament niezależności.',
+		excerpt: 'Inwestujemy w rozwój kompetencji miękkich.',
 		fullText:
-			'Energia słoneczna to niewyczerpane źródło możliwości dla Twojej firmy. Implementacja systemów fotowoltaicznych w połączeniu z inteligentnym magazynowaniem energii pozwala na drastyczną redukcję kosztów stałych. Nasze instalacje charakteryzują się najwyższą sprawnością i trwałością, zapewniając szybki zwrot z inwestycji. Pomagamy w doborze optymalnej mocy instalacji, analizując profil zużycia energii w Twoim obiekcie. Każdy projekt jest szyty na miarę, uwzględniając specyficzne uwarunkowania techniczne i lokalizacyjne.',
+			'Rozwój techniczny to u nas podstawa, ale wiemy, że efektywne zarządzanie projektami i relacjami wymaga czegoś więcej. Z dumą ogłaszamy zakończenie pierwszej edycji naszej "Akademii Liderów" – trzymiesięcznego cyklu warsztatów z asertywności, rozwiązywania konfliktów i motywowania zespołu. Program zgromadził kilkunastu najbardziej zaangażowanych pracowników, którzy pod okiem doświadczonych mentorów doskonalili swoje predyspozycje do objęcia w przyszłości ważnych ról w strukturach naszej filmy.',
 		image: blog2,
 	},
 	{
 		id: 3,
-		title: 'Serwis i konserwacja urządzeń',
+		title: 'Nasze nowe biuro – więcej niż miejsce pracy',
 		date: '01.02.2025',
-		excerpt: 'Gwarancja ciągłości pracy systemów.',
+		excerpt: 'Przestrzeń zaprojektowana z myślą o ludziach.',
 		fullText:
-			'Regularny serwis to nie tylko wymóg gwarancyjny, to przede wszystkim dbałość o żywotność Twoich urządzeń. Nasz zespół techników posiada wieloletnie doświadczenie w serwisowaniu najbardziej skomplikowanych układów chłodniczych i wentylacyjnych. Dzięki prewencyjnej diagnostyce jesteśmy w stanie wykryć potencjalne zagrożenia zanim przerodzą się w kosztowne awarie. Oferujemy całodobowe wsparcie techniczne i gwarantujemy czas reakcji dostosowany do procesów krytycznych w Twojej firmie.',
+			'Kolejny krok przed nami! Otworzyliśmy nowoczesną siedzibę, która została zaprojektowana specjalnie dla naszego rosnącego zespołu inżynierów i handlowców. Stworzyliśmy przestrzeń, która promuje kreatywność – znajdziecie tu zarówno ciche strefy do pracy w skupieniu, jak i duże obszary wspólne sprzyjające swobodnej wymianie pomysłów przy kawie. Ale największym hitem biura jest zdecydowanie nasza sala relaksu z piłkarzykami i konsolą. Nowe biuro to obietnica lepszych warunków dla każdego z naszych pracowników.',
 		image: blog3,
 	},
 	{
 		id: 4,
-		title: 'Inteligentne zarządzanie budynkiem',
+		title: 'Mistrzostwa firmy w kartingu',
 		date: '25.01.2025',
-		excerpt: 'Pełna kontrola nad zużyciem mediów.',
+		excerpt: 'Sportowa rywalizacja poza godzinami pracy.',
 		fullText:
-			'Systemy BMS (Building Management System) to mózg nowoczesnej infrastruktury. Pozwalają one na centralne sterowanie wszystkimi instalacjami w obiekcie – od oświetlenia, przez klimatyzację, aż po systemy bezpieczeństwa. Dzięki zaawansowanej analityce danych, zarządca budynku otrzymuje kompletne informacje o zużyciu energii i mediów, co pozwala na identyfikację obszarów do optymalizacji. Nasze rozwiązania zwiększają komfort użytkowników przy jednoczesnym obniżeniu śladu węglowego obiektu.',
+			'W ostatni weekend nasz zespół postanowił zmierzyć się w nieco innej domenie niż dotychczas – zorganizowaliśmy firmowe mistrzostwa w wyścigach gokartów! Po emocjonujących eliminacjach i niesamowicie zaciętym finale wyłoniliśmy zwycięzcę z działu technicznego. Jednak tego dnia nie liczyły się tylko czasy okrążeń. Liczyła się zdrowa, przyjazna sportowa rywalizacja, zbijanie "piątek" i niesamowita atmosfera. Tego typu spotkania wspaniale odstresowują nas po trudach codziennej, intensywnej pracy.',
 		image: blog1,
 	},
 	{
 		id: 5,
-		title: 'Ekologiczne rozwiązania w HVAC',
+		title: 'Targi technologii OZE – byliśmy tam!',
 		date: '15.01.2025',
-		excerpt: 'Wybór czynnika a efektywność systemów.',
+		excerpt: 'Nasi inżynierowie zdobywają nową wiedzę.',
 		fullText:
-			'Ekologia idzie w parze z ekonomią. Nowoczesne czynniki chłodnicze o niskim współczynniku GWP nie tylko chronią atmosferę, ale często charakteryzują się lepszymi właściwościami termodynamicznymi, co przekłada się na niższą konsumpcję energii przez kompresory. Doradzamy w procesie modernizacji starych układów, pomagając uzyskać dotacje na wymianę źródła ciepła i chłodu. Stawiamy na pompy ciepła i systemy odzysku energii, które stają się standardem w nowoczesnym budownictwie przemysłowym.',
+			'Branża Odnawialnych Źródeł Energii pędzi do przodu z niesamowitą prędkością, dlatego nasi specjaliści po prostu muszą być na bieżąco. Grupa inżynierów i projektantów z naszej firmy wzięła udział w największych branżowych targach we Frankfurcie. Zdobyliśmy tam masę nowej wiedzy o pompach ciepła nowej generacji i zaawansowanych systemach zarządzania energią (BMS). Ta cenna wiedza już niedługo zostanie przekuta w realne szkolenia wewnętrzne, podnosząc kompetencje wszystkich pracowników.',
 		image: blog2,
 	},
 	{
 		id: 6,
-		title: 'Szkolenia i rozwój zespołu NF',
+		title: 'Owocowe czwartki? Śniadania!',
 		date: '05.01.2025',
-		excerpt: 'Inwestujemy w ludzi, budujemy jakość.',
+		excerpt: 'Rozmowy przy stole w drodze do pracy.',
 		fullText:
-			'Nasz zespół to nasza największa wartość. Regularnie uczestniczymy w certyfikowanych szkoleniach technicznych u czołowych producentów sprzętu HVAC i OZE. Wiedza teoretyczna połączona z praktyką na budowach pozwala nam na rozwiązywanie nawet najbardziej nietypowych problemów inżynierskich. Kultura dzielenia się wiedzą wewnątrz firmy sprawia, że każdy poziom realizacji – od projektu po serwis – trzyma najwyższe standardy jakościowe zgodne z filozofią Level Up.',
+			'W zeszłym miesiącu zrobiliśmy mały audyt naszych firmowych benefitów. Odkryliśmy, że zamiast standardowych rozwiązań, nasz zespół znacznie bardziej ceni wspólnie spędzany czas! Dlatego wprowadziliśmy tradycję piątkowych "Wielkich Śniadań". Dział po departamencie - co tydzień ktoś inny przejmuje kuchenne stery i przygotowuje autorskie posiłki dla całego biura. Od pancaków po tradycyjne jajecznice. Taka przerwa sprzyja wzmacnianiu relacji i lepszej współpracy w nadchodzącym tygodniu.',
 		image: blog3,
 	},
 ];
-
-// Double the posts for infinite illusion if needed, but we'll use a circular approach in JS
-const loopPosts = [...posts, ...posts, ...posts];
 ---
 
-<section id="idea" class="blog-section h-screen max-h-screen">
-	<!-- Dynamic Background Text -->
-	<div class="bg-scroll-text" aria-hidden="true">
-		<div class="scroll-track">
-			<span>IDEA</span><span>IDEA</span><span>IDEA</span>
+<section id="idea" class="blog-section selection:bg-[#a213da] selection:text-white">
+	<!-- Ambient Background Glows -->
+	<div class="ambient-glow glow-primary"></div>
+	<div class="ambient-glow glow-secondary"></div>
+
+	<div class="bento-container">
+		<!-- Header -->
+		<div class="bento-header">
+			<div class="bento-badge">
+				<span class="pulse-dot"></span>
+				<span class="badge-text">Employer Branding</span>
+			</div>
+			<h2 class="bento-heading">
+				Życie firmy <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#a213da] to-[#c026d3]"
+					>od kuchni</span
+				>,<br />
+				czyli blog naszego zespołu.
+			</h2>
+			<p class="bento-subheading">
+				Rozwijamy technologie przyszłości, ale to ludzie są naszym największym zasobem. Przeczytaj najnowsze
+				wpisy o naszych wyjazdach, szkoleniach i codziennym życiu biurowym Level Up.
+			</p>
+		</div>
+
+		<!-- Bento Grid -->
+		<div class="bento-grid">
+			{
+				posts.map((post, i) => (
+					<div
+						class={`bento-card group item-${i % 6} ${i >= 6 ? 'hidden-post hidden opacity-0' : ''}`}
+						data-id={post.id}
+						data-title={post.title}
+						data-date={post.date}
+						data-excerpt={post.excerpt}
+						data-text={post.fullText}
+						data-img={post.image.src}>
+						<div
+							class="glowing-effect-container absolute inset-0 pointer-events-none"
+							style="border-radius: 24px; z-index: 5;">
+							<GlowingEffect
+								spread={40}
+								glow={true}
+								disabled={false}
+								proximity={64}
+								inactiveZone={0.01}
+								borderWidth={3}
+								borderRadius={24}
+								client:load
+							/>
+						</div>
+						<div class="bento-inner">
+							<div class="bento-image-wrapper">
+								<Image src={post.image} alt={post.title} class="bento-img" />
+								<div class="bento-overlay" />
+							</div>
+							<div class="bento-content">
+								<div class="bento-meta">
+									<span class="bento-date">{post.date}</span>
+									<div class="bento-arrow">
+										<svg
+											viewBox="0 0 24 24"
+											width="16"
+											height="16"
+											stroke="currentColor"
+											stroke-width="2"
+											fill="none"
+											class="bento-arrow-icon">
+											<path d="M5 12h14M12 5l7 7-7 7" />
+										</svg>
+									</div>
+								</div>
+								<h3 class="bento-title">{post.title}</h3>
+								<p class="bento-excerpt">{post.excerpt}</p>
+							</div>
+						</div>
+					</div>
+				))
+			}
+		</div>
+
+		<!-- Load More Button (Only if > 6 posts) -->
+		{
+			posts.length > 6 && (
+				<div class="flex justify-center mt-12 relative z-50">
+					<button
+						id="load-more-btn"
+						class="group relative px-6 py-3 rounded-full bg-white/5 border border-white/20 text-white font-medium uppercase tracking-wider text-xs overflow-hidden transition-all hover:bg-white/10 hover:border-white/40 active:scale-95 flex items-center gap-3 backdrop-blur-md">
+						<span class="relative z-10">Wczytaj więcej</span>
+						<svg
+							class="relative z-10 w-4 h-4 transition-transform group-hover:translate-y-1"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round">
+							<path d="M6 9l6 6 6-6" />
+						</svg>
+					</button>
+				</div>
+			)
+		}
+
+		<!-- Bottom Button -->
+		<div class="bento-btn-wrapper">
+			<a href="#history" class="btn-levelup">
+				<span class="btn-label">Level Up</span>
+				<svg
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="3"
+					stroke-linecap="round"
+					stroke-linejoin="round">
+					<path d="M7 11l5-5 5 5"></path>
+					<path d="M7 18l5-5 5 5"></path>
+				</svg>
+			</a>
 		</div>
 	</div>
 
-	<div class="blog-container h-full">
-		<div class="blog-layout h-full">
-			<!-- LEFT: STACKED LIST (Infinite-ish loop) -->
-			<div class="list-column h-full">
-				<button class="nav-arrow up" id="scroll-up" aria-label="Przewiń wpisy do góry">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-						><path d="M18 15l-6-6-6 6"></path></svg
-					>
-				</button>
+	<!-- Custom Modal -->
+	<div id="article-modal" class="modal-wrapper hidden">
+		<div id="modal-backdrop" class="modal-backdrop"></div>
 
-				<div class="list-viewport" id="list-viewport">
-					<div class="edge-fade top"></div>
-					<div class="items-track" id="blog-list">
-						{
-							loopPosts.map((post, idx) => (
-								<div
-									class="blog-post-card group"
-									data-id={post.id}
-									data-title={post.title}
-									data-date={post.date}
-									data-desc={post.fullText}
-									data-img={post.image.src}>
-									<div class="card-image">
-										<Image src={post.image} alt="" class="object-cover w-full h-full" />
-									</div>
-									<div class="card-content">
-										<h3>{post.title}</h3>
-										<p>{post.excerpt}</p>
-									</div>
-								</div>
-							))
-						}
-					</div>
-					<div class="edge-fade bottom"></div>
-				</div>
+		<div id="modal-container" class="modal-container">
+			<button id="close-modal" class="modal-close" aria-label="Zamknij">
+				<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+					<path d="M18 6L6 18M6 6l12 12"></path>
+				</svg>
+			</button>
 
-				<button class="nav-arrow down" id="scroll-down" aria-label="Przewiń wpisy w dół">
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-						><path d="M19 9l-7 7-7-7"></path></svg
-					>
-				</button>
+			<div class="modal-hero">
+				<img id="modal-img" src="" alt="" class="modal-img-element" />
+				<div class="modal-hero-gradient"></div>
 			</div>
 
-			<!-- RIGHT: MAIN DISPLAY (Centered vertically to left) -->
-			<div class="main-display h-full">
-				<!-- Initial Intro Content -->
-				<div id="intro-content" class="intro-view">
-					<div class="lightning-wrapper">
-						<svg class="lightning-svg" viewBox="0 0 24 24" fill="currentColor"
-							><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg
-						>
-					</div>
-					<h2 class="display-title">
-						Praca, w której <span class="highlight">chcesz być</span>,<br />
-						nie musisz tylko bywać.
-					</h2>
-					<p class="display-intro">
-						Wierzymy, że dobra praca to nie tylko miejsce, gdzie „odbijasz kartę”. To przestrzeń, w której
-						Twoje zaangażowanie ma znaczenie.
-					</p>
+			<div class="modal-body scrollbar-hide">
+				<div class="modal-content-meta">
+					<span id="modal-date" class="modal-content-date"></span>
+					<span class="modal-content-dot"></span>
+					<span class="modal-content-category">NF Team</span>
 				</div>
-
-				<!-- Detailed Article Content -->
-				<article class="featured-article" id="featured-article" style="display: none;">
-					<div class="article-media">
-						<img src="" alt="" id="featured-image" class="main-img" />
-						<div class="media-blur-bottom"></div>
-						<button id="back-to-intro" class="close-article" aria-label="Zamknij artykuł">
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-								><path d="M18 6L6 18M6 6l12 12"></path></svg
-							>
-						</button>
-					</div>
-
-					<div class="article-scroll-container scroll-hide">
-						<div class="article-body">
-							<div class="meta">
-								<span class="date" id="featured-date"></span>
-								<div class="divider"></div>
-								<span class="category">NF Team</span>
-							</div>
-							<h3 class="title" id="featured-title"></h3>
-							<div class="text" id="featured-text"></div>
-						</div>
-						<div class="content-blur-bottom"></div>
-					</div>
-				</article>
+				<h3 id="modal-title" class="modal-content-title"></h3>
+				<div id="modal-text" class="modal-content-text"></div>
 			</div>
-		</div>
-
-		<!-- Bottom Button -->
-		<div class="btn-container">
-			<a href="#history" class="level-up-btn">
-				<span class="btn-text">
-					Level Up
-					<svg
-						class="arrow-svg"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="3"
-						stroke-linecap="round"
-						stroke-linejoin="round">
-						<path d="M7 11l5-5 5 5"></path>
-						<path d="M7 18l5-5 5 5"></path>
-					</svg>
-				</span>
-			</a>
 		</div>
 	</div>
 </section>
 
-<script>
-	const track = document.getElementById('blog-list');
-	const cards = document.querySelectorAll('.blog-post-card');
-	const upBtn = document.getElementById('scroll-up');
-	const downBtn = document.getElementById('scroll-down');
-	const viewport = document.getElementById('list-viewport');
-
-	const mainDisplay = document.querySelector('.main-display') as HTMLElement | null;
-	const introView = document.getElementById('intro-content');
-	const featuredArticle = document.getElementById('featured-article');
-	const backBtn = document.getElementById('back-to-intro');
-	const fTitle = document.getElementById('featured-title');
-	const fDate = document.getElementById('featured-date');
-	const fText = document.getElementById('featured-text');
-	const fImage = document.getElementById('featured-image') as HTMLImageElement | null;
-
-	// Infinite Scroll setup for Desktop
-	const originalCount = 6;
-	const cardHeight = 110 + 16;
-	let currentIndex = originalCount;
-	let isAnimating = false;
-
-	const updateTrack = (instant = false) => {
-		if (!track) return;
-		if (window.innerWidth < 1024) {
-			track.style.transform = 'none';
-			return;
-		}
-		track.style.transition = instant ? 'none' : 'transform 0.6s cubic-bezier(0.19, 1, 0.22, 1)';
-		track.style.transform = `translateY(-${currentIndex * cardHeight - 60}px)`;
-
-		cards.forEach((card, i) => {
-			card.classList.remove('edge-blur-item');
-			const relativeIndex = i - currentIndex;
-			if (relativeIndex === 0 || relativeIndex === 5) {
-				card.classList.add('edge-blur-item');
-			}
-		});
-	};
-
-	const move = (dir: number) => {
-		if (!track || isAnimating || window.innerWidth < 1024) return;
-		isAnimating = true;
-		currentIndex += dir;
-		updateTrack();
-
-		track.addEventListener(
-			'transitionend',
-			() => {
-				isAnimating = false;
-				if (currentIndex >= originalCount * 2) {
-					currentIndex = originalCount;
-					updateTrack(true);
-				} else if (currentIndex < originalCount) {
-					currentIndex = originalCount * 2 - 1;
-					updateTrack(true);
-				}
-			},
-			{ once: true },
-		);
-	};
-
-	viewport?.addEventListener(
-		'wheel',
-		(e: Event) => {
-			const wheelEvent = e as WheelEvent;
-			if (window.innerWidth < 1024) return;
-			wheelEvent.preventDefault();
-			if (wheelEvent.deltaY > 0) move(1);
-			else move(-1);
-		},
-		{ passive: false },
-	);
-
-	const showPost = (card: HTMLElement) => {
-		if (!mainDisplay || !introView || !featuredArticle || !fTitle || !fDate || !fText || !fImage) return;
-
-		cards.forEach(c => c.classList.remove('is-active'));
-		card.classList.add('is-active');
-
-		const cardRect = card.getBoundingClientRect();
-		const displayRect = mainDisplay.getBoundingClientRect();
-
-		// Calculate initial transform to match card position/size
-		const scaleX = cardRect.width / displayRect.width;
-		const scaleY = cardRect.height / displayRect.height;
-		const translateX = cardRect.left - displayRect.left;
-		const translateY = cardRect.top - displayRect.top;
-
-		introView.classList.add('fade-out');
-
-		// Preparation
-		featuredArticle.style.display = 'flex';
-		featuredArticle.style.transition = 'none';
-		featuredArticle.style.transformOrigin = '0 0';
-		featuredArticle.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-		featuredArticle.style.opacity = '0';
-		featuredArticle.style.borderRadius = '16px';
-
-		setTimeout(() => {
-			// Intro is hidden via CSS .fade-out visibility: hidden
-			if (card.dataset.title) fTitle.textContent = card.dataset.title;
-			if (card.dataset.date) fDate.textContent = card.dataset.date;
-			if (card.dataset.desc) fText.innerHTML = `<p>${card.dataset.desc}</p><p>${card.dataset.desc}</p>`;
-			if (card.dataset.img) fImage.src = card.dataset.img;
-
-			// Force reflow
-			featuredArticle.offsetHeight;
-
-			// Animate to full size
-			featuredArticle.style.transition = 'all 0.6s cubic-bezier(0.19, 1, 0.22, 1)';
-			featuredArticle.style.transform = 'translate(0, 0) scale(1)';
-			featuredArticle.style.opacity = '1';
-			featuredArticle.style.borderRadius = '32px';
-
-			setTimeout(() => {
-				featuredArticle.classList.add('is-visible');
-			}, 50);
-		}, 400);
-	};
-
-	const showIntro = () => {
-		if (!mainDisplay || !featuredArticle || !introView) return;
-		const activeCard = document.querySelector('.blog-post-card.is-active');
-		if (!activeCard) return;
-
-		const cardRect = activeCard.getBoundingClientRect();
-		const displayRect = mainDisplay.getBoundingClientRect();
-
-		const scaleX = cardRect.width / displayRect.width;
-		const scaleY = cardRect.height / displayRect.height;
-		const translateX = cardRect.left - displayRect.left;
-		const translateY = cardRect.top - displayRect.top;
-
-		featuredArticle.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-		featuredArticle.style.opacity = '0';
-		featuredArticle.style.borderRadius = '16px';
-		featuredArticle.classList.remove('is-visible');
-
-		setTimeout(() => {
-			featuredArticle.style.display = 'none';
-			introView.classList.remove('fade-out');
-		}, 600);
-	};
-
-	cards.forEach(card => card.addEventListener('click', () => showPost(card as HTMLElement)));
-	backBtn?.addEventListener('click', showIntro);
-	upBtn?.addEventListener('click', () => move(-1));
-	downBtn?.addEventListener('click', () => move(1));
-
-	updateTrack(true);
-	window.addEventListener('resize', () => updateTrack(true));
-</script>
-
 <style>
+	/* SECTION LAYOUT */
 	.blog-section {
 		position: relative;
-		background: #0b111d;
-		display: flex;
-		align-items: center;
+		padding: 8rem 0;
+		background-color: #0b111d;
 		min-height: 100vh;
+		overflow: hidden;
 	}
 
-	.bg-scroll-text {
+	.ambient-glow {
 		position: absolute;
-		right: 2%;
-		top: 0;
-		bottom: 0;
+		border-radius: 50%;
 		pointer-events: none;
+		mix-blend-mode: screen;
+		filter: blur(150px);
+	}
+	.glow-primary {
+		top: 0;
+		left: 25%;
+		width: 800px;
+		height: 800px;
+		background-color: #a213da;
+		opacity: 0.1;
+	}
+	.glow-secondary {
+		bottom: 0;
+		right: 25%;
+		width: 600px;
+		height: 600px;
+		background-color: #a213da;
 		opacity: 0.05;
 	}
 
-	.scroll-track {
-		display: flex;
-		flex-direction: column;
-		font-size: 18rem;
-		font-weight: 950;
-		color: transparent;
-		-webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
-		line-height: 0.8;
-	}
-
-	.blog-container {
-		max-width: 1600px;
+	.bento-container {
+		max-width: 1400px;
 		margin: 0 auto;
-		padding: 40px 5%;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
+		padding: 0 1.5rem;
+		position: relative;
+		z-index: 10;
 	}
 
-	.blog-layout {
-		display: grid;
-		grid-template-columns: 440px 1fr;
-		gap: 100px;
-		align-items: center;
-		flex: 1;
+	/* HEADER */
+	.bento-header {
+		margin-bottom: 5rem;
+		text-align: center;
+		max-width: 56rem;
+		margin-left: auto;
+		margin-right: auto;
 	}
 
-	/* Bottom Button Shared Styles */
-	.btn-container {
-		padding: 2.5rem 0;
-		display: flex;
-		justify-content: center;
-		z-index: 50;
-	}
-
-	.level-up-btn {
+	.bento-badge {
 		display: inline-flex;
 		align-items: center;
-		padding: 0.9rem 2.2rem;
+		gap: 0.75rem;
+		padding: 0.5rem 1rem;
 		border-radius: 9999px;
-		border: 1px solid rgba(255, 255, 255, 0.25);
-		background: rgba(255, 255, 255, 0.1);
+		background-color: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		margin-bottom: 2rem;
 		backdrop-filter: blur(12px);
-		-webkit-backdrop-filter: blur(12px);
-		color: white;
-		font-weight: 800;
-		text-transform: uppercase;
-		letter-spacing: 0.15em;
-		font-size: 0.8rem;
-		transition: all 0.3s ease;
-		text-decoration: none;
 	}
-
-	.level-up-btn:hover {
-		background: rgba(255, 255, 255, 0.2);
-		transform: translateY(-5px);
-		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+	.pulse-dot {
+		width: 0.5rem;
+		height: 0.5rem;
+		border-radius: 50%;
+		background-color: #a213da;
+		animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 	}
-
-	.btn-text {
-		display: flex;
-		align-items: center;
-		gap: 0.8rem;
-	}
-
-	.arrow-svg {
-		width: 1rem;
-		height: 1rem;
-		animation: bounce-up 2s infinite ease-in-out;
-	}
-
-	@keyframes bounce-up {
+	@keyframes pulse {
 		0%,
 		100% {
-			transform: translateY(0);
+			opacity: 1;
 		}
 		50% {
-			transform: translateY(-4px);
+			opacity: 0.5;
+		}
+	}
+	.badge-text {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: rgba(255, 255, 255, 0.7);
+		font-weight: 600;
+	}
+
+	.bento-heading {
+		font-size: 2.25rem;
+		line-height: 1.2;
+		font-weight: 700;
+		color: white;
+		margin-bottom: 1.5rem;
+		letter-spacing: -0.025em;
+	}
+	@media (min-width: 768px) {
+		.bento-heading {
+			font-size: 3.75rem;
 		}
 	}
 
-	.list-column {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 10px;
-		height: 100%;
-		justify-content: center;
-		position: relative;
-		z-index: 20;
-	}
-
-	.list-viewport {
-		position: relative;
-		width: 100%;
-		height: 600px; /* Reduced to fit button in 100vh */
-		overflow: hidden;
-	}
-
-	.edge-fade {
-		position: absolute;
-		left: 0;
-		right: 0;
-		height: 140px;
-		z-index: 10;
-		pointer-events: none;
-	}
-
-	.edge-fade.top {
-		top: 0;
-		background: linear-gradient(to bottom, #0b111d 10%, transparent 100%);
-	}
-
-	.edge-fade.bottom {
-		bottom: 0;
-		background: linear-gradient(to top, #0b111d 10%, transparent 100%);
-	}
-
-	.items-track {
-		display: flex;
-		flex-direction: column;
-		gap: 16px;
-		will-change: transform;
-	}
-
-	.blog-post-card {
-		display: flex;
-		gap: 16px;
-		padding: 16px;
-		background: rgba(255, 255, 255, 0.02);
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		border-radius: 16px;
-		cursor: pointer;
-		transition: all 0.4s ease;
-		min-height: 110px;
-		position: relative;
-		overflow: hidden;
-		z-index: 1;
-	}
-
-	/* Highlight Slide Effect - Translucent Wave */
-	.blog-post-card::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 150%; /* Extended for soft lead */
-		height: 100%;
-		background: linear-gradient(90deg, rgba(162, 19, 218, 0.5) 0%, rgba(162, 19, 218, 0.3) 50%, transparent 100%);
-		transform: translateX(-100%);
-		transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-		z-index: 0; /* Behind the content, but keep relative to card */
-	}
-
-	.blog-post-card.is-active::before {
-		transform: translateX(-10%); /* Slides in so the soft gradient is visible */
-	}
-
-	.blog-post-card:hover:not(.is-active) {
-		border-color: rgba(162, 19, 218, 0.4);
-		background: rgba(162, 19, 218, 0.05);
-	}
-
-	.blog-post-card.is-active {
-		border-color: #a213da;
-		box-shadow: 0 10px 30px rgba(162, 19, 218, 0.2);
-	}
-
-	/* Ensure content stays crisp on top */
-	.card-image,
-	.card-content {
-		position: relative;
-		z-index: 2;
-	}
-
-	.edge-blur-item {
-		opacity: 0.25;
-		filter: blur(2px);
-		transform: scale(0.95);
-	}
-
-	.card-image {
-		width: 70px;
-		height: 70px;
-		border-radius: 10px;
-		overflow: hidden;
-		flex-shrink: 0;
-	}
-	.card-content h3 {
-		font-size: 1rem;
-		font-weight: 800;
-		color: #fff;
-		margin-bottom: 4px;
-	}
-	.card-content p {
-		font-size: 0.8rem;
+	.bento-subheading {
 		color: rgba(255, 255, 255, 0.5);
-		line-height: 1.4;
+		font-size: 1.125rem;
+		font-weight: 300;
+	}
+	@media (min-width: 768px) {
+		.bento-subheading {
+			font-size: 1.25rem;
+		}
+	}
+
+	/* BOTTOM BUTTON */
+	.bento-btn-wrapper {
+		display: flex;
+		justify-content: center;
+		margin-top: 5rem;
+		position: relative;
+		z-index: 50;
+	}
+	.btn-levelup {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.85rem 2.5rem;
+		border: 1px solid rgba(162, 19, 218, 0.45);
+		border-radius: 999px;
+		background: transparent;
+		color: #fff;
+		font-weight: 700;
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		text-decoration: none;
+		transition: all 0.3s ease;
+		cursor: pointer;
+	}
+	.btn-levelup svg {
+		width: 16px;
+		height: 16px;
+		transition: transform 0.3s ease;
+	}
+	.btn-levelup:hover {
+		background: rgba(162, 19, 218, 0.1);
+		border-color: #a213da;
+		box-shadow: 0 0 24px rgba(162, 19, 218, 0.3);
+		transform: translateY(-4px);
+	}
+	.btn-levelup:active {
+		transform: translateY(0) scale(0.98);
+	}
+
+	/* BENTO GRID CSS */
+	.bento-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		grid-auto-rows: 320px;
+		gap: 1.5rem;
+	}
+
+	.bento-card {
+		position: relative;
+		border-radius: 24px;
+		cursor: pointer;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.bento-inner {
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		overflow: hidden;
+		background: rgba(255, 255, 255, 0.02);
+		z-index: 10;
+	}
+
+	.bento-card:hover {
+		border-color: rgba(162, 19, 218, 0.4);
+		box-shadow:
+			0 20px 40px rgba(0, 0, 0, 0.4),
+			0 0 40px rgba(162, 19, 218, 0.1);
+		transform: translateY(-8px);
+	}
+
+	.bento-image-wrapper {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		overflow: hidden;
+	}
+
+	.bento-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: inherit;
+		transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.bento-card:hover .bento-img {
+		transform: scale(1.08);
+	}
+
+	.bento-overlay {
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		background: linear-gradient(to top, rgba(11, 17, 29, 0.95) 0%, rgba(11, 17, 29, 0.4) 50%, transparent 100%);
+		transition: background 0.5s ease;
+	}
+
+	.bento-card:hover .bento-overlay {
+		background: linear-gradient(to top, rgba(11, 17, 29, 0.95) 0%, rgba(162, 19, 218, 0.2) 50%, transparent 100%);
+	}
+
+	.bento-content {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		z-index: 10;
+	}
+
+	.bento-meta {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 0.75rem;
+	}
+	.bento-arrow {
+		width: 2rem;
+		height: 2rem;
+		border-radius: 50%;
+		background-color: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(12px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		transform: translateX(1rem);
+		transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+	.bento-arrow-icon {
+		color: white;
+	}
+	.bento-card:hover .bento-arrow {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	.bento-date {
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.8rem;
+		color: #a213da;
+		letter-spacing: 0.1em;
+	}
+
+	.bento-title {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: white;
+		margin-bottom: 0.5rem;
+		line-height: 1.2;
+		transition: color 0.3s ease;
+	}
+
+	.bento-card:hover .bento-title {
+		color: #fff;
+	}
+
+	.bento-excerpt {
+		color: rgba(255, 255, 255, 0.6);
+		font-size: 0.95rem;
+		line-height: 1.5;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
 
-	.nav-arrow {
-		background: none;
-		border: none;
-		color: rgba(255, 255, 255, 0.4);
-		cursor: pointer;
-		padding: 10px;
-		transition: all 0.3s;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	/* BENTO GRID SIZES */
+	.item-0 {
+		grid-column: span 2;
+		grid-row: span 2;
 	}
-	.nav-arrow:hover {
-		color: #a213da;
-		transform: scale(1.2);
+	.item-1 {
+		grid-column: span 2;
+		grid-row: span 1;
 	}
-	.nav-arrow svg {
-		width: 32px;
-		height: 32px;
+	.item-2 {
+		grid-column: span 1;
+		grid-row: span 1;
 	}
-
-	/* MAIN DISPLAY - Grid layout to overlay views without jumps */
-	.main-display {
-		display: grid;
-		grid-template-areas: 'stack';
-		align-items: center;
-		position: relative;
-		min-height: 600px;
+	.item-3 {
+		grid-column: span 1;
+		grid-row: span 1;
+	}
+	.item-4 {
+		grid-column: span 2;
+		grid-row: span 1;
+	}
+	.item-5 {
+		grid-column: span 2;
+		grid-row: span 1;
 	}
 
-	.intro-view,
-	.featured-article {
-		grid-area: stack;
-		width: 100%;
+	.item-0 .bento-title {
+		font-size: 2.2rem;
 	}
 
-	.intro-view {
-		text-align: center;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-		visibility: visible;
-	}
-	.intro-view.fade-out {
-		opacity: 0;
-		transform: scale(0.95);
-		visibility: hidden;
-	}
-
-	.lightning-wrapper {
-		color: #a213da;
-		width: 70px;
-		height: 70px;
-		margin-bottom: 30px;
-		filter: drop-shadow(0 0 15px #a213da);
-	}
-	.display-title {
-		font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-		font-weight: 950;
-		line-height: 1.2;
-		margin-bottom: 24px;
-		text-transform: uppercase;
-	}
-	.highlight {
-		color: #a213da;
-	}
-	.display-intro {
-		font-size: 1.1rem;
-		color: rgba(255, 255, 255, 0.6);
-		max-width: 550px;
-		line-height: 1.8;
-	}
-
-	.blog-section {
-		position: relative;
-		background: #0b111d;
-		display: flex;
-		align-items: center;
-		min-height: 100vh;
-		padding: 40px 0;
-	}
-	.highlight {
-		color: #a213da;
-	}
-	.display-intro {
-		font-size: 1.1rem;
-		color: rgba(255, 255, 255, 0.6);
-		max-width: 550px;
-		line-height: 1.8;
-	}
-
-	/* FEATURED ARTICLE FRAME */
-	.featured-article {
-		border: 2px solid #a213da; /* Stronger purple border */
-		box-shadow: 0 0 40px rgba(162, 19, 218, 0.25); /* More prominent glow */
-		border-radius: 32px;
-		background: rgba(15, 23, 42, 0.6);
-		backdrop-filter: blur(40px);
-		overflow: hidden;
-		height: 600px; /* Matched list viewport height area */
-		display: none;
-		flex-direction: column;
-		opacity: 0;
-		transform: translateY(30px);
-		transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-		width: 100%;
-	}
-	.featured-article.is-visible {
-		opacity: 1;
-		transform: translateY(0);
-	}
-
-	.article-media {
-		position: relative;
-		height: 260px;
-		flex-shrink: 0;
-	}
-	.main-img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	.media-blur-bottom {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: 80px;
-		background: linear-gradient(to top, rgba(15, 23, 42, 0.8) 0%, transparent 100%);
-		pointer-events: none;
-		z-index: 5;
-	}
-
-	.main-img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		/* Mask to fade image at the bottom into the frame */
-		mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-		-webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-	}
-
-	.close-article {
-		position: absolute;
-		top: 20px;
-		right: 20px;
-		background: rgba(0, 0, 0, 0.4);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		color: white;
-		width: 44px;
-		height: 44px;
-		border-radius: 50%;
-		cursor: pointer;
-		z-index: 50;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	}
-
-	.close-article:hover {
-		background: #a213da;
-		border-color: #a213da;
-		transform: rotate(90deg) scale(1.1);
-		box-shadow: 0 0 20px rgba(162, 19, 218, 0.6);
-	}
-
-	.close-article svg {
-		width: 24px;
-		height: 24px;
-		transition: transform 0.3s ease;
-	}
-
-	.article-scroll-container {
-		flex: 1;
-		overflow-y: auto;
-		position: relative;
-		padding: 40px;
-		/* Much softer, longer fade mask */
-		mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-		-webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-	}
-
-	.article-body .title {
-		font-size: 1.8rem;
-		font-weight: 950;
-		margin-bottom: 20px;
-		color: #fff;
-	}
-	.article-body .text {
-		font-size: 1.1rem;
-		color: rgba(255, 255, 255, 0.7);
-		line-height: 1.8;
-	}
-
-	.scroll-hide::-webkit-scrollbar {
-		display: none;
-	}
-
-	/* MOBILE DESIGN */
-	@media (max-width: 1023px) {
-		.blog-section {
-			height: auto !important;
-			min-height: auto !important;
-			max-height: none !important;
-			padding: 100px 0;
-			display: block;
-			overflow: visible;
+	/* Responsive Grid */
+	@media (max-width: 1024px) {
+		.bento-grid {
+			grid-template-columns: repeat(2, 1fr);
 		}
-		.blog-container,
-		.blog-layout,
-		.list-column,
-		.main-display {
-			height: auto !important;
-			min-height: auto !important;
-			max-height: none !important;
+		.item-0,
+		.item-1,
+		.item-4,
+		.item-5 {
+			grid-column: span 2;
 		}
-		.blog-layout {
+		.item-2,
+		.item-3 {
+			grid-column: span 1;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.bento-grid {
 			display: flex;
 			flex-direction: column;
-			gap: 40px;
-			overflow: visible;
 		}
-
-		.list-column {
-			order: 1; /* List at the TOP */
-			height: auto;
-			width: 100%;
-			overflow: visible;
-		}
-
-		.list-viewport {
-			height: auto;
-			overflow: visible;
-			width: 100vw;
-			margin-left: -5vw;
-		}
-
-		.items-track {
-			flex-direction: row;
-			overflow-x: auto !important;
-			gap: 16px;
-			padding: 20px 5vw;
-			scroll-snap-type: x mandatory;
-			-webkit-overflow-scrolling: touch;
-			display: flex;
-			width: 100%;
-			box-sizing: border-box;
-		}
-
-		.blog-post-card {
-			min-width: 280px;
-			max-width: 280px;
-			scroll-snap-align: center;
-			opacity: 1 !important;
-			filter: none !important;
-			transform: none !important;
-			flex-shrink: 0; /* Critical for horizontal scroll */
-		}
-
-		.main-display {
-			order: 2; /* Content at the BOTTOM */
-			min-height: 400px;
-			padding-top: 20px;
-		}
-
-		.nav-arrow,
-		.edge-fade,
-		.bg-scroll-text {
-			display: none;
-		}
-
-		.featured-article {
-			height: auto; /* Let it fit the content */
-			min-height: auto;
-			backdrop-filter: blur(20px);
-			-webkit-backdrop-filter: blur(20px);
-			display: none;
-			border-width: 1px;
-		}
-		.article-media {
-			height: 200px;
-		}
-		.article-scroll-container {
-			padding: 30px;
-			overflow-y: visible; /* Show full content without internal scroll */
-			mask-image: none; /* Remove the fade-out mask to show all text clearly */
-			-webkit-mask-image: none;
+		.bento-card {
+			height: 400px;
 		}
 	}
+
+	/* ========= MODAL ========= */
+	.modal-wrapper {
+		position: fixed;
+		inset: 0;
+		z-index: 100;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		pointer-events: none;
+	}
+	.modal-wrapper.hidden {
+		display: none;
+	}
+	.modal-wrapper.flex {
+		display: flex;
+	}
+
+	.modal-backdrop {
+		position: absolute;
+		inset: 0;
+		background-color: rgba(11, 17, 29, 0.8);
+		backdrop-filter: blur(24px);
+		opacity: 0;
+		transition: opacity 0.5s ease;
+	}
+
+	.modal-container {
+		position: relative;
+		width: 100%;
+		max-width: 64rem;
+		margin: 0 1rem;
+		max-height: 90vh;
+		background-color: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 1.5rem;
+		overflow: hidden;
+		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+		opacity: 0;
+		transform: scale(0.95);
+		transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+		display: flex;
+		flex-direction: column;
+		pointer-events: auto;
+	}
+
+	/* MODAL INTERNALS */
+	.opacity-0 {
+		opacity: 0 !important;
+	}
+	.opacity-100 {
+		opacity: 1 !important;
+	}
+	.scale-95 {
+		transform: scale(0.95) !important;
+	}
+	.scale-100 {
+		transform: scale(1) !important;
+	}
+
+	.modal-close {
+		position: absolute;
+		top: 1.5rem;
+		right: 1.5rem;
+		z-index: 50;
+		width: 3rem;
+		height: 3rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background-color: rgba(0, 0, 0, 0.5);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		color: white;
+		cursor: pointer;
+		backdrop-filter: blur(12px);
+		transition:
+			background-color 0.3s,
+			transform 0.2s;
+	}
+	.modal-close:hover {
+		background-color: #a213da;
+		transform: scale(1.05);
+	}
+	.modal-close:active {
+		transform: scale(0.95);
+	}
+
+	.modal-hero {
+		width: 100%;
+		height: 16rem;
+		position: relative;
+		overflow: hidden;
+		flex-shrink: 0;
+	}
+	@media (min-width: 768px) {
+		.modal-hero {
+			height: 20rem;
+		}
+	}
+
+	.modal-img-element {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.modal-hero-gradient {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to top, #111827 0%, transparent 100%);
+	}
+
+	.modal-body {
+		padding: 2rem;
+		overflow-y: auto;
+		background-color: #111827;
+		flex: 1;
+	}
+	@media (min-width: 768px) {
+		.modal-body {
+			padding: 3rem;
+		}
+	}
+
+	.modal-content-meta {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.modal-content-date {
+		color: #a213da;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.875rem;
+		letter-spacing: 0.1em;
+	}
+	.modal-content-dot {
+		width: 0.25rem;
+		height: 0.25rem;
+		border-radius: 50%;
+		background-color: rgba(255, 255, 255, 0.2);
+	}
+	.modal-content-category {
+		color: rgba(255, 255, 255, 0.4);
+		font-size: 0.875rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+
+	.modal-content-title {
+		font-size: 1.875rem;
+		line-height: 1.25;
+		font-weight: 700;
+		color: white;
+		margin-bottom: 2rem;
+	}
+	@media (min-width: 768px) {
+		.modal-content-title {
+			font-size: 2.25rem;
+		}
+	}
+
+	.modal-content-text {
+		color: rgba(255, 255, 255, 0.7);
+		font-size: 1.125rem;
+		line-height: 1.625;
+	}
+
+	.modal-content-text p {
+		margin-bottom: 1.5rem;
+	}
+
+	/* Scrollbar hide for modal */
+	.scrollbar-hide::-webkit-scrollbar {
+		display: none;
+	}
+	.scrollbar-hide {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
 </style>
+
+<script>
+	const cards = document.querySelectorAll('.bento-card');
+	const modal = document.getElementById('article-modal');
+	const backdrop = document.getElementById('modal-backdrop');
+	const container = document.getElementById('modal-container');
+	const closeBtn = document.getElementById('close-modal');
+
+	const mTitle = document.getElementById('modal-title');
+	const mDate = document.getElementById('modal-date');
+	const mText = document.getElementById('modal-text');
+	const mImg = document.getElementById('modal-img') as HTMLImageElement;
+
+	const openModal = (card: HTMLElement) => {
+		if (!modal || !backdrop || !container || !mTitle || !mDate || !mText || !mImg) return;
+
+		// Populate Data
+		mTitle.textContent = card.dataset.title || '';
+		mDate.textContent = card.dataset.date || '';
+		mText.innerHTML = `<p>${card.dataset.text}</p>`;
+		mImg.src = card.dataset.img || '';
+
+		// Open standard modal
+		modal.classList.remove('hidden');
+		modal.classList.add('flex');
+
+		// Trigger Animations
+		requestAnimationFrame(() => {
+			backdrop.classList.remove('opacity-0');
+			backdrop.classList.add('opacity-100');
+			container.classList.remove('opacity-0', 'scale-95');
+			container.classList.add('opacity-100', 'scale-100');
+			document.body.style.overflow = 'hidden'; // lock scroll
+		});
+	};
+
+	const closeModal = () => {
+		if (!modal || !backdrop || !container) return;
+
+		backdrop.classList.remove('opacity-100');
+		backdrop.classList.add('opacity-0');
+		container.classList.remove('opacity-100', 'scale-100');
+		container.classList.add('opacity-0', 'scale-95');
+		document.body.style.overflow = ''; // unlock scroll
+
+		setTimeout(() => {
+			modal.classList.remove('flex');
+			modal.classList.add('hidden');
+		}, 500);
+	};
+
+	cards.forEach(card => card.addEventListener('click', () => openModal(card as HTMLElement)));
+	closeBtn?.addEventListener('click', closeModal);
+	backdrop?.addEventListener('click', closeModal);
+
+	// ESC to close
+	document.addEventListener('keydown', e => {
+		if (e.key === 'Escape') closeModal();
+	});
+
+	// Load More Logic
+	const loadMoreBtn = document.getElementById('load-more-btn');
+	const hiddenPosts = document.querySelectorAll('.hidden-post');
+
+	if (loadMoreBtn && hiddenPosts.length > 0) {
+		loadMoreBtn.addEventListener('click', () => {
+			hiddenPosts.forEach(post => {
+				post.classList.remove('hidden');
+				// Small timeout to allow display block to apply before animating opacity
+				setTimeout(() => {
+					post.classList.remove('opacity-0');
+					post.classList.add('opacity-100');
+				}, 50);
+			});
+			loadMoreBtn.style.display = 'none';
+		});
+	}
+</script>
