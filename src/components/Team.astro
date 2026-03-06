@@ -2,7 +2,8 @@
 import { Image } from 'astro:assets';
 import kacperImg from '../assets/team/Kacper.png';
 import katarzynaImg from '../assets/team/Katarzyna.png';
-import marcinImg from '../assets/team/Marcin.png';
+import wlodzimierzImg from '../assets/team/Marcin.png';
+import backBg from '../assets/team/back-bg.png';
 
 const teamMembers = [
 	{
@@ -13,7 +14,8 @@ const teamMembers = [
 		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus.',
 		email: 'k.bilska@nextlevelenergy.pl',
 		phone: '+48 123 456 789',
-		linkedin: '#'
+		linkedin: '#',
+		stats: { ovr: 96, pac: 85, sho: 90, pas: 98, dri: 92, def: 88, phy: 80 }
 	},
 	{
 		id: 'kacper',
@@ -23,17 +25,19 @@ const teamMembers = [
 		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus. Ut interdum tellus elit sed risus. Maecenas eget condimentum velit.',
 		email: 'k.krol@nextlevelenergy.pl',
 		phone: '+48 123 456 789',
-		linkedin: '#'
+		linkedin: '#',
+		stats: { ovr: 99, pac: 95, sho: 97, pas: 99, dri: 98, def: 90, phy: 90 }
 	},
 	{
-		id: 'marcin',
+		id: 'wlodzimierz',
 		name: 'Włodzimierz Lemański',
 		role: 'Dyrektor Operacyjny',
-		image: marcinImg,
+		image: wlodzimierzImg,
 		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus.',
 		email: 'w.lemanski@nextlevelenergy.pl',
 		phone: '+48 123 456 789',
-		linkedin: '#'
+		linkedin: '#',
+		stats: { ovr: 97, pac: 88, sho: 85, pas: 96, dri: 92, def: 95, phy: 85 }
 	}
 ];
 ---
@@ -68,8 +72,39 @@ const teamMembers = [
 						data-index={index}
 						data-id={member.id}
 					>
-						<div class="card-inner">
-							<Image src={member.image} alt={member.name} class="card-img" />
+						<div class="card-visuals">
+							<div class="card-flipper">
+								<div class="card-front">
+									<div class="card-inner">
+										<Image src={member.image} alt={member.name} class="card-img" />
+									</div>
+								</div>
+								<div class="card-back">
+									<Image src={backBg} alt="Card Background" class="card-back-bg" />
+									<div class="card-stats-overlay">
+										<div class="stats-top">
+											<div class="stats-rating">{member.stats.ovr}</div>
+											<div class="stats-position">
+												{member.id === 'kacper' ? 'CEO' : member.id === 'katarzyna' ? 'CBO' : 'COO'}
+											</div>
+											<div class="stats-nation">🇵🇱</div>
+										</div>
+										<div class="stats-name">{member.name.split(' ')[0].toUpperCase()}</div>
+										<div class="stats-grid">
+											<div class="stat-col">
+												<span><strong>{member.stats.pac}</strong> PAC</span>
+												<span><strong>{member.stats.sho}</strong> SHO</span>
+												<span><strong>{member.stats.pas}</strong> PAS</span>
+											</div>
+											<div class="stat-col">
+												<span><strong>{member.stats.dri}</strong> DRI</span>
+												<span><strong>{member.stats.def}</strong> DEF</span>
+												<span><strong>{member.stats.phy}</strong> PHY</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 						
 						<!-- Details Panel (Hidden initially) -->
@@ -174,7 +209,7 @@ const teamMembers = [
 
 	// Card Click Interaction
 	cards.forEach((card, idx) => {
-		const imgContainer = card.querySelector('.card-inner');
+		const imgContainer = card.querySelector('.card-visuals');
 		imgContainer?.addEventListener('click', () => {
 			if (idx === currentIndex && !isExpanded) {
 				isExpanded = true;
@@ -313,6 +348,131 @@ const teamMembers = [
 		padding: 0;
 	}
 
+	.card-visuals {
+		width: 100%;
+		height: 100%;
+		perspective: 1500px;
+		transition: transform 0.4s ease;
+	}
+
+	.card-flipper {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		transform-style: preserve-3d;
+		transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.card-front {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		backface-visibility: hidden;
+		border-radius: 24px;
+		z-index: 2;
+	}
+
+	.card-back {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		backface-visibility: hidden;
+		border-radius: 24px;
+		transform: rotateY(180deg);
+		overflow: hidden;
+		background: transparent;
+	}
+
+	.card-back-bg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.card-stats-overlay {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		padding: 2.5rem 1.5rem;
+		color: #e2e8f0;
+		text-shadow: 0 4px 6px rgba(0,0,0,0.8);
+	}
+
+	.stats-top {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: -10px;
+	}
+
+	.stats-rating {
+		font-size: 3.5rem;
+		font-weight: 900;
+		line-height: 1;
+		color: #fff;
+	}
+
+	.stats-position {
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: #cbd5e1;
+		margin-top: 5px;
+	}
+
+	.stats-nation {
+		font-size: 1.4rem;
+		margin-top: 2px;
+	}
+
+	.stats-name {
+		font-size: 1.8rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		margin: 1.5rem 0 1rem;
+		border-bottom: 2px solid rgba(255,255,255,0.3);
+		padding-bottom: 0.5rem;
+		width: 85%;
+		text-align: center;
+		line-height: 1.1;
+	}
+
+	.stats-grid {
+		display: flex;
+		justify-content: space-between;
+		width: 85%;
+		font-size: 1.1rem;
+		padding-top: 0.5rem;
+	}
+
+	.stat-col {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.stat-col span {
+		display: flex;
+		justify-content: space-between;
+		width: 80px;
+	}
+
+	.stat-col strong {
+		text-align: right;
+		font-weight: 800;
+		font-size: 1.2rem;
+		color: #fff;
+	}
+	
 	.card-inner {
 		width: 100%;
 		max-height: 480px;
@@ -325,7 +485,6 @@ const teamMembers = [
 		max-height: 480px;
 		object-fit: contain;
 		filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
-		transition: transform 0.6s ease;
 		display: block;
 	}
 
@@ -336,9 +495,13 @@ const teamMembers = [
 		opacity: 1;
 	}
 
-	/* Hover scale ONLY on center card */
-	.member-card.is-center:not(.is-expanded):hover .card-img {
+	/* Hover scale and flip ONLY on center card */
+	.member-card.is-center:not(.is-expanded):hover .card-visuals {
 		transform: scale(1.05);
+	}
+	
+	.member-card.is-center:not(.is-expanded):hover .card-flipper {
+		transform: rotateY(180deg);
 	}
 
 	.member-card.is-left {
@@ -357,7 +520,7 @@ const teamMembers = [
 		cursor: pointer;
 	}
 
-	/* Expanded State — simple fade */
+	/* Expanded State */
 	.member-card.is-expanded {
 		width: 900px;
 		max-height: none;
@@ -372,9 +535,16 @@ const teamMembers = [
 		backdrop-filter: blur(20px);
 	}
 
-	.member-card.is-expanded .card-inner {
+	.member-card.is-expanded .card-visuals {
 		width: 40%;
 		flex-shrink: 0;
+	}
+
+	.member-card.is-expanded .card-flipper {
+		transform: rotateY(0deg); /* Reset rotation, or keep it flipped? Let's show front when expanded */
+	}
+
+	.member-card.is-expanded .card-inner {
 		max-height: none;
 	}
 
@@ -610,7 +780,7 @@ const teamMembers = [
 			padding: 2rem;
 		}
 
-		.member-card.is-expanded .card-inner {
+		.member-card.is-expanded .card-visuals {
 			width: 35%;
 		}
 
@@ -677,11 +847,21 @@ const teamMembers = [
 			background: #0b111d;
 		}
 
-		.member-card.is-expanded .card-inner {
+		.member-card.is-expanded .card-visuals {
 			width: 260px;
+			height: auto;
 			max-height: none;
-			margin-bottom: 1rem;
+			margin-bottom: 2rem;
 			flex-shrink: 0;
+			perspective: 1000px;
+		}
+		
+		.card-visuals {
+			perspective: none; /* Disable 3D flip on mobile if we want */
+		}
+		
+		.member-card.is-center:not(.is-expanded):hover .card-flipper {
+			transform: none; /* Usually no hover on mobile anyway */
 		}
 
 		.member-card.is-expanded .card-img {
@@ -737,7 +917,7 @@ const teamMembers = [
 			padding: 3.5rem 1rem 1.5rem;
 		}
 
-		.member-card.is-expanded .card-inner {
+		.member-card.is-expanded .card-visuals {
 			width: 150px;
 		}
 	}

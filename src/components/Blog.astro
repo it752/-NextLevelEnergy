@@ -92,63 +92,74 @@ const posts = [
 		<!-- Bento Grid -->
 		<div class="bento-grid">
 			{
-				posts.map((post, i) => (
-					<div
-						class={`bento-card group item-${i % 6} ${i >= 6 ? 'hidden-post hidden opacity-0' : ''}`}
-						data-id={post.id}
-						data-title={post.title}
-						data-date={post.date}
-						data-excerpt={post.excerpt}
-						data-text={post.fullText}
-						data-img={post.image.src}>
+				posts.map((post, i) => {
+					let visibilityClasses = '';
+					if (i >= 3 && i < 6) {
+						visibilityClasses = 'hidden md:block opacity-0 md:opacity-100';
+					} else if (i >= 6) {
+						visibilityClasses = 'hidden opacity-0';
+					}
+
+					return (
 						<div
-							class="glowing-effect-container absolute inset-0 pointer-events-none"
-							style="border-radius: 24px; z-index: 5;">
-							<GlowingEffect
-								spread={40}
-								glow={true}
-								disabled={false}
-								proximity={64}
-								inactiveZone={0.01}
-								borderWidth={3}
-								borderRadius={24}
-								client:load
-							/>
-						</div>
-						<div class="bento-inner">
-							<div class="bento-image-wrapper">
-								<Image src={post.image} alt={post.title} class="bento-img" />
-								<div class="bento-overlay" />
+							class={`bento-card group item-${i % 6} post-card ${visibilityClasses}`}
+							data-id={post.id}
+							data-title={post.title}
+							data-date={post.date}
+							data-excerpt={post.excerpt}
+							data-text={post.fullText}
+							data-img={post.image.src}>
+							<div
+								class="glowing-effect-container absolute inset-0 pointer-events-none"
+								style="border-radius: 24px; z-index: 5;">
+								<GlowingEffect
+									spread={40}
+									glow={true}
+									disabled={false}
+									proximity={64}
+									inactiveZone={0.01}
+									borderWidth={3}
+									borderRadius={24}
+									client:load
+								/>
 							</div>
-							<div class="bento-content">
-								<div class="bento-meta">
-									<span class="bento-date">{post.date}</span>
-									<div class="bento-arrow">
-										<svg
-											viewBox="0 0 24 24"
-											width="16"
-											height="16"
-											stroke="currentColor"
-											stroke-width="2"
-											fill="none"
-											class="bento-arrow-icon">
-											<path d="M5 12h14M12 5l7 7-7 7" />
-										</svg>
-									</div>
+							<div class="bento-inner">
+								<div class="bento-image-wrapper">
+									<Image src={post.image} alt={post.title} class="bento-img" />
+									<div class="bento-overlay" />
 								</div>
-								<h3 class="bento-title">{post.title}</h3>
-								<p class="bento-excerpt">{post.excerpt}</p>
+								<div class="bento-content">
+									<div class="bento-meta">
+										<span class="bento-date">{post.date}</span>
+										<div class="bento-arrow">
+											<svg
+												viewBox="0 0 24 24"
+												width="16"
+												height="16"
+												stroke="currentColor"
+												stroke-width="2"
+												fill="none"
+												class="bento-arrow-icon">
+												<path d="M5 12h14M12 5l7 7-7 7" />
+											</svg>
+										</div>
+									</div>
+									<h3 class="bento-title">{post.title}</h3>
+									<p class="bento-excerpt">{post.excerpt}</p>
+								</div>
 							</div>
 						</div>
-					</div>
-				))
+					);
+				})
 			}
 		</div>
 
-		<!-- Load More Button (Only if > 6 posts) -->
+		<!-- Load More Button -->
 		{
-			posts.length > 6 && (
-				<div class="flex justify-center mt-12 relative z-50">
+			posts.length > 3 && (
+				<div
+					id="load-more-wrapper"
+					class={`flex justify-center mt-12 relative z-50 ${posts.length <= 6 ? 'md:hidden' : ''}`}>
 					<button
 						id="load-more-btn"
 						class="group relative px-6 py-3 rounded-full bg-white/5 border border-white/20 text-white font-medium uppercase tracking-wider text-xs overflow-hidden transition-all hover:bg-white/10 hover:border-white/40 active:scale-95 flex items-center gap-3 backdrop-blur-md">
@@ -819,19 +830,39 @@ const posts = [
 
 	// Load More Logic
 	const loadMoreBtn = document.getElementById('load-more-btn');
-	const hiddenPosts = document.querySelectorAll('.hidden-post');
+	const loadMoreWrapper = document.getElementById('load-more-wrapper');
+	const allCards = document.querySelectorAll('.post-card') as NodeListOf<HTMLElement>;
 
-	if (loadMoreBtn && hiddenPosts.length > 0) {
+	if (loadMoreBtn && allCards.length > 0) {
 		loadMoreBtn.addEventListener('click', () => {
-			hiddenPosts.forEach(post => {
-				post.classList.remove('hidden');
-				// Small timeout to allow display block to apply before animating opacity
-				setTimeout(() => {
-					post.classList.remove('opacity-0');
-					post.classList.add('opacity-100');
-				}, 50);
+			let revealed = 0;
+			allCards.forEach(post => {
+				const isHidden = window.getComputedStyle(post).display === 'none';
+
+				if (isHidden && revealed < 3) {
+					post.classList.remove('hidden', 'md:block');
+					post.style.display = 'block';
+
+					setTimeout(() => {
+						post.classList.remove('opacity-0', 'md:opacity-100');
+						post.classList.add('opacity-100');
+						post.style.opacity = '1';
+					}, 50);
+
+					revealed++;
+				}
 			});
-			loadMoreBtn.style.display = 'none';
+
+			let stillHidden = false;
+			allCards.forEach(post => {
+				if (window.getComputedStyle(post).display === 'none' && post.style.display !== 'block') {
+					stillHidden = true;
+				}
+			});
+
+			if (!stillHidden && loadMoreWrapper) {
+				loadMoreWrapper.style.display = 'none';
+			}
 		});
 	}
 </script>
