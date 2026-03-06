@@ -95,7 +95,8 @@ const posts = [
 				posts.map((post, i) => {
 					let visibilityClasses = '';
 					if (i >= 3 && i < 6) {
-						visibilityClasses = 'hidden md:block opacity-0 md:opacity-100';
+						// Hide only on mobile (<768px), normally it is block but bento grids need nothing special
+						visibilityClasses = 'max-md:hidden max-md:opacity-0';
 					} else if (i >= 6) {
 						visibilityClasses = 'hidden opacity-0';
 					}
@@ -840,7 +841,7 @@ const posts = [
 				const isHidden = window.getComputedStyle(post).display === 'none';
 
 				if (isHidden && revealed < 3) {
-					post.classList.remove('hidden', 'md:block');
+					post.classList.remove('hidden', 'md:block', 'max-md:hidden', 'max-md:opacity-0');
 					post.style.display = 'block';
 
 					setTimeout(() => {
