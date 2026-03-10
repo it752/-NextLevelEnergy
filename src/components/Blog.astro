@@ -121,12 +121,12 @@ const posts = [
 									inactiveZone={0.01}
 									borderWidth={3}
 									borderRadius={24}
-									client:load
+									client:visible
 								/>
 							</div>
 							<div class="bento-inner">
 								<div class="bento-image-wrapper">
-									<Image src={post.image} alt={post.title} class="bento-img" />
+									<Image src={post.image} alt={post.title} class="bento-img" loading="lazy" />
 									<div class="bento-overlay" />
 								</div>
 								<div class="bento-content">

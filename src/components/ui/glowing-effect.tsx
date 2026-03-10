@@ -1,8 +1,20 @@
 "use client";
 
-import { memo, useCallback, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { animate } from "motion/react";
+
+// Global pointer tracker to avoid multiple listeners
+let globalPointer = { x: 0, y: 0 };
+const subscribers = new Set<(pos: { x: number; y: number }) => void>();
+
+if (typeof window !== "undefined") {
+  const handlePointerMove = (e: PointerEvent) => {
+    globalPointer = { x: e.clientX, y: e.clientY };
+    subscribers.forEach((fn) => fn(globalPointer));
+  };
+  document.body.addEventListener("pointermove", handlePointerMove, { passive: true });
+}
 
 interface GlowingEffectProps {
   blur?: number;
@@ -17,6 +29,7 @@ interface GlowingEffectProps {
   borderWidth?: number;
   borderRadius?: number;
 }
+
 const GlowingEffect = memo(
   ({
     blur = 0,
@@ -32,12 +45,28 @@ const GlowingEffect = memo(
     disabled = true,
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const lastPosition = useRef({ x: 0, y: 0 });
     const animationFrameRef = useRef<number>(0);
+    const isVisible = useRef(false);
+    const [active, setActive] = useState(false);
 
-    const handleMove = useCallback(
-      (e?: MouseEvent | { x: number; y: number }) => {
-        if (!containerRef.current) return;
+    // Track visibility to skip calculations
+    useEffect(() => {
+      if (!containerRef.current || disabled) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          isVisible.current = entry.isIntersecting;
+        },
+        { threshold: 0 }
+      );
+
+      observer.observe(containerRef.current);
+      return () => observer.disconnect();
+    }, [disabled]);
+
+    const updatePosition = useCallback(
+      (pos: { x: number; y: number }) => {
+        if (!isVisible.current || !containerRef.current || disabled) return;
 
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
@@ -47,13 +76,10 @@ const GlowingEffect = memo(
           const element = containerRef.current;
           if (!element) return;
 
-          const { left, top, width, height } = element.getBoundingClientRect();
-          const mouseX = e?.x ?? lastPosition.current.x;
-          const mouseY = e?.y ?? lastPosition.current.y;
-
-          if (e) {
-            lastPosition.current = { x: mouseX, y: mouseY };
-          }
+          const rect = element.getBoundingClientRect();
+          const { left, top, width, height } = rect;
+          const mouseX = pos.x;
+          const mouseY = pos.y;
 
           const center = [left + width * 0.5, top + height * 0.5];
           const distanceFromCenter = Math.hypot(
@@ -96,28 +122,23 @@ const GlowingEffect = memo(
           });
         });
       },
-      [inactiveZone, proximity, movementDuration]
+      [inactiveZone, proximity, movementDuration, disabled]
     );
 
     useEffect(() => {
       if (disabled) return;
 
-      const handleScroll = () => handleMove();
-      const handlePointerMove = (e: PointerEvent) => handleMove(e);
-
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      document.body.addEventListener("pointermove", handlePointerMove, {
-        passive: true,
-      });
+      subscribers.add(updatePosition);
+      // Run once to initialize
+      updatePosition(globalPointer);
 
       return () => {
+        subscribers.delete(updatePosition);
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
         }
-        window.removeEventListener("scroll", handleScroll);
-        document.body.removeEventListener("pointermove", handlePointerMove);
       };
-    }, [handleMove, disabled]);
+    }, [updatePosition, disabled]);
 
     return (
       <>

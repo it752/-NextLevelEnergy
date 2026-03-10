@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logoWhite from '../assets/logo/logo-white.svg';
-import Hyperspeed from './Hyperspeed.jsx';
+import LazyHyperspeed from './LazyHyperspeed.tsx';
 ---
 
 <section id="hero-next">
@@ -67,8 +67,8 @@ import Hyperspeed from './Hyperspeed.jsx';
 	<!-- Dashboard Container -->
 	<!-- Background Texture & Glows -->
 	<div class="dashboard-bg">
-		<Hyperspeed
-			client:load
+		<LazyHyperspeed
+			client:only="react"
 			effectOptions={{
 				onSpeedUp: () => {},
 				onSlowDown: () => {},

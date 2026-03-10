@@ -76,11 +76,11 @@ const teamMembers = [
 							<div class="card-flipper">
 								<div class="card-front">
 									<div class="card-inner">
-										<Image src={member.image} alt={member.name} class="card-img" />
+										<Image src={member.image} alt={member.name} class="card-img" loading="lazy" />
 									</div>
 								</div>
 								<div class="card-back">
-									<Image src={backBg} alt="Card Background" class="card-back-bg" />
+									<Image src={backBg} alt="Card Background" class="card-back-bg" loading="lazy" />
 									<div class="card-stats-overlay">
 										<div class="stats-top">
 											<div class="stats-rating">{member.stats.ovr}</div>
