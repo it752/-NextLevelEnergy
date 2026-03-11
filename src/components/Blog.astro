@@ -366,6 +366,8 @@ const posts = rawPosts.map((post: any) => ({
 		cursor: pointer;
 		border: 1px solid rgba(255, 255, 255, 0.05);
 		transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+		will-change: transform, border-color;
+		transform: translateZ(0);
 	}
 
 	.bento-inner {
@@ -441,8 +443,10 @@ const posts = rawPosts.map((post: any) => ({
 		height: 2rem;
 		border-radius: 50%;
 		background-color: rgba(255, 255, 255, 0.1);
-		backdrop-filter: blur(12px);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
 		transform: translateZ(0);
+		will-change: transform, opacity;
 		display: flex;
 		align-items: center;
 		justify-content: center;
