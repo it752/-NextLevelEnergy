@@ -2,8 +2,19 @@
 import Layout from '../../layouts/Layout.astro';
 import { sanityClient } from 'sanity:client';
 
+interface JobOffer {
+	id: string;
+	title: string;
+	department: string;
+	salary: string;
+	location: string;
+	description: any;
+	responsibilities: any;
+	requirements: any;
+}
+
 export async function getStaticPaths() {
-	const offers = await sanityClient.fetch(`*[_type == "jobOffer"]`);
+	const offers: any[] = await sanityClient.fetch(`*[_type == "jobOffer"]`);
 	return offers.map((offer: any, index: number) => ({
 		params: { id: offer.slug.current },
 		props: { offer, index },

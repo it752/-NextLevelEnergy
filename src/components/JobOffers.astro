@@ -1,8 +1,19 @@
 ---
 import { sanityClient } from 'sanity:client';
 
+interface JobOffer {
+	id: string;
+	title: string;
+	department: string;
+	salary: string;
+	location: string;
+	description: any;
+	responsibilities: any;
+	requirements: any;
+}
+
 const rawJobOffers = await sanityClient.fetch(`*[_type == "jobOffer"] | order(_createdAt asc)`);
-const jobOffers = rawJobOffers.map((offer: any) => ({
+const jobOffers: JobOffer[] = rawJobOffers.map((offer: any) => ({
 	id: offer.slug.current,
 	title: offer.title,
 	department: offer.department,
@@ -20,7 +31,7 @@ const jobOffers = rawJobOffers.map((offer: any) => ({
 		<div class="list-column">
 			<div class="list-header">
 				<h2 class="section-title">Kariera</h2>
-				<p class="section-subtitle">Dołącz do ekipy The Next Level</p>
+				<p class="section-subtitle">Dołącz do ekipy Next Level Energy</p>
 			</div>
 
 			<div class="filters-container">
@@ -52,11 +63,17 @@ const jobOffers = rawJobOffers.map((offer: any) => ({
 							>Wszystkie lokalizacje</button
 						>
 						{
-							Array.from(new Set(jobOffers.map(offer => offer.location))).map(loc => (
-								<button class="dropdown-option" data-value={loc} role="option" aria-selected="false">
-									{loc}
-								</button>
-							))
+							Array.from(new Set(jobOffers.map((offer: JobOffer) => offer.location))).map(
+								(loc: string) => (
+									<button
+										class="dropdown-option"
+										data-value={loc}
+										role="option"
+										aria-selected="false">
+										{loc}
+									</button>
+								),
+							)
 						}
 					</div>
 				</div>
@@ -64,7 +81,7 @@ const jobOffers = rawJobOffers.map((offer: any) => ({
 
 			<div class="offers-list">
 				{
-					jobOffers.map((offer, index) => (
+					jobOffers.map((offer: JobOffer, index: number) => (
 						<button
 							class="offer-card"
 							data-index={index}

@@ -8,8 +8,17 @@ function urlFor(source: any, width = 800) {
 	return builder.image(source).width(width).auto('format').quality(80);
 }
 
+interface Post {
+	id: string;
+	title: string;
+	date: string;
+	excerpt: string;
+	fullText: string;
+	image: any;
+}
+
 const rawPosts = await sanityClient.fetch(`*[_type == "post"] | order(date desc)`);
-const posts = rawPosts.map((post: any) => ({
+const posts: Post[] = rawPosts.map((post: any) => ({
 	id: post._id,
 	title: post.title,
 	date: post.date,
@@ -48,7 +57,7 @@ const posts = rawPosts.map((post: any) => ({
 		<!-- Bento Grid -->
 		<div class="bento-grid">
 			{
-				posts.map((post, i) => {
+				posts.map((post: Post, i: number) => {
 					let visibilityClasses = '';
 					if (i >= 3 && i < 6) {
 						// Hide only on mobile (<768px), normally it is block but bento grids need nothing special

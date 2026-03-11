@@ -5,7 +5,27 @@ import katarzynaImg from '../assets/team/Katarzyna.png';
 import wlodzimierzImg from '../assets/team/Marcin.png';
 import backBg from '../assets/team/back-bg.png';
 
-const teamMembers = [
+interface TeamMember {
+	id: string;
+	name: string;
+	role: string;
+	image: any;
+	desc: string;
+	email: string;
+	phone: string;
+	linkedin: string;
+	stats: {
+		ovr: number;
+		pac: number;
+		sho: number;
+		pas: number;
+		dri: number;
+		def: number;
+		phy: number;
+	};
+}
+
+const teamMembers: TeamMember[] = [
 	{
 		id: 'katarzyna',
 		name: 'Katarzyna Bilska',
@@ -66,7 +86,7 @@ const teamMembers = [
 			</button>
 
 			<div class="cards-stage">
-				{teamMembers.map((member, index) => (
+				{teamMembers.map((member: TeamMember, index: number) => (
 					<div 
 						class={`member-card ${index === 1 ? 'is-center' : index === 0 ? 'is-left' : 'is-right'}`}
 						data-index={index}
