@@ -132,20 +132,18 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 			posts.length > 3 && (
 				<div
 					id="load-more-wrapper"
-					class={`flex justify-center mt-12 relative z-50 ${posts.length <= 6 ? 'md:hidden' : ''}`}>
-					<button
-						id="load-more-btn"
-						class="group relative px-6 py-3 rounded-full bg-white/5 border border-white/20 text-white font-medium uppercase tracking-wider text-xs overflow-hidden transition-all hover:bg-white/10 hover:border-white/40 active:scale-95 flex items-center gap-3 backdrop-blur-md">
-						<span class="relative z-10">Wczytaj więcej</span>
+					class={`flex justify-center mt-20 relative z-50 ${posts.length <= 6 ? 'md:hidden' : ''}`}>
+					<button id="load-more-btn" class="btn-levelup">
+						<span class="btn-label">Wczytaj więcej</span>
 						<svg
-							class="relative z-10 w-4 h-4 transition-transform group-hover:translate-y-1"
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
-							stroke-width="2"
+							stroke-width="3"
 							stroke-linecap="round"
 							stroke-linejoin="round">
-							<path d="M6 9l6 6 6-6" />
+							<path d="M7 11l5-5 5 5" />
+							<path d="M7 18l5-5 5 5" />
 						</svg>
 					</button>
 				</div>
@@ -755,6 +753,16 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 	}
+
+	/* Utility to hide global nav when modal is open on mobile */
+	:global(.nav-hidden-mobile) {
+		@media (max-width: 768px) {
+			opacity: 0 !important;
+			pointer-events: none !important;
+			transform: translateY(-20px) !important;
+			transition: all 0.3s ease !important;
+		}
+	}
 </style>
 
 <script>
@@ -763,6 +771,7 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 	const backdrop = document.getElementById('modal-backdrop');
 	const container = document.getElementById('modal-container');
 	const closeBtn = document.getElementById('close-modal');
+	const globalNav = document.getElementById('global-nav');
 
 	const mTitle = document.getElementById('modal-title');
 	const mDate = document.getElementById('modal-date');
@@ -806,6 +815,7 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 			container.classList.remove('opacity-0', 'scale-95');
 			container.classList.add('opacity-100', 'scale-100');
 			document.body.style.overflow = 'hidden'; // lock scroll
+			if (globalNav) globalNav.classList.add('nav-hidden-mobile');
 		});
 	};
 
@@ -817,6 +827,7 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 		container.classList.remove('opacity-100', 'scale-100');
 		container.classList.add('opacity-0', 'scale-95');
 		document.body.style.overflow = ''; // unlock scroll
+		if (globalNav) globalNav.classList.remove('nav-hidden-mobile');
 
 		setTimeout(() => {
 			modal.classList.remove('flex');

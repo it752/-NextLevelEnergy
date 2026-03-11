@@ -408,26 +408,29 @@ const milestones = [
 		}
 
 		.year-outline {
-			font-size: 15vh;
+			font-size: 12vh;
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%) rotate(0deg);
 			-webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+			transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 		}
 
 		.timeline-item.is-active .year-outline {
-			font-size: 25vh;
+			font-size: 18vh;
 			left: 50%;
-			top: 50%;
-			transform: translate(-50%, -50%) rotate(0deg);
+			top: 5%;
+			transform: translate(-50%, 0) rotate(0deg);
+			opacity: 0.15;
 		}
 
 		.year-mobile {
 			display: block;
-			font-size: 1.2rem;
+			font-size: 1.1rem;
 			font-weight: 900;
-			opacity: 0.4;
+			opacity: 0.5;
 			margin-bottom: 0.5rem;
+			color: var(--accent-color);
 		}
 
 		.item-content {
@@ -435,8 +438,16 @@ const milestones = [
 		}
 
 		.milestone-title {
-			font-size: 1.3rem;
+			font-size: 1.5rem;
 			margin-bottom: 1rem;
+			transform: scale(1) !important; /* Force reset desktop scale */
+			line-height: 1.2;
+		}
+
+		.timeline-item.is-active .milestone-title {
+			transform: scale(1) !important;
+			margin-bottom: 1.5rem;
+			font-size: 1.8rem;
 		}
 	}
 </style>

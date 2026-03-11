@@ -177,6 +177,7 @@ const teamMembers: TeamMember[] = rawMembers.map((member: any) => ({
 	const prevBtn = document.querySelector('.nav-arrow.prev') as HTMLElement | null;
 	const nextBtn = document.querySelector('.nav-arrow.next') as HTMLElement | null;
 	const carouselWrapper = document.querySelector('.carousel-wrapper') as HTMLElement | null;
+	const globalNav = document.getElementById('global-nav');
 	let currentIndex = 1;
 	let isExpanded = false;
 
@@ -196,9 +197,11 @@ const teamMembers: TeamMember[] = rawMembers.map((member: any) => ({
 		if (isExpanded) {
 			stage?.classList.add('has-expanded-card');
 			document.body.style.overflow = 'hidden';
+			if (globalNav) globalNav.classList.add('nav-hidden-mobile');
 		} else {
 			stage?.classList.remove('has-expanded-card');
 			document.body.style.overflow = '';
+			if (globalNav) globalNav.classList.remove('nav-hidden-mobile');
 		}
 	}
 
@@ -907,6 +910,16 @@ const teamMembers: TeamMember[] = rawMembers.map((member: any) => ({
 		.level-up-btn {
 			padding: 0.75rem 2rem;
 			font-size: 0.8rem;
+		}
+
+		/* Global utility for hiding nav - duplicated for safety */
+		:global(.nav-hidden-mobile) {
+			@media (max-width: 1024px) {
+				opacity: 0 !important;
+				pointer-events: none !important;
+				transform: translateY(-20px) !important;
+				transition: all 0.3s ease !important;
+			}
 		}
 	}
 
