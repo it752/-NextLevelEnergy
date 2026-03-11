@@ -1,16 +1,23 @@
 "use client";
 
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 // Global pointer tracker to avoid multiple listeners
 let globalPointer = { x: 0, y: 0 };
 const subscribers = new Set<(pos: { x: number; y: number }) => void>();
 
+let isTicking = false;
 if (typeof window !== "undefined") {
   const handlePointerMove = (e: PointerEvent) => {
     globalPointer = { x: e.clientX, y: e.clientY };
-    subscribers.forEach((fn) => fn(globalPointer));
+    if (!isTicking) {
+      requestAnimationFrame(() => {
+        subscribers.forEach((fn) => fn(globalPointer));
+        isTicking = false;
+      });
+      isTicking = true;
+    }
   };
   document.body.addEventListener("pointermove", handlePointerMove, { passive: true });
 }
@@ -63,56 +70,50 @@ const GlowingEffect = memo(
       return () => observer.disconnect();
     }, [disabled]);
 
-    const updatePosition = useCallback(
+      const updatePosition = useCallback(
       (pos: { x: number; y: number }) => {
         if (!isVisible.current || !containerRef.current || disabled) return;
 
-        if (animationFrameRef.current) {
-          cancelAnimationFrame(animationFrameRef.current);
+        const element = containerRef.current;
+        if (!element) return;
+
+        const now = Date.now();
+        if (!lastRect.current || now - lastRect.current.time > 100) {
+          lastRect.current = { rect: element.getBoundingClientRect(), time: now };
         }
 
-        animationFrameRef.current = requestAnimationFrame(() => {
-          const element = containerRef.current;
-          if (!element) return;
+        const { left, top, width, height } = lastRect.current.rect;
+        const mouseX = pos.x;
+        const mouseY = pos.y;
 
-          const now = Date.now();
-          if (!lastRect.current || now - lastRect.current.time > 100) {
-            lastRect.current = { rect: element.getBoundingClientRect(), time: now };
-          }
+        const center = [left + width * 0.5, top + height * 0.5];
+        const distanceFromCenter = Math.hypot(
+          mouseX - center[0],
+          mouseY - center[1]
+        );
+        const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
 
-          const { left, top, width, height } = lastRect.current.rect;
-          const mouseX = pos.x;
-          const mouseY = pos.y;
+        if (distanceFromCenter < inactiveRadius) {
+          element.style.setProperty("--active", "0");
+          return;
+        }
 
-          const center = [left + width * 0.5, top + height * 0.5];
-          const distanceFromCenter = Math.hypot(
-            mouseX - center[0],
-            mouseY - center[1]
-          );
-          const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
+        const isActive =
+          mouseX > left - proximity &&
+          mouseX < left + width + proximity &&
+          mouseY > top - proximity &&
+          mouseY < top + height + proximity;
 
-          if (distanceFromCenter < inactiveRadius) {
-            element.style.setProperty("--active", "0");
-            return;
-          }
+        element.style.setProperty("--active", isActive ? "1" : "0");
 
-          const isActive =
-            mouseX > left - proximity &&
-            mouseX < left + width + proximity &&
-            mouseY > top - proximity &&
-            mouseY < top + height + proximity;
+        if (!isActive) return;
 
-          element.style.setProperty("--active", isActive ? "1" : "0");
+        let targetAngle =
+          (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
+            Math.PI +
+          90;
 
-          if (!isActive) return;
-
-          let targetAngle =
-            (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
-              Math.PI +
-            90;
-
-          element.style.setProperty("--start", String(targetAngle));
-        });
+        element.style.setProperty("--start", String(targetAngle));
       },
       [inactiveZone, proximity, disabled]
     );
@@ -126,9 +127,6 @@ const GlowingEffect = memo(
 
       return () => {
         subscribers.delete(updatePosition);
-        if (animationFrameRef.current) {
-          cancelAnimationFrame(animationFrameRef.current);
-        }
       };
     }, [updatePosition, disabled]);
 

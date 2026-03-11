@@ -5,7 +5,7 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 
 const builder = imageUrlBuilder(sanityClient);
 function urlFor(source: any) {
-	return builder.image(source).auto('format').fit('max');
+	return builder.image(source).width(800).format('webp').quality(80);
 }
 
 const rawPosts = await sanityClient.fetch(`*[_type == "post"] | order(date desc)`);
@@ -261,6 +261,7 @@ const posts = rawPosts.map((post: any) => ({
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		margin-bottom: 2rem;
 		backdrop-filter: blur(12px);
+		transform: translateZ(0);
 	}
 	.pulse-dot {
 		width: 0.5rem;
@@ -441,6 +442,7 @@ const posts = rawPosts.map((post: any) => ({
 		border-radius: 50%;
 		background-color: rgba(255, 255, 255, 0.1);
 		backdrop-filter: blur(12px);
+		transform: translateZ(0);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -564,7 +566,8 @@ const posts = rawPosts.map((post: any) => ({
 		position: absolute;
 		inset: 0;
 		background-color: rgba(11, 17, 29, 0.8);
-		backdrop-filter: blur(24px);
+		backdrop-filter: blur(16px);
+		transform: translateZ(0);
 		opacity: 0;
 		transition: opacity 0.5s ease;
 	}
@@ -618,6 +621,7 @@ const posts = rawPosts.map((post: any) => ({
 		color: white;
 		cursor: pointer;
 		backdrop-filter: blur(12px);
+		transform: translateZ(0);
 		transition:
 			background-color 0.3s,
 			transform 0.2s;

@@ -156,7 +156,8 @@ const jobOffers = rawJobOffers.map((offer: any) => ({
 			/* Subtle glow rim for the whole container */
 			background: rgba(15, 23, 42, 0.4);
 			border: 1px solid rgba(255, 255, 255, 0.05);
-			backdrop-filter: blur(20px);
+			backdrop-filter: blur(12px);
+			transform: translateZ(0);
 			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 			overflow: hidden;
 			height: 80vh; /* Fixed height for internal scrolling */
@@ -479,7 +480,7 @@ const jobOffers = rawJobOffers.map((offer: any) => ({
 		.glow-orb {
 			position: absolute;
 			border-radius: 50%;
-			filter: blur(80px);
+			/* removed blur(80px) for performance */
 			z-index: 0;
 			opacity: 0.4;
 			animation: drift 10s infinite alternate ease-in-out;
@@ -488,7 +489,7 @@ const jobOffers = rawJobOffers.map((offer: any) => ({
 		.glow-orb.primary {
 			width: 400px;
 			height: 400px;
-			background: #a213da;
+			background: radial-gradient(circle, #a213da 0%, transparent 70%);
 			top: 10%;
 			right: -10%;
 		}
@@ -496,9 +497,9 @@ const jobOffers = rawJobOffers.map((offer: any) => ({
 		.glow-orb.secondary {
 			width: 300px;
 			height: 300px;
-			background: #0047ff;
-			bottom: -10%;
-			left: 10%;
+			background: radial-gradient(circle, #0047ff 0%, transparent 70%);
+			bottom: 10%;
+			left: -10%;
 			animation-delay: -5s;
 		}
 
@@ -526,6 +527,7 @@ const jobOffers = rawJobOffers.map((offer: any) => ({
 			border: 1px solid rgba(255, 255, 255, 0.1);
 			background: rgba(255, 255, 255, 0.02);
 			backdrop-filter: blur(10px);
+			transform: translateZ(0);
 			padding: 0.4rem 1.2rem;
 			border-radius: 99px;
 			font-size: 0.8rem;

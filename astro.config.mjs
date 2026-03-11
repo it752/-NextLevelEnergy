@@ -10,7 +10,10 @@ import sanity from '@sanity/astro';
 // https://astro.build/config
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    build: {
+      chunkSizeWarningLimit: 1000,
+    }
   },
 
   integrations: [
