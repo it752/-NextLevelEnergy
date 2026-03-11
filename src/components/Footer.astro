@@ -135,16 +135,30 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 							Odbieraj powiadomienia o nowych technologiach i rozwiązaniach OZE.
 						</p>
 
-						<form class="newsletter-form relative z-10">
+						<form class="newsletter-form relative z-10" id="footer-newsletter-form">
 							<div class="input-group">
-								<input type="email" id="newsletter-email" placeholder="Twój e-mail" required />
+								<input
+									type="email"
+									id="newsletter-email"
+									name="email"
+									placeholder="Twój e-mail"
+									required
+								/>
 							</div>
 							<label class="nl-checkbox">
 								<input type="checkbox" required />
 								<span class="nl-mark"></span>
 								<span class="nl-text">Zgadzam się na otrzymywanie informacji handlowych.</span>
 							</label>
-							<button type="submit" class="outline-btn-neon w-full">Zasubskrybuj kanał</button>
+							<p id="nl-success-msg" class="hidden text-green-400 text-sm mt-2">
+								Dziękujemy za zapis do newslettera!
+							</p>
+							<p id="nl-error-msg" class="hidden text-red-400 text-sm mt-2">
+								Wystąpił błąd. Spróbuj powonie.
+							</p>
+							<button type="submit" id="nl-submit-btn" class="outline-btn-neon w-full"
+								>Zasubskrybuj kanał</button
+							>
 						</form>
 					</div>
 
@@ -724,3 +738,50 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 		}
 	}
 </style>
+
+<script>
+	const nlForm = document.getElementById('footer-newsletter-form') as HTMLFormElement;
+	const nlBtn = document.getElementById('nl-submit-btn') as HTMLButtonElement | null;
+	const nlSuccess = document.getElementById('nl-success-msg');
+	const nlError = document.getElementById('nl-error-msg');
+
+	if (nlForm && nlBtn) {
+		nlForm.addEventListener('submit', async e => {
+			e.preventDefault();
+
+			const originalText = nlBtn.innerHTML;
+			nlBtn.innerHTML =
+				'Zapisywanie... <svg viewBox="0 0 24 24" fill="none" class="animate-spin inline ml-2 w-4 h-4" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v4"></path></svg>';
+			nlBtn.style.opacity = '0.7';
+			nlBtn.disabled = true;
+
+			if (nlSuccess) nlSuccess.classList.add('hidden');
+			if (nlError) nlError.classList.add('hidden');
+
+			const formData = new FormData(nlForm);
+			const payload = {
+				email: formData.get('email'),
+			};
+
+			try {
+				const response = await fetch('https://hook.eu1.make.com/b9ejxp876syewyp2ggjwm9l3d6v7qzpt', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(payload),
+				});
+
+				if (!response.ok) throw new Error('Network error');
+
+				if (nlSuccess) nlSuccess.classList.remove('hidden');
+				nlForm.reset();
+			} catch (err) {
+				console.error('Newsletter error:', err);
+				if (nlError) nlError.classList.remove('hidden');
+			} finally {
+				nlBtn.innerHTML = originalText;
+				nlBtn.style.opacity = '1';
+				nlBtn.disabled = false;
+			}
+		});
+	}
+</script>

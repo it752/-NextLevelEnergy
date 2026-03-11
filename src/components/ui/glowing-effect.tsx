@@ -46,6 +46,7 @@ const GlowingEffect = memo(
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const animationFrameRef = useRef<number>(0);
+    const animationRef = useRef<any>(null);
     const isVisible = useRef(false);
     const [active, setActive] = useState(false);
 
@@ -113,7 +114,11 @@ const GlowingEffect = memo(
           const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
           const newAngle = currentAngle + angleDiff;
 
-          animate(currentAngle, newAngle, {
+          if (animationRef.current) {
+            animationRef.current.stop();
+          }
+
+          animationRef.current = animate(currentAngle, newAngle, {
             duration: movementDuration,
             ease: [0.16, 1, 0.3, 1],
             onUpdate: (value) => {
@@ -136,6 +141,9 @@ const GlowingEffect = memo(
         subscribers.delete(updatePosition);
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
+        }
+        if (animationRef.current) {
+          animationRef.current.stop();
         }
       };
     }, [updatePosition, disabled]);
