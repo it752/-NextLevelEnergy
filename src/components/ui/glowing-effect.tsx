@@ -75,16 +75,31 @@ const GlowingEffect = memo(
         if (!isVisible.current || !containerRef.current || disabled) return;
 
         const element = containerRef.current;
-        if (!element) return;
-
         const now = Date.now();
-        if (!lastRect.current || now - lastRect.current.time > 100) {
+        
+        // Use a cached rect, update only every 500ms or so unless window size changes
+        // This dramatically reduces getBoundingClientRect calls
+        if (!lastRect.current || now - lastRect.current.time > 500) {
           lastRect.current = { rect: element.getBoundingClientRect(), time: now };
         }
 
         const { left, top, width, height } = lastRect.current.rect;
+        // Optimization: early escape if far away (using screen coordinates is faster)
         const mouseX = pos.x;
         const mouseY = pos.y;
+
+        // Proximity check - if mouse is very far from the element's bounding box, just hide it
+        const margin = proximity + 50;
+        const isFar = mouseX < left - margin || mouseX > left + width + margin || 
+                      mouseY < top - margin || mouseY > top + height + margin;
+        
+        if (isFar) {
+           if (element.getAttribute('data-active') !== '0') {
+             element.style.setProperty("--active", "0");
+             element.setAttribute('data-active', '0');
+           }
+           return;
+        }
 
         const center = [left + width * 0.5, top + height * 0.5];
         const distanceFromCenter = Math.hypot(
@@ -94,7 +109,10 @@ const GlowingEffect = memo(
         const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
 
         if (distanceFromCenter < inactiveRadius) {
-          element.style.setProperty("--active", "0");
+          if (element.getAttribute('data-active') !== '0') {
+            element.style.setProperty("--active", "0");
+            element.setAttribute('data-active', '0');
+          }
           return;
         }
 
@@ -104,7 +122,11 @@ const GlowingEffect = memo(
           mouseY > top - proximity &&
           mouseY < top + height + proximity;
 
-        element.style.setProperty("--active", isActive ? "1" : "0");
+        const activeStr = isActive ? "1" : "0";
+        if (element.getAttribute('data-active') !== activeStr) {
+          element.style.setProperty("--active", activeStr);
+          element.setAttribute('data-active', activeStr);
+        }
 
         if (!isActive) return;
 
@@ -113,7 +135,12 @@ const GlowingEffect = memo(
             Math.PI +
           90;
 
-        element.style.setProperty("--start", String(targetAngle));
+        // Only update if angle changed by more than 1 degree to avoid micro-repaints
+        const lastAngle = element.getAttribute('data-angle');
+        if (!lastAngle || Math.abs(Number(lastAngle) - targetAngle) > 1) {
+          element.style.setProperty("--start", String(targetAngle));
+          element.setAttribute('data-angle', String(targetAngle));
+        }
       },
       [inactiveZone, proximity, disabled]
     );

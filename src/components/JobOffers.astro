@@ -171,9 +171,10 @@ const jobOffers: JobOffer[] = rawJobOffers.map((offer: any) => ({
 			gap: 2rem;
 			border-radius: 20px;
 			/* Subtle glow rim for the whole container */
-			background: rgba(15, 23, 42, 0.4);
+			background: #111827; /* Solid fallback */
+			background: rgba(15, 23, 42, 0.9);
 			border: 1px solid rgba(255, 255, 255, 0.05);
-			backdrop-filter: blur(12px);
+			/* Removed backdrop-filter: blur(12px) as it is extremely expensive during animations */
 			transform: translateZ(0);
 			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 			overflow: hidden;
