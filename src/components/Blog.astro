@@ -4,8 +4,8 @@ import imageUrlBuilder from '@sanity/image-url';
 import { GlowingEffect } from './ui/glowing-effect.tsx';
 
 const builder = imageUrlBuilder(sanityClient);
-function urlFor(source: any) {
-	return builder.image(source).width(800).format('webp').quality(80);
+function urlFor(source: any, width = 800) {
+	return builder.image(source).width(width).auto('format').quality(80);
 }
 
 const rawPosts = await sanityClient.fetch(`*[_type == "post"] | order(date desc)`);
@@ -15,7 +15,7 @@ const posts = rawPosts.map((post: any) => ({
 	date: post.date,
 	excerpt: post.excerpt,
 	fullText: post.fullText,
-	image: { src: urlFor(post.image).url() },
+	image: post.image,
 }));
 ---
 
@@ -65,7 +65,7 @@ const posts = rawPosts.map((post: any) => ({
 							data-date={post.date}
 							data-excerpt={post.excerpt}
 							data-text={post.fullText}
-							data-img={post.image.src}>
+							data-img={urlFor(post.image, 800).url()}>
 							<div
 								class="glowing-effect-container absolute inset-0 pointer-events-none"
 								style="border-radius: 24px; z-index: 5;">
@@ -82,7 +82,15 @@ const posts = rawPosts.map((post: any) => ({
 							</div>
 							<div class="bento-inner">
 								<div class="bento-image-wrapper">
-									<img src={post.image.src} alt={post.title} class="bento-img" loading="lazy" />
+									<img
+										src={urlFor(post.image, 800).url()}
+										srcset={`${urlFor(post.image, 400).url()} 400w, ${urlFor(post.image, 800).url()} 800w`}
+										sizes="(max-width: 768px) 400px, 800px"
+										alt={post.title}
+										class="bento-img"
+										loading="lazy"
+										decoding="async"
+									/>
 									<div class="bento-overlay" />
 								</div>
 								<div class="bento-content">

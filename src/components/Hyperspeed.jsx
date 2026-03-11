@@ -341,8 +341,9 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
     };
 
     class App {
-      constructor(container, options = {}) {
+      constructor(container, options = {}, isMobile = false) {
         this.options = options;
+        this.isMobile = isMobile;
         if (this.options.distortion == null) {
           this.options.distortion = {
             uniforms: distortion_uniforms,
@@ -454,20 +455,26 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
           })
         );
 
-        const smaaPass = new EffectPass(
-          this.camera,
-          new SMAAEffect({
-            preset: SMAAPreset.MEDIUM,
-            searchImage: SMAAEffect.searchImageDataURL,
-            areaImage: SMAAEffect.areaImageDataURL
-          })
-        );
+        if (!this.isMobile) {
+          const smaaPass = new EffectPass(
+            this.camera,
+            new SMAAEffect({
+              preset: SMAAPreset.MEDIUM,
+              searchImage: SMAAEffect.searchImageDataURL,
+              areaImage: SMAAEffect.areaImageDataURL
+            })
+          );
+          smaaPass.renderToScreen = true;
+          this.composer.addPass(smaaPass);
+          this.bloomPass.renderToScreen = false;
+        } else {
+          // No SMAA on mobile, just bloom
+          this.bloomPass.renderToScreen = true;
+        }
+
         this.renderPass.renderToScreen = false;
-        this.bloomPass.renderToScreen = false;
-        smaaPass.renderToScreen = true;
         this.composer.addPass(this.renderPass);
         this.composer.addPass(this.bloomPass);
-        this.composer.addPass(smaaPass);
       }
 
       loadAssets() {
@@ -1127,13 +1134,37 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
     }
 
     (function () {
-      const container = document.getElementById('lights');
-      const options = { ...DEFAULT_EFFECT_OPTIONS, ...effectOptions, colors: { ...DEFAULT_EFFECT_OPTIONS.colors, ...effectOptions.colors } };
-      options.distortion = distortions[options.distortion];
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+      
+      const initialize = () => {
+        const container = document.getElementById('lights');
+        if (!container) return;
+        
+        const options = { ...DEFAULT_EFFECT_OPTIONS, ...effectOptions, colors: { ...DEFAULT_EFFECT_OPTIONS.colors, ...effectOptions.colors } };
+        options.distortion = distortions[options.distortion];
 
-      const myApp = new App(container, options);
-      appRef.current = myApp;
-      myApp.loadAssets().then(myApp.init);
+        // Downscale for mobile
+        if (isMobile) {
+          options.totalSideLightSticks = Math.max(5, Math.floor(options.totalSideLightSticks * 0.4));
+          options.lightPairsPerRoadWay = Math.max(10, Math.floor(options.lightPairsPerRoadWay * 0.4));
+        }
+
+        const myApp = new App(container, options, isMobile);
+        appRef.current = myApp;
+        myApp.loadAssets().then(() => {
+          if (myApp.disposed) return;
+          myApp.init();
+        });
+      };
+
+      // Delay initialization to free up main thread for FCP/LCP
+      if (typeof window !== 'undefined') {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(initialize, { timeout: 2000 });
+        } else {
+          setTimeout(initialize, 1000);
+        }
+      }
     })();
 
     return () => {
