@@ -73,7 +73,6 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 							data-title={post.title}
 							data-date={post.date}
 							data-excerpt={post.excerpt}
-							data-text={post.fullText}
 							data-img={urlFor(post.image, 800).url()}>
 							<div
 								class="glowing-effect-container absolute inset-0 pointer-events-none"
@@ -86,7 +85,7 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 									inactiveZone={0.01}
 									borderWidth={3}
 									borderRadius={24}
-									client:visible
+									client:idle
 								/>
 							</div>
 							<div class="bento-inner">
@@ -198,6 +197,13 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 			</div>
 		</div>
 	</div>
+
+	<!-- Secure Data Injection via Script tag instead of data-* DOM variables -->
+	<script
+		id="blog-data-script"
+		type="application/json"
+		set:html={JSON.stringify(posts.map(p => ({ id: p.id, text: p.fullText })))}
+	/>
 </section>
 
 <style>
@@ -214,24 +220,20 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 		position: absolute;
 		border-radius: 50%;
 		pointer-events: none;
-		mix-blend-mode: screen;
-		filter: blur(150px);
 	}
 	.glow-primary {
 		top: 0;
 		left: 25%;
 		width: 800px;
 		height: 800px;
-		background-color: #a213da;
-		opacity: 0.1;
+		background: radial-gradient(circle, rgba(162, 19, 218, 0.12) 0%, transparent 70%);
 	}
 	.glow-secondary {
 		bottom: 0;
 		right: 25%;
 		width: 600px;
 		height: 600px;
-		background-color: #a213da;
-		opacity: 0.05;
+		background: radial-gradient(circle, rgba(162, 19, 218, 0.08) 0%, transparent 70%);
 	}
 
 	.edge-fade {
@@ -274,10 +276,9 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 		gap: 0.75rem;
 		padding: 0.5rem 1rem;
 		border-radius: 9999px;
-		background-color: rgba(255, 255, 255, 0.05);
+		background-color: rgba(255, 255, 255, 0.07);
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		margin-bottom: 2rem;
-		backdrop-filter: blur(12px);
 		transform: translateZ(0);
 	}
 	.pulse-dot {
@@ -351,7 +352,11 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
 		text-decoration: none;
-		transition: all 0.3s ease;
+		transition:
+			background 0.3s ease,
+			border-color 0.3s ease,
+			box-shadow 0.3s ease,
+			transform 0.3s ease;
 		cursor: pointer;
 	}
 	.btn-levelup svg {
@@ -381,9 +386,11 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 		position: relative;
 		border-radius: 24px;
 		cursor: pointer;
-		border: 1px solid rgba(255, 255, 255, 0.05);
-		transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-		will-change: transform, border-color;
+		border: none;
+		transition:
+			transform 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+			box-shadow 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+		will-change: transform;
 		transform: translateZ(0);
 	}
 
@@ -397,7 +404,6 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 	}
 
 	.bento-card:hover {
-		border-color: rgba(162, 19, 218, 0.4);
 		box-shadow:
 			0 20px 40px rgba(0, 0, 0, 0.4),
 			0 0 40px rgba(162, 19, 218, 0.1);
@@ -459,9 +465,7 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 		width: 2rem;
 		height: 2rem;
 		border-radius: 50%;
-		background-color: rgba(255, 255, 255, 0.1);
-		backdrop-filter: blur(8px);
-		-webkit-backdrop-filter: blur(8px);
+		background-color: rgba(255, 255, 255, 0.15);
 		transform: translateZ(0);
 		will-change: transform, opacity;
 		display: flex;
@@ -469,7 +473,9 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 		justify-content: center;
 		opacity: 0;
 		transform: translateX(1rem);
-		transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+		transition:
+			transform 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+			opacity 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 	}
 	.bento-arrow-icon {
 		color: white;
@@ -600,7 +606,7 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 		margin: 0 1rem;
 		max-height: 90vh;
 		background-color: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		border: none;
 		border-radius: 1.5rem;
 		overflow: hidden;
 		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
@@ -763,14 +769,31 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 	const mText = document.getElementById('modal-text');
 	const mImg = document.getElementById('modal-img') as HTMLImageElement;
 
+	let textData: Record<string, string> = {};
+	try {
+		const dt = document.getElementById('blog-data-script');
+		if (dt && dt.textContent) {
+			const parsed = JSON.parse(dt.textContent);
+			parsed.forEach((item: any) => {
+				textData[item.id] = item.text;
+			});
+		}
+	} catch (e) {}
+
 	const openModal = (card: HTMLElement) => {
 		if (!modal || !backdrop || !container || !mTitle || !mDate || !mText || !mImg) return;
 
 		// Populate Data
 		mTitle.textContent = card.dataset.title || '';
 		mDate.textContent = card.dataset.date || '';
-		mText.innerHTML = `<p>${card.dataset.text}</p>`;
+
+		const safeP = document.createElement('p');
+		safeP.textContent = textData[card.dataset.id || ''] || '';
+		mText.innerHTML = '';
+		mText.appendChild(safeP);
+
 		mImg.src = card.dataset.img || '';
+		mImg.alt = card.dataset.title || '';
 
 		// Open standard modal
 		modal.classList.remove('hidden');
@@ -819,28 +842,23 @@ const posts: Post[] = rawPosts.map((post: any) => ({
 		loadMoreBtn.addEventListener('click', () => {
 			let revealed = 0;
 			allCards.forEach(post => {
-				const isHidden = window.getComputedStyle(post).display === 'none';
+				const isHidden = post.classList.contains('hidden') || post.classList.contains('max-md:hidden');
 
 				if (isHidden && revealed < 3) {
-					post.classList.remove('hidden', 'md:block', 'max-md:hidden', 'max-md:opacity-0');
-					post.style.display = 'block';
+					post.classList.remove('hidden', 'md:block', 'max-md:hidden', 'max-md:opacity-0', 'opacity-0');
 
-					setTimeout(() => {
-						post.classList.remove('opacity-0', 'md:opacity-100');
-						post.classList.add('opacity-100');
-						post.style.opacity = '1';
-					}, 50);
+					// Force reflow
+					void post.offsetWidth;
 
+					post.classList.add('opacity-100');
 					revealed++;
 				}
 			});
 
-			let stillHidden = false;
-			allCards.forEach(post => {
-				if (window.getComputedStyle(post).display === 'none' && post.style.display !== 'block') {
-					stillHidden = true;
-				}
-			});
+			// Check if we still have any hidden cards
+			const stillHidden = Array.from(allCards).some(
+				p => p.classList.contains('hidden') || p.classList.contains('max-md:hidden'),
+			);
 
 			if (!stillHidden && loadMoreWrapper) {
 				loadMoreWrapper.style.display = 'none';

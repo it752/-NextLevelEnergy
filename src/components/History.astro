@@ -5,7 +5,7 @@ const milestones = [
 		title: 'Level Energy',
 		color: '#A213DA',
 		description:
-			'Początek naszej drogi. Z pasją do innowacji i zrównnoważonego rozwoju, założyliśmy fundamenty firmy, która miała zrewolucjonizować rynek energii odnawialnej w Polsce. Skupiliśmy się na dostarczaniu rozwiązań, które łączą ekologię z realnym zyskiem dla przedsiębiorstw.',
+			'Początek naszej drogi. Z pasją do innowacji i zrównoważonego rozwoju, założyliśmy fundamenty firmy, która miała zrewolucjonizować rynek energii odnawialnej w Polsce. Skupiliśmy się na dostarczaniu rozwiązań, które łączą ekologię z realnym zyskiem dla przedsiębiorstw.',
 	},
 	{
 		year: '2006',
@@ -23,7 +23,7 @@ const milestones = [
 	},
 	{
 		year: '2018',
-		title: 'Stworzenia własnej metody sprzedażowej',
+		title: 'Stworzenie własnej metody sprzedażowej',
 		color: '#FF9E00',
 		description:
 			'Wdrożyliśmy unikalny model doradztwa, oparty na głębokiej analizie potrzeb klienta i optymalizacji kosztów energetycznych, co stało się naszym znakiem rozpoznawczym. Nasza metoda "Value-Driven Sales" zrewolucjonizowała sposób, w jaki firmy podchodzą do inwestycji w OZE.',
@@ -47,6 +47,7 @@ const milestones = [
 				milestones.map((m, idx) => (
 					<div
 						class={`timeline-item ${idx === 1 ? 'is-active' : ''}`}
+						aria-expanded={idx === 1 ? 'true' : 'false'}
 						style={`--accent-color: ${m.color}; --index: ${idx}`}
 						data-year={m.year}>
 						<div class="item-bg" />
@@ -64,12 +65,24 @@ const milestones = [
 								</div>
 
 								<div class="level-up-wrapper">
-									<a href="#zespol" class="mini-level-up">
-										Level Up{' '}
-										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-											<path d="M7 11l5-5 5 5M7 18l5-5 5 5" />
-										</svg>
-									</a>
+									{idx < milestones.length - 1 ? (
+										<button
+											type="button"
+											class="mini-level-up next-step"
+											aria-label="Następny krok">
+											Level Up{' '}
+											<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+												<path d="M7 11l5-5 5 5M7 18l5-5 5 5" />
+											</svg>
+										</button>
+									) : (
+										<a href="#team" class="mini-level-up">
+											Level Up{' '}
+											<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+												<path d="M7 11l5-5 5 5M7 18l5-5 5 5" />
+											</svg>
+										</a>
+									)}
 								</div>
 							</div>
 						</div>
@@ -83,11 +96,29 @@ const milestones = [
 <script>
 	const historyItems = document.querySelectorAll('.timeline-item') as NodeListOf<HTMLElement>;
 
-	historyItems.forEach(item => {
+	historyItems.forEach((item, index) => {
 		item.addEventListener('click', () => {
-			historyItems.forEach(i => i.classList.remove('is-active'));
+			if (item.classList.contains('is-active')) return; // Avoid re-triggering animation on same item
+
+			historyItems.forEach(i => {
+				i.classList.remove('is-active');
+				i.setAttribute('aria-expanded', 'false');
+			});
 			item.classList.add('is-active');
+			item.setAttribute('aria-expanded', 'true');
 		});
+
+		const nextBtn = item.querySelector('.next-step');
+		if (nextBtn) {
+			nextBtn.addEventListener('click', e => {
+				e.stopPropagation();
+				const nextIndex = index + 1;
+				if (nextIndex < historyItems.length) {
+					// Simulate click on the next item
+					historyItems[nextIndex].click();
+				}
+			});
+		}
 	});
 </script>
 
@@ -131,7 +162,7 @@ const milestones = [
 		height: 100%;
 		cursor: pointer;
 		overflow: hidden;
-		transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+		transition: flex 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 		border-left: 1px solid rgba(255, 255, 255, 0.05);
 		display: flex;
 		flex-direction: column;
@@ -186,7 +217,10 @@ const milestones = [
 		pointer-events: none;
 		white-space: nowrap;
 		z-index: 2;
-		transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+		transition:
+			opacity 1s cubic-bezier(0.19, 1, 0.22, 1),
+			top 1s cubic-bezier(0.19, 1, 0.22, 1),
+			transform 1s cubic-bezier(0.19, 1, 0.22, 1);
 		/* Force equal width for all numbers so every year has the same length */
 		font-variant-numeric: tabular-nums;
 		font-feature-settings: 'tnum';
@@ -198,11 +232,10 @@ const milestones = [
 	}
 
 	.timeline-item.is-active .year-outline {
-		font-size: clamp(12rem, 35vh, 45vh);
 		opacity: 0.1;
 		top: 2%; /* Moved much higher */
 		left: 50%;
-		transform: translate(-50%, 0) rotate(0deg);
+		transform: translate(-50%, 0) rotate(0deg) scale(2.5);
 		-webkit-text-stroke: 2px white;
 		color: transparent;
 		letter-spacing: 0.05em;
@@ -245,17 +278,17 @@ const milestones = [
 		margin-bottom: 0px;
 		width: 100%;
 		max-width: none; /* Allow full width */
-		transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+		transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+		transform-origin: bottom center;
 		text-transform: none;
 		transform: translateY(0);
 		hyphens: auto; /* Optional: help with very long words if needed */
 	}
 
 	.timeline-item.is-active .milestone-title {
-		font-size: clamp(1.8rem, 4vw, 3rem);
 		max-width: 700px;
 		margin-bottom: 1.5rem;
-		animation: none; /* Remove previous animation to avoid conflict with transitions */
+		transform: scale(2.2);
 		margin-top: auto; /* Push to bottom if needed */
 	}
 
@@ -296,7 +329,9 @@ const milestones = [
 		margin-top: 3rem;
 		opacity: 0;
 		transform: translateY(20px);
-		transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+		transition:
+			opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+			transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
 		pointer-events: none;
 	}
 
@@ -307,17 +342,6 @@ const milestones = [
 		pointer-events: auto;
 	}
 
-	@keyframes reveal-text {
-		0% {
-			opacity: 0;
-			transform: translateY(30px);
-		}
-		100% {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
 	.mini-level-up {
 		display: inline-flex;
 		align-items: center;
@@ -325,13 +349,18 @@ const milestones = [
 		padding: 0.8rem 1.8rem;
 		border-radius: 9999px;
 		border: 1px solid white;
+		background: transparent;
 		color: white;
 		text-decoration: none;
 		text-transform: uppercase;
 		font-weight: 800;
 		font-size: 0.8rem;
 		letter-spacing: 0.1em;
-		transition: all 0.3s ease;
+		font-family: inherit;
+		cursor: pointer;
+		transition:
+			background 0.3s ease,
+			color 0.3s ease;
 	}
 
 	.mini-level-up:hover {

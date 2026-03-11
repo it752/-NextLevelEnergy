@@ -211,7 +211,6 @@ import imgAfter from '../assets/przed-po/po.jpeg';
 		color: transparent;
 		-webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.05);
 		display: block;
-		will-change: transform; /* Prevent text rendering glitches during scroll */
 	}
 
 	.after-layer .outline-text {
@@ -262,7 +261,6 @@ import imgAfter from '../assets/przed-po/po.jpeg';
 		color: white;
 		margin-bottom: 1.5rem;
 		text-transform: uppercase;
-		text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 	}
 
 	.description {
@@ -311,15 +309,15 @@ import imgAfter from '../assets/przed-po/po.jpeg';
 		border-radius: 9999px;
 		border: 1px solid #a213da;
 		background: rgba(162, 19, 218, 0.1);
-		backdrop-filter: blur(10px);
-		transform: translateZ(0);
 		color: white;
 		text-decoration: none;
 		text-transform: uppercase;
 		font-weight: 800;
 		font-size: 0.9rem;
 		letter-spacing: 0.15em;
-		transition: all 0.3s ease;
+		transition:
+			background 0.3s ease,
+			box-shadow 0.3s ease;
 	}
 
 	.btn-level-up:hover {
@@ -343,8 +341,9 @@ import imgAfter from '../assets/przed-po/po.jpeg';
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		will-change: left, transform;
+		will-change: transform, clip-path; /* Optimized will-change */
 		cursor: grab;
+		left: 0; /* Base position for transform */
 	}
 
 	.scroll-divider:active {
@@ -365,10 +364,8 @@ import imgAfter from '../assets/przed-po/po.jpeg';
 		width: 48px;
 		height: 48px;
 		border-radius: 50%;
-		background: rgba(11, 17, 29, 0.8);
+		background: rgba(11, 17, 29, 0.9);
 		border: 1px solid rgba(255, 255, 255, 0.2);
-		backdrop-filter: blur(10px);
-		transform: translateZ(0);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -457,7 +454,7 @@ import imgAfter from '../assets/przed-po/po.jpeg';
 			const insetLeft = 100 - percentage;
 
 			afterLayer.style.clipPath = `inset(0 0 0 ${insetLeft}%)`;
-			scrollDivider.style.left = `${insetLeft}%`;
+			scrollDivider.style.transform = `translateX(calc(${insetLeft}vw - 50%)) translateZ(0)`;
 			ticking = false;
 		};
 
@@ -471,7 +468,14 @@ import imgAfter from '../assets/przed-po/po.jpeg';
 
 		// Run initially and on scroll/resize
 		window.addEventListener('scroll', updateProgress, { passive: true });
-		window.addEventListener('resize', updateProgress, { passive: true });
+		window.addEventListener(
+			'resize',
+			() => {
+				updateCache();
+				updateProgress();
+			},
+			{ passive: true },
+		);
 		calculateProgress(); // Initial call
 
 		// DRAG LOGIC
@@ -506,23 +510,9 @@ import imgAfter from '../assets/przed-po/po.jpeg';
 			const clampedInset = Math.min(Math.max(insetLeft, 0), 100);
 
 			afterLayer.style.clipPath = `inset(0 0 0 ${clampedInset}%)`;
-			scrollDivider.style.left = `${clampedInset}%`;
+			scrollDivider.style.transform = `translateX(calc(${clampedInset}vw - 50%)) translateZ(0)`;
 
-			// Scroll Page to match progress in background
-			const rect = section.getBoundingClientRect();
-			const windowHeight = window.innerHeight;
-			const maxScroll = Math.max(rect.height - windowHeight, 1);
-
-			// insetLeft = 100 - (progress * 100)
-			// progress * 100 = 100 - insetLeft
-			// progress = (100 - insetLeft) / 100
-			const newProgress = Math.min(Math.max((100 - clampedInset) / 100, 0), 1);
-			const targetScrollY = section.offsetTop + newProgress * maxScroll;
-
-			window.scrollTo({
-				top: targetScrollY,
-				behavior: 'instant',
-			});
+			// Remove sync scrolling during drag to prevent heavy recalculations & jank
 		};
 
 		scrollDivider.addEventListener('mousedown', startDrag);

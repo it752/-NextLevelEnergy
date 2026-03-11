@@ -194,7 +194,7 @@ const teamMembers: TeamMember[] = [
 
 	function updateClasses() {
 		cards.forEach((card, idx) => {
-			card.className = 'member-card';
+			card.classList.remove('is-center', 'is-left', 'is-right', 'is-expanded');
 			if (idx === currentIndex) {
 				card.classList.add('is-center');
 				if (isExpanded) card.classList.add('is-expanded');
@@ -276,6 +276,11 @@ const teamMembers: TeamMember[] = [
 		},
 		{ passive: true },
 	);
+
+	// Cleanup on route change
+	document.addEventListener('astro:before-swap', () => {
+		document.body.style.overflow = '';
+	});
 </script>
 
 <style>
@@ -355,14 +360,12 @@ const teamMembers: TeamMember[] = [
 		left: 50%;
 		transform: translate(-50%, -50%); 
 		transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1),
-					opacity 0.5s ease,
-					filter 0.5s ease,
-					width 0.5s ease;
+					opacity 0.5s ease;
 		cursor: pointer;
 		width: 300px;
 		max-height: 480px;
 		z-index: 1;
-		border: 1px solid transparent;
+		border: none;
 		background: transparent;
 		border-radius: 24px;
 		padding: 0;
@@ -497,6 +500,7 @@ const teamMembers: TeamMember[] = [
 		width: 100%;
 		max-height: 480px;
 		overflow: visible;
+		border-radius: inherit;
 	}
 	
 	.card-img {
@@ -504,7 +508,6 @@ const teamMembers: TeamMember[] = [
 		height: auto;
 		max-height: 480px;
 		object-fit: contain;
-		filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
 		display: block;
 	}
 
@@ -526,17 +529,15 @@ const teamMembers: TeamMember[] = [
 
 	.member-card.is-left {
 		transform: translate(-50%, -50%) translateX(-280px) scale(0.8);
-		opacity: 0.5;
+		opacity: 0.35;
 		z-index: 5;
-		filter: brightness(0.5);
 		cursor: pointer;
 	}
 
 	.member-card.is-right {
 		transform: translate(-50%, -50%) translateX(280px) scale(0.8);
-		opacity: 0.5;
+		opacity: 0.35;
 		z-index: 5;
-		filter: brightness(0.5);
 		cursor: pointer;
 	}
 
@@ -544,16 +545,14 @@ const teamMembers: TeamMember[] = [
 	.member-card.is-expanded {
 		width: 900px;
 		max-height: none;
-		transform: translate(-50%, -50%) scale(1);
+		transform: translate(-50%, -50%) scale(1) translateZ(0);
 		cursor: default;
 		display: flex;
 		align-items: stretch;
-		background: rgba(15, 23, 42, 0.92);
+		background: rgba(15, 23, 42, 0.97);
 		border-radius: 24px;
-		border: 1px solid rgba(162, 19, 218, 0.3);
+		border: none;
 		padding: 2.5rem;
-		backdrop-filter: blur(12px);
-		transform: translateZ(0);
 	}
 
 	.member-card.is-expanded .card-visuals {
@@ -573,16 +572,19 @@ const teamMembers: TeamMember[] = [
 		max-height: none;
 	}
 
-	/* Details Panel — just fade in */
+	/* Details Panel */
 	.details-panel {
-		width: 0;
+		width: 60%;
 		overflow: hidden;
 		opacity: 0;
-		transition: opacity 0.5s ease;
+		max-width: 0;
+		transform: translateX(20px);
+		transition: opacity 0.5s ease, transform 0.5s ease, max-width 0.5s ease;
 	}
 
 	.member-card.is-expanded .details-panel {
-		width: 60%;
+		max-width: 100%;
+		transform: translateX(0);
 		opacity: 1;
 		padding-left: 2rem;
 	}

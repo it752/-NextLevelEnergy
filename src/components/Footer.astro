@@ -63,7 +63,7 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 							inactiveZone={0.01}
 							borderWidth={3}
 							borderRadius={24}
-							client:visible
+							client:idle
 						/>
 					</div>
 					<!-- Background Glass Layer that correctly clips internal overflow without clipping the outside glow -->
@@ -122,7 +122,7 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 								inactiveZone={0.01}
 								borderWidth={3}
 								borderRadius={24}
-								client:visible
+								client:idle
 							/>
 						</div>
 						<div class="glass-bg-layer absolute inset-0 rounded-[24px] pointer-events-none"></div>
@@ -154,7 +154,7 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 								Dziękujemy za zapis do newslettera!
 							</p>
 							<p id="nl-error-msg" class="hidden text-red-400 text-sm mt-2">
-								Wystąpił błąd. Spróbuj powonie.
+								Wystąpił błąd. Spróbuj ponownie.
 							</p>
 							<button type="submit" id="nl-submit-btn" class="outline-btn-neon w-full"
 								>Zasubskrybuj kanał</button
@@ -172,7 +172,7 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 								inactiveZone={0.01}
 								borderWidth={3}
 								borderRadius={24}
-								client:visible
+								client:idle
 							/>
 						</div>
 						<div class="glass-bg-layer absolute inset-0 rounded-[24px] pointer-events-none"></div>
@@ -216,7 +216,7 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 					<button type="button" data-cc="show-preferencesModal" class="cookie-link">Cookies</button>
 				</div>
 				<div class="copyright">
-					© 2024 Next Level. <span class="creator"
+					© 2025 Next Level Energy. <span class="creator"
 						>Powered by <a href="https://pawlukstudio.pl/pl" target="_blank" rel="noopener noreferrer"
 							>Pawluk Studio</a
 						></span
@@ -230,12 +230,12 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 <style>
 	.footer-next-container {
 		width: 100%;
-		min-height: 100vh;
+		/* min-height: 100vh; -- Removed to allow better lazy rendering */
 		background-color: #020202; /* Very dark outside background matching Hero */
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 2rem;
+		padding: 4rem 2rem; /* Replaced padding as requested */
 		overflow: hidden;
 		position: relative;
 	}
@@ -249,11 +249,23 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 		border-radius: 40px;
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		background: #0b111d;
-		overflow: hidden;
+		/* overflow: hidden removed to stop compositing limits on children */
 		position: relative;
-		box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
+		contain: layout style paint; /* Replaced overflow hidden */
+		isolation: isolate; /* Creates a new stacking context for shadow efficiency */
 		display: flex;
 		flex-direction: column;
+	}
+
+	.footer-dashboard::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		background: transparent;
+		box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9);
+		pointer-events: none;
+		z-index: -1;
 	}
 
 	/* Dashboard Background Layer */
@@ -262,6 +274,8 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 		inset: 0;
 		z-index: 0;
 		pointer-events: none;
+		border-radius: 40px; /* Moved from parent */
+		overflow: hidden; /* Only clip the background layer itself */
 	}
 	.bg-texture {
 		width: 100%;
@@ -277,7 +291,6 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 		border-radius: 50%;
 		/* Removed filter: blur(100px) as radial-gradient provides the softness inherently, avoiding massive GPU cost */
 		opacity: 0.4;
-		will-change: transform;
 	}
 	.sphere-1 {
 		width: 800px;
@@ -361,6 +374,7 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 		display: block;
 		margin-top: -10px;
 		animation: spin-slow 8s infinite linear;
+		will-change: transform;
 	}
 	@keyframes spin-slow {
 		100% {
@@ -401,18 +415,25 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 
 	/* Inner background layer for glass effect & shadows */
 	.glass-bg-layer {
-		background: rgba(11, 17, 29, 0.4);
-		backdrop-filter: blur(12px);
-		-webkit-backdrop-filter: blur(12px);
+		background: rgba(11, 17, 29, 0.85); /* Solidified for performance */
+		/* backdrop-filter: blur(12px) removed to stop massive layout/rendering GPU hits */
 		transform: translateZ(0);
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-top: 1px solid rgba(255, 255, 255, 0.2);
 		border-radius: 24px;
+		overflow: hidden; /* Only clip the background contents */
+		z-index: 1;
+	}
+
+	.glass-bg-layer::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
 		box-shadow:
 			0 30px 60px rgba(0, 0, 0, 0.3),
 			inset 0 1px 0 rgba(255, 255, 255, 0.05);
-		overflow: hidden; /* Only clip the background contents */
-		z-index: 1;
+		pointer-events: none;
 	}
 
 	/* The actual glowing component sits behind/around the content but effectively on top of bg */
@@ -479,7 +500,10 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 		color: white;
 		font-size: 0.95rem;
 		font-family: inherit;
-		transition: all 0.3s ease;
+		transition:
+			border-color 0.3s ease,
+			background 0.3s ease,
+			box-shadow 0.3s ease;
 		resize: none;
 	}
 
@@ -563,7 +587,9 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 		border: none;
 		cursor: pointer;
 		box-shadow: 0 10px 30px rgba(162, 19, 218, 0.4);
-		transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+		transition:
+			transform 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+			box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 		margin-top: 1rem;
 	}
 	.primary-btn-neon:hover {
@@ -584,8 +610,6 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 		height: 40px;
 		background: rgba(255, 255, 255, 0.2);
 		border-radius: 50%;
-		backdrop-filter: blur(5px);
-		-webkit-backdrop-filter: blur(5px);
 		transform: translateZ(0);
 	}
 
@@ -603,7 +627,9 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 		letter-spacing: 0.05em;
 		font-size: 0.85rem;
 		cursor: pointer;
-		transition: all 0.3s;
+		transition:
+			background 0.3s ease,
+			border-color 0.3s ease;
 		margin-top: 1rem;
 	}
 	.outline-btn-neon:hover {
