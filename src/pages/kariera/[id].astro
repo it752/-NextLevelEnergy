@@ -186,7 +186,14 @@ const { offer } = Astro.props;
 
 							<div class="file-upload-section">
 								<label class="file-dropzone" for="cv_upload">
-									<input type="file" id="cv_upload" name="cvFile" accept=".pdf,.doc,.docx" hidden />
+									<input
+										type="file"
+										id="cv_upload"
+										name="cvFile"
+										accept=".pdf,.doc,.docx"
+										hidden
+										required
+									/>
 									<div class="drop-content">
 										<svg
 											viewBox="0 0 24 24"
@@ -851,6 +858,11 @@ const { offer } = Astro.props;
 
 				const submitBtn = document.getElementById('btn-submit-form') as HTMLButtonElement;
 				const originalText = submitBtn.innerHTML;
+				// Validate CV file presence before submission
+				if (!formData.has('cvFile')) {
+					alert('Proszę załączyć plik CV przed wysłaniem aplikacji.');
+					return;
+				}
 
 				// Append Step 2 data
 				const data = new FormData(form2);
@@ -868,7 +880,7 @@ const { offer } = Astro.props;
 
 				// UX Fake Loading -> Real Loading
 				submitBtn.innerHTML =
-					'Wysyłanie... <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="animate-spin"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v4"></path></svg>';
+					'<span>Wysyłanie...</span> <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" class="animate-spin" style="display: inline-block; vertical-align: middle; margin-left: 10px;"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-opacity="0.25"></circle><path d="M12 2v4"></path></svg>';
 				submitBtn.style.opacity = '0.7';
 				submitBtn.disabled = true;
 
