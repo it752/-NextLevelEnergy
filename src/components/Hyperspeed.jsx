@@ -405,8 +405,18 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
         this.timeOffset = 0;
 
         this.isVisible = true;
+        this.isRunning = true;
         this.observer = new IntersectionObserver((entries) => {
-          this.isVisible = entries[0].isIntersecting;
+          const isIntersecting = entries[0].isIntersecting;
+          if (isIntersecting && !this.isVisible) {
+             this.isVisible = true;
+             if (!this.isRunning) {
+                 this.isRunning = true;
+                 this.tick();
+             }
+          } else {
+             this.isVisible = isIntersecting;
+          }
         });
         this.observer.observe(this.container);
 
@@ -615,12 +625,15 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
 
       tick() {
         if (this.disposed || !this) return;
-        requestAnimationFrame(this.tick);
 
         if (!this.isVisible) {
+          this.isRunning = false;
           this.clock.getDelta(); // keep delta fresh
           return;
         }
+
+        this.isRunning = true;
+        requestAnimationFrame(this.tick);
 
         if (resizeRendererToDisplaySize(this.renderer, this.setSize)) {
           const canvas = this.renderer.domElement;

@@ -2,7 +2,6 @@
 
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { animate } from "motion/react";
 
 // Global pointer tracker to avoid multiple listeners
 let globalPointer = { x: 0, y: 0 };
@@ -46,9 +45,8 @@ const GlowingEffect = memo(
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const animationFrameRef = useRef<number>(0);
-    const animationRef = useRef<any>(null);
+    const lastRect = useRef<{ rect: DOMRect; time: number } | null>(null);
     const isVisible = useRef(false);
-    const [active, setActive] = useState(false);
 
     // Track visibility to skip calculations
     useEffect(() => {
@@ -77,8 +75,12 @@ const GlowingEffect = memo(
           const element = containerRef.current;
           if (!element) return;
 
-          const rect = element.getBoundingClientRect();
-          const { left, top, width, height } = rect;
+          const now = Date.now();
+          if (!lastRect.current || now - lastRect.current.time > 100) {
+            lastRect.current = { rect: element.getBoundingClientRect(), time: now };
+          }
+
+          const { left, top, width, height } = lastRect.current.rect;
           const mouseX = pos.x;
           const mouseY = pos.y;
 
@@ -104,30 +106,15 @@ const GlowingEffect = memo(
 
           if (!isActive) return;
 
-          const currentAngle =
-            parseFloat(element.style.getPropertyValue("--start")) || 0;
           let targetAngle =
             (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
               Math.PI +
             90;
 
-          const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
-          const newAngle = currentAngle + angleDiff;
-
-          if (animationRef.current) {
-            animationRef.current.stop();
-          }
-
-          animationRef.current = animate(currentAngle, newAngle, {
-            duration: movementDuration,
-            ease: [0.16, 1, 0.3, 1],
-            onUpdate: (value) => {
-              element.style.setProperty("--start", String(value));
-            },
-          });
+          element.style.setProperty("--start", String(targetAngle));
         });
       },
-      [inactiveZone, proximity, movementDuration, disabled]
+      [inactiveZone, proximity, disabled]
     );
 
     useEffect(() => {
@@ -141,9 +128,6 @@ const GlowingEffect = memo(
         subscribers.delete(updatePosition);
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
-        }
-        if (animationRef.current) {
-          animationRef.current.stop();
         }
       };
     }, [updatePosition, disabled]);
