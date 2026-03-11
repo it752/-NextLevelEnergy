@@ -7,6 +7,9 @@ import react from '@astrojs/react';
 
 import sanity from '@sanity/astro';
 
+import { loadEnv } from 'vite';
+const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), '');
+
 // https://astro.build/config
 export default defineConfig({
   vite: {
@@ -22,7 +25,8 @@ export default defineConfig({
       projectId: '9grbh5qy',
       dataset: 'production',
       apiVersion: '2024-03-10', // today's date or similar
-      useCdn: true, // `false` if you want to ensure fresh data
+      useCdn: false, // `false` if you want to ensure fresh data
+      token: env.SANITY_AUTH_TOKEN,
     })
   ]
 });

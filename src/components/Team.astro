@@ -4,6 +4,13 @@ import kacperImg from '../assets/team/Kacper.png';
 import katarzynaImg from '../assets/team/Katarzyna.png';
 import wlodzimierzImg from '../assets/team/Marcin.png';
 import backBg from '../assets/team/back-bg.png';
+import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from '@sanity/image-url';
+
+const builder = imageUrlBuilder(sanityClient);
+function urlFor(source: any, width = 800) {
+	return builder.image(source).width(width).auto('format').quality(80);
+}
 
 interface TeamMember {
 	id: string;
@@ -25,41 +32,18 @@ interface TeamMember {
 	};
 }
 
-const teamMembers: TeamMember[] = [
-	{
-		id: 'katarzyna',
-		name: 'Katarzyna Bilska',
-		role: 'Dyrektor Backoffice',
-		image: katarzynaImg,
-		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus.',
-		email: 'k.bilska@nextlevelenergy.pl',
-		phone: '+48 123 456 789',
-		linkedin: '#',
-		stats: { ovr: 96, pac: 85, sho: 90, pas: 98, dri: 92, def: 88, phy: 80 }
-	},
-	{
-		id: 'kacper',
-		name: 'Kacper Król',
-		role: 'CEO - założyciel, prezes firmy',
-		image: kacperImg,
-		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus. Ut interdum tellus elit sed risus. Maecenas eget condimentum velit.',
-		email: 'k.krol@nextlevelenergy.pl',
-		phone: '+48 123 456 789',
-		linkedin: '#',
-		stats: { ovr: 99, pac: 95, sho: 97, pas: 99, dri: 98, def: 90, phy: 90 }
-	},
-	{
-		id: 'wlodzimierz',
-		name: 'Włodzimierz Lemański',
-		role: 'Dyrektor Operacyjny',
-		image: wlodzimierzImg,
-		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus.',
-		email: 'w.lemanski@nextlevelenergy.pl',
-		phone: '+48 123 456 789',
-		linkedin: '#',
-		stats: { ovr: 97, pac: 88, sho: 85, pas: 96, dri: 92, def: 95, phy: 85 }
-	}
-];
+const rawMembers = await sanityClient.fetch(`*[_type == "founder"] | order(_createdAt asc)`);
+const teamMembers: TeamMember[] = rawMembers.map((member: any) => ({
+	id: member._id,
+	name: member.name,
+	role: member.role,
+	image: member.image, // Sanity asset
+	desc: member.description,
+	email: member.email,
+	phone: member.phone,
+	linkedin: member.linkedin,
+	stats: member.stats,
+}));
 ---
 
 <section id="team" class="team-section">
@@ -96,7 +80,11 @@ const teamMembers: TeamMember[] = [
 							<div class="card-flipper">
 								<div class="card-front">
 									<div class="card-inner">
-										<Image src={member.image} alt={member.name} class="card-img" loading="lazy" />
+										{member.image?.asset ? (
+											<img src={urlFor(member.image, 600).url()} alt={member.name} class="card-img" loading="lazy" />
+										) : (
+											<div class="card-img" style="background:#0F172A;"></div>
+										)}
 									</div>
 								</div>
 								<div class="card-back">
@@ -105,7 +93,7 @@ const teamMembers: TeamMember[] = [
 										<div class="stats-top">
 											<div class="stats-rating">{member.stats.ovr}</div>
 											<div class="stats-position">
-												{member.id === 'kacper' ? 'CEO' : member.id === 'katarzyna' ? 'CBO' : 'COO'}
+												{member.role || 'COO'}
 											</div>
 											<div class="stats-nation">🇵🇱</div>
 										</div>
