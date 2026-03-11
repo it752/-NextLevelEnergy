@@ -76,8 +76,8 @@ const teamMembers = rawTeamMembers.map((member: any) => ({
 							<p>{m.desc}</p>
 							<div class="to-contact">
 								<strong>Kontakt</strong>
-								<a href={`mailto:${m.email}`}>{m.email}</a>
-								<a href={`tel:${m.phone.replace(/\s/g, '')}`}>{m.phone}</a>
+								{m.email && <a href={`mailto:${m.email}`}>{m.email}</a>}
+								{m.phone && <a href={`tel:${m.phone.replace(/\s/g, '')}`}>{m.phone}</a>}
 							</div>
 						</div>
 					</div>
