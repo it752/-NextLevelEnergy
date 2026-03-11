@@ -1,10 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { jobOffers } from '../../data/jobs';
+import { sanityClient } from 'sanity:client';
 
-export function getStaticPaths() {
-	return jobOffers.map((offer, index) => ({
-		params: { id: offer.id },
+export async function getStaticPaths() {
+	const offers = await sanityClient.fetch(`*[_type == "jobOffer"]`);
+	return offers.map((offer: any, index: number) => ({
+		params: { id: offer.slug.current },
 		props: { offer, index },
 	}));
 }

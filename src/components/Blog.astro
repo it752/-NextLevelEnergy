@@ -1,66 +1,22 @@
 ---
-import { Image } from 'astro:assets';
-import blog1 from '../assets/blog/blog-1.png';
-import blog2 from '../assets/blog/blog-2.png';
-import blog3 from '../assets/blog/blog-3.png';
+import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from '@sanity/image-url';
 import { GlowingEffect } from './ui/glowing-effect.tsx';
 
-const posts = [
-	{
-		id: 1,
-		title: 'Integracja zespołu w polskich górach',
-		date: '12.02.2025',
-		excerpt: 'Weekend pełen wyzwań i wspólnej zabawy.',
-		fullText:
-			'W naszej firmie wierzymy, że najlepsze pomysły rodzą się z dala od biurek. Nasz ostatni wyjazd integracyjny do Zakopanego to nie tylko kilometry pokonane na szlakach, ale też dziesiątki godzin rozmów i wspólnych gier, które zbliżyły nas do siebie. Po wymagającym sezonie projektowym taki odpoczynek był nam wszystkim potrzebny. W górach nauczyliśmy się ufać sobie nawzajem i jeszcze sprawniej rozwiązywać problemy jako zespół. Zobaczcie sami, jak Level Up ładuje baterie przed kolejnymi wyzwaniami w branży OZE!',
-		image: blog1,
-	},
-	{
-		id: 2,
-		title: 'Akademia Liderów – pierwsza edycja',
-		date: '08.02.2025',
-		excerpt: 'Inwestujemy w rozwój kompetencji miękkich.',
-		fullText:
-			'Rozwój techniczny to u nas podstawa, ale wiemy, że efektywne zarządzanie projektami i relacjami wymaga czegoś więcej. Z dumą ogłaszamy zakończenie pierwszej edycji naszej "Akademii Liderów" – trzymiesięcznego cyklu warsztatów z asertywności, rozwiązywania konfliktów i motywowania zespołu. Program zgromadził kilkunastu najbardziej zaangażowanych pracowników, którzy pod okiem doświadczonych mentorów doskonalili swoje predyspozycje do objęcia w przyszłości ważnych ról w strukturach naszej filmy.',
-		image: blog2,
-	},
-	{
-		id: 3,
-		title: 'Nasze nowe biuro – więcej niż miejsce pracy',
-		date: '01.02.2025',
-		excerpt: 'Przestrzeń zaprojektowana z myślą o ludziach.',
-		fullText:
-			'Kolejny krok przed nami! Otworzyliśmy nowoczesną siedzibę, która została zaprojektowana specjalnie dla naszego rosnącego zespołu inżynierów i handlowców. Stworzyliśmy przestrzeń, która promuje kreatywność – znajdziecie tu zarówno ciche strefy do pracy w skupieniu, jak i duże obszary wspólne sprzyjające swobodnej wymianie pomysłów przy kawie. Ale największym hitem biura jest zdecydowanie nasza sala relaksu z piłkarzykami i konsolą. Nowe biuro to obietnica lepszych warunków dla każdego z naszych pracowników.',
-		image: blog3,
-	},
-	{
-		id: 4,
-		title: 'Mistrzostwa firmy w kartingu',
-		date: '25.01.2025',
-		excerpt: 'Sportowa rywalizacja poza godzinami pracy.',
-		fullText:
-			'W ostatni weekend nasz zespół postanowił zmierzyć się w nieco innej domenie niż dotychczas – zorganizowaliśmy firmowe mistrzostwa w wyścigach gokartów! Po emocjonujących eliminacjach i niesamowicie zaciętym finale wyłoniliśmy zwycięzcę z działu technicznego. Jednak tego dnia nie liczyły się tylko czasy okrążeń. Liczyła się zdrowa, przyjazna sportowa rywalizacja, zbijanie "piątek" i niesamowita atmosfera. Tego typu spotkania wspaniale odstresowują nas po trudach codziennej, intensywnej pracy.',
-		image: blog1,
-	},
-	{
-		id: 5,
-		title: 'Targi technologii OZE – byliśmy tam!',
-		date: '15.01.2025',
-		excerpt: 'Nasi inżynierowie zdobywają nową wiedzę.',
-		fullText:
-			'Branża Odnawialnych Źródeł Energii pędzi do przodu z niesamowitą prędkością, dlatego nasi specjaliści po prostu muszą być na bieżąco. Grupa inżynierów i projektantów z naszej firmy wzięła udział w największych branżowych targach we Frankfurcie. Zdobyliśmy tam masę nowej wiedzy o pompach ciepła nowej generacji i zaawansowanych systemach zarządzania energią (BMS). Ta cenna wiedza już niedługo zostanie przekuta w realne szkolenia wewnętrzne, podnosząc kompetencje wszystkich pracowników.',
-		image: blog2,
-	},
-	{
-		id: 6,
-		title: 'Owocowe czwartki? Śniadania!',
-		date: '05.01.2025',
-		excerpt: 'Rozmowy przy stole w drodze do pracy.',
-		fullText:
-			'W zeszłym miesiącu zrobiliśmy mały audyt naszych firmowych benefitów. Odkryliśmy, że zamiast standardowych rozwiązań, nasz zespół znacznie bardziej ceni wspólnie spędzany czas! Dlatego wprowadziliśmy tradycję piątkowych "Wielkich Śniadań". Dział po departamencie - co tydzień ktoś inny przejmuje kuchenne stery i przygotowuje autorskie posiłki dla całego biura. Od pancaków po tradycyjne jajecznice. Taka przerwa sprzyja wzmacnianiu relacji i lepszej współpracy w nadchodzącym tygodniu.',
-		image: blog3,
-	},
-];
+const builder = imageUrlBuilder(sanityClient);
+function urlFor(source: any) {
+	return builder.image(source).auto('format').fit('max');
+}
+
+const rawPosts = await sanityClient.fetch(`*[_type == "post"] | order(date desc)`);
+const posts = rawPosts.map((post: any) => ({
+	id: post._id,
+	title: post.title,
+	date: post.date,
+	excerpt: post.excerpt,
+	fullText: post.fullText,
+	image: { src: urlFor(post.image).url() },
+}));
 ---
 
 <section id="idea" class="blog-section selection:bg-[#a213da] selection:text-white">
@@ -126,7 +82,7 @@ const posts = [
 							</div>
 							<div class="bento-inner">
 								<div class="bento-image-wrapper">
-									<Image src={post.image} alt={post.title} class="bento-img" loading="lazy" />
+									<img src={post.image.src} alt={post.title} class="bento-img" loading="lazy" />
 									<div class="bento-overlay" />
 								</div>
 								<div class="bento-content">

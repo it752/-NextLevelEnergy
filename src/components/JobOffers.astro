@@ -1,5 +1,17 @@
 ---
-import { jobOffers } from '../data/jobs';
+import { sanityClient } from 'sanity:client';
+
+const rawJobOffers = await sanityClient.fetch(`*[_type == "jobOffer"] | order(_createdAt asc)`);
+const jobOffers = rawJobOffers.map((offer: any) => ({
+	id: offer.slug.current,
+	title: offer.title,
+	department: offer.department,
+	salary: offer.salary,
+	location: offer.location,
+	description: offer.description,
+	responsibilities: offer.responsibilities,
+	requirements: offer.requirements,
+}));
 ---
 
 <section id="kariera" class="job-offers-section">

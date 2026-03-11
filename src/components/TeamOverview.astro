@@ -1,5 +1,6 @@
 ---
 import { GlowingEffect } from './ui/glowing-effect.tsx';
+import { sanityClient } from 'sanity:client';
 
 const stats = [
 	{ value: '50+', label: 'Pracowników' },
@@ -7,56 +8,15 @@ const stats = [
 	{ value: '20+', label: 'Lat na rynku' },
 ];
 
-const teamMembers = [
-	{
-		name: 'Jan Kowalski',
-		role: 'CEO',
-		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
-		email: 'jan@levelup.pl',
-		phone: '+48 123 456 789',
-		linkedin: '#',
-	},
-	{
-		name: 'Anna Nowak',
-		role: 'COO',
-		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
-		email: 'anna@levelup.pl',
-		phone: '+48 123 456 789',
-		linkedin: '#',
-	},
-	{
-		name: 'Piotr Wiśniewski',
-		role: 'CTO',
-		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
-		email: 'piotr@levelup.pl',
-		phone: '+48 123 456 789',
-		linkedin: '#',
-	},
-	{
-		name: 'Marta Zielińska',
-		role: 'Head of Sales',
-		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
-		email: 'marta@levelup.pl',
-		phone: '+48 123 456 789',
-		linkedin: '#',
-	},
-	{
-		name: 'Tomasz Lewandowski',
-		role: 'Finance Director',
-		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
-		email: 'tomasz@levelup.pl',
-		phone: '+48 123 456 789',
-		linkedin: '#',
-	},
-	{
-		name: 'Karolina Dąbrowska',
-		role: 'HR Manager',
-		desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum.',
-		email: 'karolina@levelup.pl',
-		phone: '+48 123 456 789',
-		linkedin: '#',
-	},
-];
+const rawTeamMembers = await sanityClient.fetch(`*[_type == "teamMember"] | order(_createdAt asc)`);
+const teamMembers = rawTeamMembers.map((member: any) => ({
+	name: member.name,
+	role: member.role,
+	desc: member.description,
+	email: member.email,
+	phone: member.phone,
+	linkedin: member.linkedin || '#',
+}));
 ---
 
 <section id="team-overview" class="to-section">

@@ -160,6 +160,28 @@ const teamMembers = [
 				</span>
 			</a>
 		</div>
+
+		<!-- Secondary Team Grid -->
+		{extraTeamMembers.length > 0 && (
+			<div id="team-overview" class="secondary-team-grid">
+				{extraTeamMembers.map((member: any) => (
+					<div class="secondary-member-card">
+						<div class="member-photo-wrapper">
+							<img src={member.image.src} alt={member.name} loading="lazy" class="member-photo" />
+							{member.linkedin ? (
+								<a href={member.linkedin} target="_blank" rel="noopener noreferrer" class="member-linkedin" aria-label={`LinkedIn ${member.name}`}>
+									<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+								</a>
+							) : null}
+						</div>
+						<div class="member-info">
+							<h4 class="secondary-member-name">{member.name}</h4>
+							<p class="secondary-member-role">{member.role}</p>
+						</div>
+					</div>
+				))}
+			</div>
+		)}
 	</div>
 </section>
 
@@ -920,5 +942,91 @@ const teamMembers = [
 		.member-card.is-expanded .card-visuals {
 			width: 150px;
 		}
+	}
+
+	/* SECONDARY TEAM GRID STYLES */
+	.secondary-team-grid {
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		gap: 2rem;
+		padding-top: 4rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+		margin-top: 2rem;
+	}
+
+	.secondary-member-card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		background: rgba(255, 255, 255, 0.02);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		border-radius: 20px;
+		padding: 1.5rem;
+		transition: all 0.3s ease;
+		position: relative;
+		overflow: hidden;
+	}
+	
+	.secondary-member-card:hover {
+		transform: translateY(-5px);
+		border-color: rgba(162, 19, 218, 0.3);
+		background: rgba(162, 19, 218, 0.05);
+	}
+
+	.member-photo-wrapper {
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		position: relative;
+		margin-bottom: 1rem;
+		padding: 4px;
+		background: linear-gradient(135deg, rgba(162, 19, 218, 0.5), transparent);
+	}
+
+	.member-photo {
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		object-fit: cover;
+		background: #0b111d;
+	}
+
+	.member-linkedin {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		background: #a213da;
+		color: white;
+		width: 32px;
+		height: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+		transition: transform 0.3s ease, background 0.3s;
+	}
+
+	.member-linkedin:hover {
+		transform: scale(1.1);
+		background: #b515f2;
+	}
+
+	.member-info {
+		margin-top: 0.5rem;
+	}
+
+	.secondary-member-name {
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: white;
+		margin-bottom: 0.2rem;
+	}
+
+	.secondary-member-role {
+		font-size: 0.85rem;
+		color: rgba(255, 255, 255, 0.6);
 	}
 </style>
