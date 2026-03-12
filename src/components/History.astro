@@ -47,7 +47,10 @@ const milestones = [
 				milestones.map((m, idx) => (
 					<div
 						class={`timeline-item ${idx === 1 ? 'is-active' : ''}`}
+						role="button"
+						tabindex="0"
 						aria-expanded={idx === 1 ? 'true' : 'false'}
+						aria-label={`Milestone year ${m.year}: ${m.title}`}
 						style={`--accent-color: ${m.color}; --index: ${idx}`}
 						data-year={m.year}>
 						<div class="item-bg" />
@@ -97,8 +100,8 @@ const milestones = [
 	const historyItems = document.querySelectorAll('.timeline-item') as NodeListOf<HTMLElement>;
 
 	historyItems.forEach((item, index) => {
-		item.addEventListener('click', () => {
-			if (item.classList.contains('is-active')) return; // Avoid re-triggering animation on same item
+		const toggleItem = () => {
+			if (item.classList.contains('is-active')) return;
 
 			historyItems.forEach(i => {
 				i.classList.remove('is-active');
@@ -106,6 +109,15 @@ const milestones = [
 			});
 			item.classList.add('is-active');
 			item.setAttribute('aria-expanded', 'true');
+		};
+
+		item.addEventListener('click', toggleItem);
+
+		item.addEventListener('keydown', e => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				toggleItem();
+			}
 		});
 
 		const nextBtn = item.querySelector('.next-step');
