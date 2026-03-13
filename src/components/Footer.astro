@@ -70,20 +70,38 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 					<div class="glass-bg-layer absolute inset-0 rounded-[24px] pointer-events-none"></div>
 
 					<h3 class="card-title relative z-10">Wyślij zapytanie</h3>
-					<form class="contact-form relative z-10">
+					<form class="contact-form relative z-10" id="contact-form">
 						<div class="form-row">
 							<div class="input-group">
-								<input type="text" id="contact-name" placeholder="Imię i nazwisko" required />
+								<input
+									type="text"
+									id="contact-name"
+									name="name"
+									placeholder="Imię i nazwisko"
+									required
+								/>
 							</div>
 							<div class="input-group">
-								<input type="email" id="contact-email" placeholder="Adres e-mail" required />
+								<input
+									type="email"
+									id="contact-email"
+									name="email"
+									placeholder="Adres e-mail"
+									required
+								/>
 							</div>
 						</div>
 						<div class="input-group">
-							<input type="tel" id="contact-phone" placeholder="Numer telefonu (opcjonalnie)" />
+							<input
+								type="tel"
+								id="contact-phone"
+								name="phone"
+								placeholder="Numer telefonu (opcjonalnie)"
+							/>
 						</div>
 						<div class="input-group">
-							<textarea id="contact-msg" rows="3" placeholder="Treść wiadomości" required></textarea>
+							<textarea id="contact-msg" name="message" rows="3" placeholder="Treść wiadomości" required
+							></textarea>
 						</div>
 
 						<label class="nl-checkbox">
@@ -94,7 +112,14 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 							>
 						</label>
 
-						<button type="submit" class="primary-btn-neon w-full">
+						<p id="contact-success-msg" class="hidden text-green-400 text-sm mt-2">
+							Wiadomość została wysłana pomyślnie!
+						</p>
+						<p id="contact-error-msg" class="hidden text-red-400 text-sm mt-2">
+							Wystąpił błąd podczas wysyłania. Spróbuj ponownie.
+						</p>
+
+						<button type="submit" id="contact-submit-btn" class="primary-btn-neon w-full">
 							<span class="btn-icon">
 								<svg
 									viewBox="0 0 24 24"
@@ -807,6 +832,47 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 				nlBtn.innerHTML = originalText;
 				nlBtn.style.opacity = '1';
 				nlBtn.disabled = false;
+			}
+		});
+	}
+	// Contact Form logic
+	const contactForm = document.getElementById('contact-form') as HTMLFormElement;
+	const contactBtn = document.getElementById('contact-submit-btn') as HTMLButtonElement | null;
+	const contactSuccess = document.getElementById('contact-success-msg');
+	const contactError = document.getElementById('contact-error-msg');
+
+	if (contactForm && contactBtn) {
+		contactForm.addEventListener('submit', async e => {
+			e.preventDefault();
+
+			const originalText = contactBtn.innerHTML;
+			contactBtn.innerHTML =
+				'<span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" class="animate-spin w-4 h-4" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v4"></path></svg></span> Wysyłanie...';
+			contactBtn.style.opacity = '0.7';
+			contactBtn.disabled = true;
+
+			if (contactSuccess) contactSuccess.classList.add('hidden');
+			if (contactError) contactError.classList.add('hidden');
+
+			const formData = new FormData(contactForm);
+
+			try {
+				const response = await fetch('/api/contact', {
+					method: 'POST',
+					body: formData,
+				});
+
+				if (!response.ok) throw new Error('Network error');
+
+				if (contactSuccess) contactSuccess.classList.remove('hidden');
+				contactForm.reset();
+			} catch (err) {
+				console.error('Contact error:', err);
+				if (contactError) contactError.classList.remove('hidden');
+			} finally {
+				contactBtn.innerHTML = originalText;
+				contactBtn.style.opacity = '1';
+				contactBtn.disabled = false;
 			}
 		});
 	}
