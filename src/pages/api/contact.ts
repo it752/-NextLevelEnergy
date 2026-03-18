@@ -22,20 +22,30 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // SMTP Configuration from environment variables
+    const smtpHost = import.meta.env.SMTP_HOST || process.env.SMTP_HOST;
+    const smtpPort = import.meta.env.SMTP_PORT || process.env.SMTP_PORT;
+    const smtpUser = import.meta.env.SMTP_USER || process.env.SMTP_USER;
+    const smtpPass = import.meta.env.SMTP_PASS || process.env.SMTP_PASS;
+    const targetEmail = import.meta.env.CONTACT_TARGET_EMAIL || process.env.CONTACT_TARGET_EMAIL;
+
+    if (!smtpHost || !smtpPort || !smtpUser || !smtpPass || !targetEmail) {
+      throw new Error(`Brakujące zmienne środowiskowe: HOST=${!!smtpHost}, PORT=${!!smtpPort}, USER=${!!smtpUser}, PASS=${!!smtpPass}, TARGET=${!!targetEmail}`);
+    }
+
     const transporter = nodemailer.createTransport({
-      host: import.meta.env.SMTP_HOST,
-      port: parseInt(import.meta.env.SMTP_PORT),
-      secure: parseInt(import.meta.env.SMTP_PORT) === 465, // true for 465, false for other ports
+      host: smtpHost,
+      port: parseInt(smtpPort),
+      secure: parseInt(smtpPort) === 465, // true for 465, false for other ports
       auth: {
-        user: import.meta.env.SMTP_USER,
-        pass: import.meta.env.SMTP_PASS,
+        user: smtpUser,
+        pass: smtpPass,
       },
     });
 
     // Email content
     const mailOptions = {
-      from: import.meta.env.SMTP_USER,
-      to: import.meta.env.CONTACT_TARGET_EMAIL,
+      from: smtpUser,
+      to: targetEmail,
       replyTo: email as string,
       subject: `Nowa wiadomość od ${name} | Next Level Energy`,
       text: `Wiadomość z formularza kontaktowego:\n\nImię: ${name}\nE-mail: ${email}\nTelefon: ${phone}\n\nWiadomość:\n${message}`,
@@ -63,11 +73,12 @@ export const POST: APIRoute = async ({ request }) => {
       }),
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error('Nodemailer error:', error);
     return new Response(
       JSON.stringify({
         message: 'Wystąpił błąd podczas wysyłania wiadomości.',
+        errorDetail: error?.message || String(error)
       }),
       { status: 500 }
     );
