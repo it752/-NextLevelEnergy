@@ -1,5 +1,13 @@
 ---
-const milestones = [
+import { sanityClient } from 'sanity:client';
+
+const historyData = await sanityClient.fetch(`*[_type == "history"][0]`);
+const milestones = historyData?.milestones?.map((m: any) => ({
+	year: m.year,
+	title: m.title,
+	color: m.color || '#A213DA',
+	description: m.description,
+})) || [
 	{
 		year: '2004',
 		title: 'Level Energy',
@@ -44,7 +52,7 @@ const milestones = [
 
 		<div class="timeline-accordion">
 			{
-				milestones.map((m, idx) => (
+				milestones.map((m: { year: string; title: string; color: string; description: string }, idx: number) => (
 					<div
 						class={`timeline-item ${idx === 1 ? 'is-active' : ''}`}
 						role="button"
