@@ -862,7 +862,10 @@ import { GlowingEffect } from './ui/glowing-effect.tsx';
 					body: formData,
 				});
 
-				if (!response.ok) throw new Error('Network error');
+				if (!response.ok) {
+					const errorData = await response.json().catch(() => ({}));
+					throw new Error(errorData.errorDetail || errorData.message || 'Network error');
+				}
 
 				if (contactSuccess) contactSuccess.classList.remove('hidden');
 				contactForm.reset();
