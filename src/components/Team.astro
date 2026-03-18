@@ -24,11 +24,17 @@ interface TeamMember {
 	stats: {
 		ovr: number;
 		pac: number;
+		pacLabel: string;
 		sho: number;
+		shoLabel: string;
 		pas: number;
+		pasLabel: string;
 		dri: number;
+		driLabel: string;
 		def: number;
+		defLabel: string;
 		phy: number;
+		phyLabel: string;
 	};
 }
 
@@ -42,7 +48,15 @@ const teamMembers: TeamMember[] = rawMembers.map((member: any) => ({
 	email: member.email,
 	phone: member.phone,
 	linkedin: member.linkedin,
-	stats: member.stats,
+	stats: {
+		...member.stats,
+		pacLabel: member.stats?.pacLabel || 'PAC',
+		shoLabel: member.stats?.shoLabel || 'SHO',
+		pasLabel: member.stats?.pasLabel || 'PAS',
+		driLabel: member.stats?.driLabel || 'DRI',
+		defLabel: member.stats?.defLabel || 'DEF',
+		phyLabel: member.stats?.phyLabel || 'PHY',
+	},
 }));
 ---
 
@@ -100,14 +114,14 @@ const teamMembers: TeamMember[] = rawMembers.map((member: any) => ({
 										<div class="stats-name">{member.name.split(' ')[0].toUpperCase()}</div>
 										<div class="stats-grid">
 											<div class="stat-col">
-												<span><strong>{member.stats.pac}</strong> PAC</span>
-												<span><strong>{member.stats.sho}</strong> SHO</span>
-												<span><strong>{member.stats.pas}</strong> PAS</span>
+												<span><strong>{member.stats.pac}</strong> {member.stats.pacLabel}</span>
+												<span><strong>{member.stats.sho}</strong> {member.stats.shoLabel}</span>
+												<span><strong>{member.stats.pas}</strong> {member.stats.pasLabel}</span>
 											</div>
 											<div class="stat-col">
-												<span><strong>{member.stats.dri}</strong> DRI</span>
-												<span><strong>{member.stats.def}</strong> DEF</span>
-												<span><strong>{member.stats.phy}</strong> PHY</span>
+												<span><strong>{member.stats.dri}</strong> {member.stats.driLabel}</span>
+												<span><strong>{member.stats.def}</strong> {member.stats.defLabel}</span>
+												<span><strong>{member.stats.phy}</strong> {member.stats.phyLabel}</span>
 											</div>
 										</div>
 									</div>

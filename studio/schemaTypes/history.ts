@@ -4,6 +4,11 @@ export const history = defineType({
   name: 'history',
   title: 'Historia',
   type: 'document',
+  preview: {
+    prepare() {
+      return { title: 'Historia firmy' }
+    },
+  },
   fields: [
     defineField({
       name: 'milestones',
