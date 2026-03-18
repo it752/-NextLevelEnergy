@@ -43,10 +43,10 @@ const teamMembers: TeamMember[] = rawTeamMembers.map((member: any) => ({
 			<p>Zespół ekspertów Next Level Energy, który zamienia pomysły w sukcesy.</p>
 		</div>
 
-		<div class="to-cards">
+		<div class="to-cards" id="to-cards-grid">
 			{
 				teamMembers.map((m: TeamMember, i: number) => (
-					<div class="to-card" style={`--delay: ${i * 0.08}s`}>
+					<div class={`to-card${i >= 6 ? ' to-card-hidden' : ''}`} style={`--delay: ${i * 0.08}s`}>
 						<div
 							class="glowing-effect-container absolute inset-0 pointer-events-none"
 							style="border-radius: 16px; z-index: 0;">
@@ -93,6 +93,18 @@ const teamMembers: TeamMember[] = rawTeamMembers.map((member: any) => ({
 				))
 			}
 		</div>
+
+		{teamMembers.length > 6 && (
+			<div class="to-show-more-wrap" id="to-show-more-wrap">
+				<button id="to-show-more-btn" class="to-btn" aria-expanded="false">
+					<span id="to-show-more-label">Pokaż więcej</span>
+					<svg id="to-show-more-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M7 13l5 5 5-5"></path>
+						<path d="M7 6l5 5 5-5"></path>
+					</svg>
+				</button>
+			</div>
+		)}
 
 		<div class="to-stats">
 			{
@@ -149,6 +161,30 @@ const teamMembers: TeamMember[] = rawTeamMembers.map((member: any) => ({
 			}
 		});
 	});
+
+	// Show more / show less button
+	const showMoreBtn = document.getElementById('to-show-more-btn') as HTMLButtonElement | null;
+	const showMoreLabel = document.getElementById('to-show-more-label');
+	const showMoreIcon = document.getElementById('to-show-more-icon');
+	const hiddenCards = document.querySelectorAll('.to-card-hidden') as NodeListOf<HTMLElement>;
+	let isExpanded = false;
+
+	if (showMoreBtn && hiddenCards.length > 0) {
+		showMoreBtn.addEventListener('click', () => {
+			isExpanded = !isExpanded;
+			hiddenCards.forEach((card, i) => {
+				if (isExpanded) {
+					card.style.setProperty('--extra-delay', `${i * 0.08}s`);
+					card.classList.add('to-card-visible');
+				} else {
+					card.classList.remove('to-card-visible');
+				}
+			});
+			showMoreBtn.setAttribute('aria-expanded', String(isExpanded));
+			if (showMoreLabel) showMoreLabel.textContent = isExpanded ? 'Zwiń' : 'Pokaż więcej';
+			if (showMoreIcon) showMoreIcon.style.transform = isExpanded ? 'rotate(180deg)' : '';
+		});
+	}
 </script>
 
 <style>
@@ -223,7 +259,25 @@ const teamMembers: TeamMember[] = rawTeamMembers.map((member: any) => ({
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 1.25rem;
-		margin-bottom: 4rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.to-card-hidden {
+		display: none;
+	}
+	.to-card-hidden.to-card-visible {
+		display: block;
+		animation: cardFadeIn 0.5s cubic-bezier(0.19, 1, 0.22, 1) var(--extra-delay, 0s) both;
+	}
+	@keyframes cardFadeIn {
+		from { opacity: 0; transform: translateY(16px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	.to-show-more-wrap {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 3rem;
 	}
 
 	.to-card {
