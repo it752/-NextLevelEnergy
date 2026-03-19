@@ -2,6 +2,8 @@
 export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { sanityClient } from 'sanity:client';
+import { Image } from 'astro:assets';
+import logoWhite from '../../assets/logo/logo-white.svg';
 
 interface JobOffer {
 	id: string;
@@ -39,6 +41,9 @@ const { offer } = Astro.props;
 		<!-- Left Side: Offer Details -->
 		<div class="job-info-column">
 			<div class="job-header">
+				<div class="logo-center-wrapper">
+					<Image src={logoWhite} alt="Next Level Energy Logo" class="large-logo-hero" />
+				</div>
 				<h1 class="job-title">{offer.title}</h1>
 				<div class="job-meta">
 					<span class="meta-item">
@@ -300,16 +305,35 @@ const { offer } = Astro.props;
 		}
 
 		.job-header {
-			margin-bottom: 3rem;
-			padding-bottom: 2rem;
+			margin-bottom: 4rem;
+			padding-bottom: 3rem;
 			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
 		}
 
-		.job-title {
-			font-size: clamp(2rem, 4vw, 3rem);
-			font-weight: 900;
-			line-height: 1.2;
-			margin-bottom: 1rem;
+		.logo-center-wrapper {
+			margin-bottom: 2rem;
+			animation: fadeDownLogo 1s ease forwards;
+		}
+
+		.large-logo-hero {
+			height: 15rem;
+			width: auto;
+			filter: drop-shadow(0 0 30px rgba(162, 19, 218, 0.4));
+		}
+
+		@keyframes fadeDownLogo {
+			from {
+				opacity: 0;
+				transform: translateY(-20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
 		}
 
 		.job-meta {

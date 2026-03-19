@@ -114,32 +114,31 @@ import LazyHyperspeed from './LazyHyperspeed.tsx';
 		<!-- Centered Text Column -->
 		<div class="dash-text-col">
 			<h1 class="main-heading">
-				<span class="heading-line line-1">Nowa Era</span>
-				<span class="heading-line line-2">
-					<span class="gradient-text">Efektywności</span>
-				</span>
-				<span class="heading-line line-3">Energetycznej</span>
+				<div class="hero-logo-wrapper">
+					<Image src={logoWhite} alt="Next Level Energy Logo" class="hero-main-logo" loading="eager" />
+				</div>
+				<span class="visually-hidden">Nowa Era Efektywności Energetycznej</span>
 			</h1>
+		</div>
 
-			<!-- Restored CTA Button -->
-			<div class="btn-container">
-				<a href="#idea" class="level-up-btn">
-					<span class="btn-text">
-						Level Up
-						<svg
-							class="arrow-svg"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="3"
-							stroke-linecap="round"
-							stroke-linejoin="round">
-							<path d="M7 11l5-5 5 5"></path>
-							<path d="M7 18l5-5 5 5"></path>
-						</svg>
-					</span>
-				</a>
-			</div>
+		<!-- Move CTA Button to Bottom -->
+		<div class="btn-container">
+			<a href="#idea" class="level-up-btn">
+				<span class="btn-text">
+					Level Up
+					<svg
+						class="arrow-svg"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="3"
+						stroke-linecap="round"
+						stroke-linejoin="round">
+						<path d="M7 11l5-5 5 5"></path>
+						<path d="M7 18l5-5 5 5"></path>
+					</svg>
+				</span>
+			</a>
 		</div>
 	</div>
 </section>
@@ -670,22 +669,47 @@ import LazyHyperspeed from './LazyHyperspeed.tsx';
 	}
 
 	.main-heading {
-		font-size: clamp(3.5rem, 6.5vw, 6.5rem);
-		font-weight: 850;
-		line-height: 1.05;
-		letter-spacing: -0.04em;
 		display: flex;
 		flex-direction: column;
-	}
-	.heading-line {
-		display: block;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
 	}
 
-	/* Dodałem flex dla linii z Efektywnością aby trzymać sparkle zablokowany idealnie obok */
-	.heading-line.line-2 {
+	.hero-logo-wrapper {
+		width: 100%;
+		max-width: 1200px;
 		display: flex;
-		align-items: center;
-		flex-wrap: nowrap;
+		justify-content: center;
+		filter: drop-shadow(0 0 30px rgba(162, 19, 218, 0.4));
+		animation: logoGlow 4s infinite alternate ease-in-out;
+	}
+
+	.hero-main-logo {
+		width: 100%;
+		height: auto;
+		max-height: 40vh;
+	}
+
+	@keyframes logoGlow {
+		from {
+			filter: drop-shadow(0 0 20px rgba(162, 19, 218, 0.3));
+		}
+		to {
+			filter: drop-shadow(0 0 40px rgba(162, 19, 218, 0.6));
+		}
+	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
 	}
 
 	.gradient-text {
@@ -707,11 +731,31 @@ import LazyHyperspeed from './LazyHyperspeed.tsx';
 
 	/* CTA BUTTON RESTORED */
 	.btn-container {
-		padding: 2.5rem 0 0 0;
+		position: absolute;
+		bottom: 5rem;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 30;
 		display: flex;
 		justify-content: center;
-		position: relative;
-		z-index: 30;
+		padding: 0;
+		pointer-events: auto;
+		opacity: 0;
+	}
+
+	.hero-content-anim.animate-in .btn-container {
+		animation: fadeUpBtn 1s cubic-bezier(0.19, 1, 0.22, 1) forwards 1.2s;
+	}
+
+	@keyframes fadeUpBtn {
+		from {
+			opacity: 0;
+			transform: translate(-50%, 20px);
+		}
+		to {
+			opacity: 1;
+			transform: translate(-50%, 0);
+		}
 	}
 
 	.level-up-btn {
