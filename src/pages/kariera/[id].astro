@@ -3,6 +3,7 @@ export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { sanityClient } from 'sanity:client';
 import { Image } from 'astro:assets';
+import logoColor from '../../assets/hero/logo-główne-kolor.png';
 import logoWhite from '../../assets/logo/logo-white.svg';
 
 interface JobOffer {
@@ -42,7 +43,7 @@ const { offer } = Astro.props;
 		<div class="job-info-column">
 			<div class="job-header">
 				<div class="logo-center-wrapper">
-					<Image src={logoWhite} alt="Next Level Energy Logo" class="large-logo-hero" />
+					<Image src={logoColor} alt="Next Level Energy Logo" class="large-logo-hero" />
 				</div>
 				<h1 class="job-title">{offer.title}</h1>
 				<div class="job-meta">
@@ -320,8 +321,11 @@ const { offer } = Astro.props;
 		}
 
 		.large-logo-hero {
-			height: 15rem;
+			height: auto;
+			max-height: 15rem;
+			max-width: 100%;
 			width: auto;
+			object-fit: contain;
 			filter: drop-shadow(0 0 30px rgba(162, 19, 218, 0.4));
 		}
 

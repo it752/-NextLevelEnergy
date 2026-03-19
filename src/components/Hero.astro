@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import logoColor from '../assets/hero/logo-główne-kolor.png';
 import logoWhite from '../assets/logo/logo-white.svg';
 import LazyHyperspeed from './LazyHyperspeed.tsx';
 ---
@@ -115,7 +116,7 @@ import LazyHyperspeed from './LazyHyperspeed.tsx';
 		<div class="dash-text-col">
 			<h1 class="main-heading">
 				<div class="hero-logo-wrapper">
-					<Image src={logoWhite} alt="Next Level Energy Logo" class="hero-main-logo" loading="eager" />
+					<Image src={logoColor} alt="Next Level Energy Logo" class="hero-main-logo" loading="eager" />
 				</div>
 				<span class="visually-hidden">Nowa Era Efektywności Energetycznej</span>
 			</h1>
@@ -686,9 +687,10 @@ import LazyHyperspeed from './LazyHyperspeed.tsx';
 	}
 
 	.hero-main-logo {
-		width: 100%;
+		max-width: 100%;
 		height: auto;
 		max-height: 40vh;
+		object-fit: contain;
 	}
 
 	@keyframes logoGlow {
