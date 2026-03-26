@@ -1,6 +1,12 @@
 ---
 import { GlowingEffect } from './ui/glowing-effect.tsx';
 import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from '@sanity/image-url';
+
+const builder = imageUrlBuilder(sanityClient);
+function urlFor(source: any, width = 400) {
+	return builder.image(source).width(width).auto('format').quality(80);
+}
 
 const stats = [
 	{ value: '50+', label: 'Pracowników' },
@@ -15,12 +21,14 @@ interface TeamMember {
 	email: string;
 	phone: string;
 	linkedin: string;
+	image?: any;
 }
 
 const rawTeamMembers = await sanityClient.fetch(`*[_type == "teamMember"] | order(_createdAt asc)`);
 const teamMembers: TeamMember[] = rawTeamMembers.map((member: any) => ({
 	name: member.name,
 	role: member.role,
+	image: member.image,
 	desc: member.description,
 	email: member.email,
 	phone: member.phone,
@@ -63,10 +71,14 @@ const teamMembers: TeamMember[] = rawTeamMembers.map((member: any) => ({
 						</div>
 						<div class="to-card-face to-card-front" style="z-index: 10;">
 							<div class="to-avatar">
-								{m.name
-									.split(' ')
-									.map((n: string) => n[0])
-									.join('')}
+								{m.image?.asset ? (
+									<img src={urlFor(m.image, 128).url()} alt={m.name} class="to-avatar-img" />
+								) : (
+									m.name
+										.split(' ')
+										.map((n: string) => n[0])
+										.join('')
+								)}
 							</div>
 							<div class="to-card-info">
 								<h3>{m.name}</h3>
@@ -326,6 +338,13 @@ const teamMembers: TeamMember[] = rawTeamMembers.map((member: any) => ({
 		color: #fff;
 		flex-shrink: 0;
 		box-shadow: 0 4px 20px rgba(162, 19, 218, 0.3);
+		overflow: hidden;
+	}
+
+	.to-avatar-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 
 	.to-card-info h3 {
