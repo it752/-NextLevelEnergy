@@ -44,6 +44,51 @@ const {
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.css"
 		/>
+
+		<!-- Meta Pixel Code -->
+		<script type="text/plain" data-category="marketing" is:inline>
+			!function(f,b,e,v,n,t,s)
+			{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+			n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+			if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+			n.queue=[];t=b.createElement(e);t.async=!0;
+			t.src=v;s=b.getElementsByTagName(e)[0];
+			s.parentNode.insertBefore(t,s)}(window, document,'script',
+			'https://connect.facebook.net/en_US/fbevents.js');
+			fbq('init', '1468535111329752');
+			
+			// Generowanie unikalnego event_id dla deduplikacji
+			var eventId = Date.now().toString() + '_' + Math.random().toString(36).substring(2, 10);
+			
+			// Wysyłka z poziomu klienta (Pixel) z event_id
+			fbq('track', 'PageView', {}, { eventID: eventId });
+
+			// Odbiór identyfikatorów z ciasteczek dla lepszej jakości dopasowania CAPI
+			function getCookie(name) {
+				var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+				if (match) return match[2];
+				return null;
+			}
+
+			// Wysyłka z poziomu serwera (CAPI) - krótki timeout aby upewnić się że ciastko _fbp zostało zapisane
+			setTimeout(function() {
+				fetch('/api/meta-capi', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						event_name: 'PageView',
+						event_id: eventId,
+						event_source_url: window.location.href,
+						fbp: getCookie('_fbp'),
+						fbc: getCookie('_fbc')
+					})
+				}).catch(function(e) { console.error("CAPI Error:", e); });
+			}, 250);
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+			src="https://www.facebook.com/tr?id=1468535111329752&ev=PageView&noscript=1"
+		/></noscript>
+		<!-- End Meta Pixel Code -->
 	</head>
 	<body>
 		<slot />
